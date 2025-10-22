@@ -1,13 +1,500 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="/src/outputail.css" rel="stylesheet">
-</head>
-<body>
-  <h1 class="text-3xl font-bold underline ">
-    Hello world!
-  </h1>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/src/outputail.css" rel="stylesheet" />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            screens: {
+              sm: "640px",
+              md: "768px",
+              lg: "1024px",
+              xl: "1440px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        overflow: auto;
+      }
+      .foto {
+        filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.5));
+      }
+      .h1-healty {
+        color: greenyellow;
+      }
+      .kotak {
+        filter: drop-shadow(12px 20px 7px rgba(0, 0, 0, 0.5));
+      }
+      .bigpro {
+        filter: drop-shadow(70px 60px 7px rgba(0, 0, 0, 0.3));
+      }
+      header {
+        background: rgba(0, 235, 51, 0.15);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-[#aaf334] w-full h-220">
+      <!-- navbar -->
+      <header
+        id="navbar"
+        class="fixed left-0 right-0 top-0 z-50 py-4 transition-all"
+      >
+        <div
+          class="container mx-auto px-6 md:px-16 flex justify-between items-center"
+        >
+          <!-- logo -->
+          <div>
+            <img src="content/logo.png" alt="logo" class="h-14" />
+          </div>
+
+          <!-- nav menu -->
+          <nav class="py-2 px-6 rounded-full bg-white/30 backdrop-blur-md">
+            <a href="#" class="bg-white rounded-full py-2 px-8 font-semibold"
+              >HOME</a
+            >
+            <a
+              href="#"
+              class="rounded-full py-2 px-8 font-semibold hover:text-green-700"
+              >ABOUT US</a
+            >
+            <a
+              href="#"
+              class="rounded-full py-2 px-8 font-semibold hover:text-green-700"
+              >PRODUCT</a
+            >
+            <a
+              href="#"
+              class="rounded-full py-2 px-8 font-semibold hover:text-green-700"
+              >CONTACT</a
+            >
+          </nav>
+
+          <!-- kanan -->
+          <div class="flex items-center space-x-4">
+            <a href="#">
+              <img
+                src="content/icon/shopping-cart.svg"
+                alt="cart"
+                class="h-7 w-7"
+              />
+            </a>
+            <a href="#" class="bg-white rounded-full py-2 px-8 font-semibold"
+              >Login</a
+            >
+          </div>
+        </div>
+      </header>
+      <!-- hero section -->
+
+      <section class="relative overflow-hidden pb-20 pt-20 lg:pt-20">
+        <div
+          class="container mx-auto px-4 md:px-8 lg:px-24 flex flex-col lg:flex-row items-center justify-between relative"
+        >
+          <div
+            class="lg:w-1/2 text-center lg:text-left pt-10 lg:pt-20 relative z-10"
+          >
+            <div
+              class="flex justify-center lg:justify-start items-center space-x-1 mb-10"
+            >
+              <img
+                src="content/icon/star.png"
+                alt="star"
+                class="w-4 h-4 lg:w-5 lg:h-5"
+              />
+              <img
+                src="content/icon/star.png"
+                alt="star"
+                class="w-4 h-4 lg:w-5 lg:h-5"
+              />
+              <img
+                src="content/icon/star.png"
+                alt="star"
+                class="w-4 h-4 lg:w-5 lg:h-5"
+              />
+              <img
+                src="content/icon/star.png"
+                alt="star"
+                class="w-4 h-4 lg:w-5 lg:h-5"
+              />
+              <img
+                src="content/icon/star.png"
+                alt="star"
+                class="w-4 h-4 lg:w-5 lg:h-5"
+              />
+            </div>
+            <h1
+              class="hero-title text-4xl lg:text-6xl font-extrabold leading-tight mb-4 tracking-wide text-white"
+            >
+              ANTI OXIDANT <br />MIX
+            </h1>
+            <p
+              class="hero-description text-base lg:text-lg mb-8 leading-relaxed text-white"
+            >
+              Campuran kacang dan buah kering kaya vitamin & <br />
+              antioksidan, pas untuk camilan sehat setiap hari.
+            </p>
+            <div
+              class="flex flex-col sm:flex-row justify-center lg:justify-start items-center space-y-4 sm:space-y-0 sm:space-x-5"
+            >
+              <a
+                href="#"
+                class="btn-primary rounded-full py-3 px-10 text-lg font-semibold shadow-lg bg-white"
+                >ORDER NOW</a
+              >
+              <a
+                href="#"
+                class="text-white text-lg underline underline-offset-15 hover:opacity-80 transition-opacity font-semibold"
+                >SEE ALL PRODUCT ->
+              </a>
+            </div>
+            <div
+              class="flex justify-center lg:justify-start items-center space-x-7 mt-12"
+            >
+              <img
+                src="content/product/ori-_ijo-removebg-preview.png"
+                alt="product-blue"
+                class="w-16 lg:w-20 h-auto product-thumbnail"
+              />
+              <img
+                src="content/product/ori-almond-removebg-preview.png"
+                alt="product-dark-green"
+                class="w-16 lg:w-12 h-auto product-thumbnail"
+              />
+              <img
+                src="content/product/ori-roastedcashew-removebg-preview.png"
+                alt="product-red"
+                class="w-20 lg:w-20 h-auto product-thumbnail"
+              />
+            </div>
+          </div>
+
+          <div class="lg:w-1/2 flex justify-center items-center relative">
+            <div
+              class="absolute mt-7 w-120 h-120 bg-[#72C84A] rounded-full blur-3xl"
+            ></div>
+            <img
+              src="content/product/ori-_ijo-removebg-preview.png"
+              alt="Anti Oxidant Mix"
+              class="bigpro relative z-10 w-7 md:w-80 lg:w-[500px] drop-shadow-3xl"
+            />
+
+            <img
+              src="content/kacang/almond1-removebg-preview.png"
+              alt="almond"
+              class="floating-nut z-10 absolute w-24 h-auto -top-6 left-5 lg:left-36 rotate-60"
+            />
+            <img
+              src="content/kacang/hityam-removebg-preview.png"
+              alt="cashew"
+              class="floating-nut-2 absolute w-42 z-20 h-auto -bottom-24.5 left-0 lg:left-31.5"
+            />
+            <img
+              src="content/kacang/bijilabu-removebg-preview.png"
+              alt="pistachio"
+              class="floating-nut-3 z-10 absolute w-56 h-auto -top-14 right-0 lg:right-12"
+            />
+            <img
+              src="content/kacang/almond1-removebg-preview.png"
+              alt="walnut"
+              class="floating-nut-4 z-10 absolute w-28 h-auto bottom-30 right-10 lg:right-33 rotate-60"
+            />
+            <img
+              src="content/kacang/kuaci-removebg-preview.png"
+              alt="pecan"
+              class="floating-nut-5 absolute w-24 h-auto top-40 left-10 lg:left-27"
+            />
+            <img
+              src="content/kacang/mente1-removebg-preview.png"
+              alt="mente"
+              class="floating-nut-6 absolute w-27 h-auto -bottom-11 right-10 lg:right-27 rotate-90"
+            />
+          </div>
+        </div>
+      </section>
+    </div>
+    <img src="/content/sret-hijau.png" alt="garis" class="w-2000 -z-10" />
+    <section>
+      <h1 class="h1-healty text-center text-4xl font-bold py-7">
+        No. 1 Healthy Snack in Indonesia
+      </h1>
+      <div class="flex justify-center items-center py-10">
+        <img src="content/hijau/palm-oil-removebg-preview.png" alt="" />
+        <img src="content/hijau/vegan-removebg-preview.png" alt="" />
+        <img src="content/hijau/natural-removebg-preview.png" alt="" />
+        <img src="content/hijau/sugar-removebg-preview.png" alt="" />
+        <img src="content/hijau/salt-removebg-preview.png" alt="" />
+        <img src="content/hijau/hala-removebg-preview.png" alt="" />
+      </div>
+
+      <div class="flex items-center justify-center space-x-16 pb-10">
+        <img
+          src="content/foto-mid1.png"
+          alt="foto-mid1"
+          class="foto w-90 drop-shadow-2xl"
+        />
+        <img
+          src="content/foto-mid2-removebg-preview.png"
+          alt="foto-mid2"
+          class="foto w-90"
+        />
+        <img
+          src="content/foto-mid3-removebg-preview.png"
+          alt="foto-mid3"
+          class="foto w-90"
+        />
+      </div>
+    </section>
+
+    <div class="bg-[#aaf334] w-full h-44">
+      <div class="flex justify-between items-center px-48 h-full">
+        <div class="text-center">
+          <h1 class="text-white font-bold text-8xl pb-1.5">1K+</h1>
+          <p class="text-white font-bold text-3xl">produk terjual</p>
+        </div>
+        <div class="text-center">
+          <h1 class="text-white font-bold text-8xl pb-1.5">300+</h1>
+          <p class="text-white font-bold text-3xl">orang mengunjungi</p>
+        </div>
+        <div class="text-center">
+          <h1 class="text-white font-bold text-8xl pb-1.5">780+</h1>
+          <p class="text-white font-bold text-3xl">orang menyukai</p>
+        </div>
+      </div>
+    </div>
+<!-- Testimoni -->
+    <h1 class="testimoni text-amber-950 font-bold text-6xl text-center pt-20">
+      Testimoni
+    </h1>
+    <div
+      class="flex justify-between gap-8 pr-12 pl-12 md:flex-row flex-col pt-14 pb-32"
+    >
+      <div
+        class="kotak p-4 bg-gray-100 rounded-2xl shadow-xl w-full md:w-[32%] flex-shrink-0"
+      >
+        <div class="flex justify-between items-start">
+          <div class="w-2/3 flex flex-col space-y-2">
+            <div class="flex items-center space-x-2">
+              <img
+                src="content/icon/user.png"
+                alt="user"
+                class="w-8 h-8 rounded-full bg-gray-200"
+              />
+              <p class="font-bold text-base">y*****i</p>
+            </div>
+
+            <div class="flex items-center space-x-1">
+              <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
+              <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
+              <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
+              <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
+              <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
+              <h1 class="font-extrabold text-lg ml-1">5.0</h1>
+            </div>
+
+            <div>
+              <p class="font-extrabold text-sm leading-snug">
+                Enak... dan sehat... uda repeat order juga disini.
+              </p>
+            </div>
+          </div>
+
+          <div class="w-1/3 flex justify-end">
+            <img
+              src="content/product/ori-_ijo-removebg-preview.png"
+              alt="product-cashew"
+              class="w-16 h-auto object-contain mt-6"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="kotak p-4 bg-gray-100 rounded-2xl shadow-xl w-full md:w-[32%] flex-shrink-0"
+      >
+        <div class="flex justify-between items-start">
+          <div class="w-2/3 flex flex-col space-y-2">
+            <div class="flex items-center space-x-2">
+              <img
+                src="content/icon/user.png"
+                alt="user"
+                class="w-8 h-8 rounded-full bg-gray-200"
+              />
+              <p class="font-bold text-base">t*****n</p>
+            </div>
+            <div class="flex items-center space-x-1">
+              <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
+              <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
+              <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
+              <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
+              <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
+              <h1 class="font-extrabold text-lg ml-1">5.0</h1>
+            </div>
+            <div>
+              <p class="font-extrabold text-sm leading-snug">
+                mantab enak & krg seruasal (teks disesuaikan dengan gambar)
+              </p>
+            </div>
+          </div>
+
+          <div class="w-1/3 flex justify-end">
+            <img
+              src="content/product/ori-merah-removebg-preview.png"
+              alt="product-almond"
+              class="w-16 h-auto object-contain mt-6"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="kotak p-10 bg-gray-100 rounded-2xl shadow-xl w-full md:w-[32%] flex-shrink-0"
+      >
+        <div class="flex justify-between items-start">
+          <div class="w-2/3 flex flex-col space-y-2">
+            <div class="flex items-center space-x-2">
+              <img
+                src="content/icon/user.png"
+                alt="user"
+                class="w-8 h-8 rounded-full bg-gray-200"
+              />
+              <p class="font-bold text-base">m*****g</p>
+            </div>
+            <div class="flex items-center space-x-1">
+              <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
+              <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
+              <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
+              <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
+              <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
+              <h1 class="font-extrabold text-lg ml-1">5.0</h1>
+            </div>
+            <div>
+              <p class="font-extrabold text-sm leading-snug">
+                Puas banget pengiriman cepat kemasan aman appe pun di kasih
+                (teks disesuaikan)
+              </p>
+            </div>
+          </div>
+
+          <div class="w-1/3 flex justify-end">
+            <img
+              src="content/product/ori-almond-removebg-preview.png"
+              alt="product-granola"
+              class="w-16 h-auto object-contain mt-6"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- footer -->
+    <img
+      src="/content/sret-hijau.png"
+      alt="sret-foot"
+      class="w-2000 rotate-180 p-0 m-0"
+    />
+    <footer>
+      <div class="w-full p-10 bg-[#aaf334] text-[#38761d]">
+        <img src="/content/logo.png" alt="Orinuts Logo" class="w-32 mb-6" />
+
+        <div class="flex justify-between items-start pt-6 text-sm">
+          <div class="w-full md:w-1/4 pr-8 text-[#491A0B]">
+            <p class="leading-relaxed">
+              the No.1 Healthy Snack in Indonesia. We provide <br />
+              premium quality roasted nut snacks, crafted <br />
+              without salt, sugar, preservatives, or MSG — <br />
+              delivering a pure and healthy taste in every bite.
+            </p>
+
+            <div class="flex space-x-3 pt-5">
+              <a href=""
+                ><img
+                  src="content/icon/instagram.svg"
+                  alt="Instagram"
+                  class="w-7 h-7 rounded-full border border-[#38761d] p-1"
+                  style="
+                    filter: invert(30%) sepia(20%) saturate(600%)
+                      hue-rotate(60deg) brightness(50%) contrast(100%);
+                  "
+              /></a>
+              <a href=""
+                ><img
+                  src="content/icon/twitter.svg"
+                  alt="Twitter"
+                  class="w-7 h-7 rounded-full border border-[#38761d] p-1"
+                  style="
+                    filter: invert(30%) sepia(20%) saturate(600%)
+                      hue-rotate(60deg) brightness(50%) contrast(100%);
+                  "
+              /></a>
+              <a href=""
+                ><img
+                  src="content/icon/facebook.svg"
+                  alt="Facebook"
+                  class="w-7 h-7 rounded-full border border-[#38761d] p-1"
+                  style="
+                    filter: invert(30%) sepia(20%) saturate(600%)
+                      hue-rotate(60deg) brightness(50%) contrast(100%);
+                  "
+              /></a>
+              <a href=""
+                ><img
+                  src="content/icon/mail.svg"
+                  alt="Email"
+                  class="w-7 h-7 rounded-full border border-[#38761d] p-1"
+                  style="
+                    filter: invert(30%) sepia(20%) saturate(600%)
+                      hue-rotate(60deg) brightness(50%) contrast(100%);
+                  "
+              /></a>
+            </div>
+          </div>
+
+          <div class="flex justify-between w-full md:w-3/4">
+            <div class="w-1/3 text-[#491A0B]">
+              <h2 class="font-bold text-lg pb-4 uppercase">main office</h2>
+              <p class="leading-relaxed">
+                Bavarian Village A 7,<br />
+                Darmo Permai Baru III,<br />
+                Surabaya, Indonesia 60188
+              </p>
+            </div>
+
+            <div class="w-1/3 text-[#491A0B]">
+              <h2 class="font-bold text-lg pb-4 uppercase">main menu</h2>
+              <a href="" class="block leading-loose hover:underline">HOME</a>
+              <a href="" class="block leading-loose hover:underline"
+                >ABOUT US</a
+              >
+              <a href="" class="block leading-loose hover:underline">PRODUCT</a>
+              <a href="" class="block leading-loose hover:underline">CONTACT</a>
+            </div>
+
+            <div class="w-1/3 text-[#491A0B]">
+              <h2 class="font-bold text-lg pb-4 uppercase">
+                Official Online Store
+              </h2>
+              <p class="leading-loose">
+                Official Shopee <br />
+                Official Tokopedia <br />
+                <br />
+                +62 816-521-369
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <hr class="mt-12 mb-4 border-[#38761d]" />
+
+        <p class="text-sm text-[#38761d] mt-2">
+          Orinuts © 2025 All Rights Reserved. | Privacy Policy Term of Service
+        </p>
+      </div>
+    </footer>
+  </body>
 </html>
