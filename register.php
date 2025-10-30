@@ -15,7 +15,7 @@ if (!empty($_POST)) {
     "no_telp" => $_POST['no_telp']
   ]);
   echo "<script>alert('Registrasi berhasil! Silakan login dengan akun Anda.');</script>";
-  header("location: login.php");
+  echo "<script>window.location.href = 'login.php';</script>";
 }
 
 
