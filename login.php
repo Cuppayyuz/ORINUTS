@@ -17,13 +17,24 @@ if (!empty($_POST)) {
     } elseif(sha1($_POST['password']) != $user['password']) {
         $hasil = false;
     } else {
-        $hasil = true;
-        $_SESSION['user']= [
-            'id' => $user['id'],
-            'username' => $user['username'],
+        if ($_POST['email'] == "orinuts@gmail.com" && sha1($_POST['password']) == $user['password']) {
+            $_SESSION['user']= [
+                'id' => $user['id'],
+                'username' => $user['username'],
+                'is_admin' => true,
+            ];
+            header("Location: profile-admin.html");
+            exit();
+        } else {
+          $hasil = true;
+          $_SESSION['user']= [
+              'id' => $user['id'],
+              'username' => $user['username'],
+              'is_admin' => false,
+          ];
+          header("Location: login.php");
+        }
 
-        ];
-        header("Location: login.php");
     }
 }
 ?>

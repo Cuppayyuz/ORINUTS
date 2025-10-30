@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 if (!empty($_POST)) {
   $pdo = require 'koneksi.php';
   $sql = "INSERT INTO users (username, fullname, email, password, provinsi, kabupaten, alamat_lengkap, no_telp) VALUES (:username, :fullname, :email, :password, :provinsi, :kabupaten, :alamat_lengkap, :no_telp)";
