@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Detail Produk - Orinuts Roasted Cashew</title>
+    <link rel="stylesheet" href="/src/outputail.css" /> 
+    <style>
+        /* Gaya tambahan yang sudah Anda sediakan */
+        header {
+            background: rgba(220, 213, 185, 0.15);
+        }
+
+        #hamburger-button span {
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        }
+
+        #hamburger-button.open span:nth-child(1) {
+            transform: translateY(10px) rotate(45deg);
+        }
+
+        #hamburger-button.open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        #hamburger-button.open span:nth-child(3) {
+            transform: translateY(-10px) rotate(-45deg);
+        }
+
+        /* Gaya untuk bintang */
+        .star-filled {
+            color: #FFC700;
+        }
+
+        .star-empty {
+            color: #D3D3D3;
+        }
+    </style>
+</head>
+
+<body class="bg-[#F4EFD8] w-full min-h-screen pt-20">
+    <header id="navbar"
+        class="fixed left-0 right-0 top-0 z-50 py-2 transition-all duration-300 bg-[#DCD5B9]/90 backdrop-blur-sm">
+        <div class="container mx-auto px-6 md:px-16 flex justify-between items-center">
+            <div>
+                <img src="/content/logo.png" alt="logo" class="h-14" />
+            </div>
+
+            <nav class="hidden lg:flex py-1 px-2 rounded-full bg-white/30 backdrop-blur-md">
+                <a href="/index.html" class=" rounded-full py-2 px-8 font-semibold">HOME</a>
+                <a href="/about.html" class=" rounded-full py-2 px-8 font-semibold hover:text-green-700">ABOUT
+                    US</a>
+                <a href="/p_orinuts.html"
+                    class=" bg-white rounded-full py-2 px-8 font-semibold hover:text-green-700">PRODUCT</a>
+                <a href="/contact.html"
+                    class="rounded-full py-2 px-8 font-semibold hover:text-green-700">CONTACT</a>
+            </nav>
+
+            <div class="hidden lg:flex items-center space-x-4">
+                <a href="#">
+                    <img src="/content/icon/shopping-cart.svg" alt="cart" class="h-7 w-7" />
+                </a>
+                <a href="#" class="bg-white rounded-full py-2 px-8 font-semibold">Login</a>
+            </div>
+
+            <div class="lg:hidden flex items-center">
+                <button id="hamburger-button"
+                    class="relative z-[60] w-8 h-6 flex flex-col justify-between items-center focus:outline-none">
+                    <span class="block w-full h-0.5 bg-green-700"></span>
+                    <span class="block w-full h-0.5 bg-green-700"></span>
+                    <span class="block w-full h-0.5 bg-green-700"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div id="mobile-menu"
+        class="lg:hidden fixed top-0 right-0 h-screen w-3/4 max-w-sm bg-amber-800 transform translate-x-full transition-transform duration-300 ease-in-out z-50 overflow-y-auto">
+        <div class="p-8">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-2xl font-bold text-white">Menu</h2>
+                <button id="close-menu" class="text-white hover:text-gray-300 text-3xl">
+                    &times;
+                </button>
+            </div>
+
+            <a href="#"
+                class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30">HOME</a>
+            <a href="#"
+                class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30">ABOUT
+                US</a>
+            <a href="#"
+                class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30">PRODUCT</a>
+            <a href="#" class="block py-3 text-white font-semibold hover:text-green-800">CONTACT</a>
+            <hr class="my-6 border-white/30" />
+            <div class="space-y-4">
+                <a href="#" class="flex items-center space-x-3 py-3 text-white font-semibold hover:text-green-800">
+                    <img src="/content/icon/shopping-cart.svg" alt="cart" class="h-6 w-6"
+                        style="filter: brightness(0) invert(1)" />
+                    <span>Keranjang</span>
+                </a>
+                <a href="#"
+                    class="block w-full text-center bg-white hover:bg-gray-200 text-green-700 px-4 py-2 rounded-full font-bold">
+                    Login
+                </a>
+            </div>
+        </div>
+    </div>
+    <main class="container mx-auto px-6 md:px-16 pt-8 pb-16">
+        <div class="mb-6">
+            <a href="#" class="text-sm text-gray-600 hover:text-green-700 flex items-center space-x-1">
+                <span class="text-xl">&larr;</span>
+                <span>PRODUCT</span>
+            </a>
+        </div>
+
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20">
+            <div class="space-y-4">
+                <div class="p-6 bg-white rounded-xl shadow-lg border border-gray-200">
+                    <img src="content/product/ori-roastedcashew-removebg-preview.png" alt="Orinuts Roasted Cashew"
+                        class="w-full h-auto rounded-lg object-contain" />
+                </div>
+                <div class="flex space-x-4 justify-center">
+                    <img src="content/product/ori-4mighty-removebg-preview.png" alt="Thumbnail 1"
+                        class="w-20 h-20 md:w-24 md:h-24 object-cover border-2 border-green-700 p-1 rounded-lg cursor-pointer" />
+                    <img src="content/product/ori-4mighty-removebg-preview.png" alt="Thumbnail 2"
+                        class="w-20 h-20 md:w-24 md:h-24 object-cover border border-gray-300 p-1 rounded-lg cursor-pointer hover:border-green-700" />
+                    <img src="content/product/ori-4mighty-removebg-preview.png" alt="Thumbnail 3"
+                        class="w-20 h-20 md:w-24 md:h-24 object-cover border border-gray-300 p-1 rounded-lg cursor-pointer hover:border-green-700" />
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <h1 id="product-title" class="text-3xl md:text-4xl font-bold text-gray-800">ORINUTS KACANG PANGGANG ROASTED CASHEW</h1>
+
+                <div class="space-y-2">
+                    <p class="text-lg text-gray-500 line-through">Rp35.000</p>
+                    <p id="product-price" class="text-4xl font-extrabold text-green-700">Rp30.000</p>
+                </div>
+
+                <div class="flex space-x-3" id="gramasi-options">
+                    <button data-gram="75" data-price="30000"
+                        class="gramasi-btn py-2 px-6 border-2 border-green-700 bg-green-700 text-white rounded-full font-semibold text-sm">75 gram</button>
+                    <button data-gram="200" data-price="65000"
+                        class="gramasi-btn py-2 px-6 border-2 border-gray-300 bg-white text-gray-700 rounded-full font-semibold text-sm hover:border-green-700">200 gram</button>
+                    <button data-gram="500" data-price="150000"
+                        class="gramasi-btn py-2 px-6 border-2 border-gray-300 bg-white text-gray-700 rounded-full font-semibold text-sm hover:border-green-700">500 gram</button>
+                </div>
+
+                <div class="flex items-center space-x-6">
+                    <div class="flex items-center border border-gray-300 rounded-full bg-white">
+                        <button id="decrement"
+                            class="p-3 text-xl font-bold text-gray-600 hover:text-green-700 rounded-l-full">&minus;</button>
+                        <input type="number" id="quantity" value="1" min="1"
+                            class="w-10 text-center border-x border-gray-200 focus:outline-none text-lg bg-white" />
+                        <button id="increment"
+                            class="p-3 text-xl font-bold text-gray-600 hover:text-green-700 rounded-r-full">&plus;</button>
+                    </div>
+
+                    <button
+                        class="flex-1 max-w-xs py-3 px-6 bg-amber-800 text-white rounded-full font-bold shadow-md hover:bg-amber-700 transition duration-150 flex items-center justify-center space-x-2">
+                        <img src="/content/icon/shopping-cart.svg" alt="Cart Icon" class="h-5 w-5 invert" />
+                        <span>Add to cart</span>
+                    </button>
+                    <button
+                        class="hidden md:block py-3 px-6 border-2 border-amber-800 text-amber-800 rounded-full font-bold shadow-md hover:bg-amber-100 transition duration-150">
+                        Buy now
+                    </button>
+                    <button id="wishlist-button" class="text-gray-400 hover:text-red-500 transition duration-150">
+                        <svg id="wishlist-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                    </button>
+                </div>
+
+                <button
+                    class="block md:hidden w-full py-3 px-6 border-2 border-amber-800 text-amber-800 rounded-full font-bold shadow-md hover:bg-amber-100 transition duration-150 mt-4">
+                    Buy now
+                </button>
+
+                <div class="border-t border-gray-300 pt-6 space-y-4">
+                    <details open class="group">
+                        <summary
+                            class="flex justify-between items-center cursor-pointer font-semibold text-lg text-gray-800 py-2 border-b border-gray-200">
+                            Detail
+                            <span
+                                class="transition-transform duration-300 transform group-open:rotate-180 text-xl">
+                                &#9660;
+                            </span>
+                        </summary>
+                        <ul class="list-disc pl-5 pt-3 text-gray-700 space-y-1 text-sm">
+                            <li>Premium Quality.</li>
+                            <li>Tahan 1 tahun dalam kemasan (sebelum kemasan dibuka).</li>
+                            <li>Kacang FRESH & ENAK.</li>
+                            <li>Sudah matang & siap dimakan.</li>
+                            <li>Good Source of Fiber, Gluten Free, No Trans Fat, No Artificial Ingredients.</li>
+                            <li>Sertifikat DINKES P-IRT 2053578161825-26</li>
+                            <li>Diproduksi oleh: Orinuts, Surabaya.</li>
+                        </ul>
+                    </details>
+
+                    <details class="group">
+                        <summary
+                            class="flex justify-between items-center cursor-pointer font-semibold text-lg text-gray-800 py-2 border-b border-gray-200">
+                            Shipping
+                            <span
+                                class="transition-transform duration-300 transform group-open:rotate-180 text-xl">
+                                &#9660;
+                            </span>
+                        </summary>
+                        <div class="pt-3 text-gray-700 space-y-3 text-sm">
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-green-600 font-bold">Disc 20%</span>
+                                </div>
+                                <div class="flex items-center space-x-2 text-gray-500">
+                                    <img src="content/icon/locate.png" alt="Location Icon" class="h-4 w-4" />
+                                    <span>Lokasi: <span class="font-semibold text-gray-700">Surabaya</span></span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center space-x-2">
+                                    <img src="/content/icon/delivery.png" alt="Delivery Icon" class="h-5 w-5" />
+                                    <span>Delivery est: <span class="font-semibold">2 - 3 working days</span></span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <img src="/content/icon/kalender.png" alt="Calendar Icon" class="h-5 w-5" />
+                                    <span><span class="font-semibold">11 - 13 September</span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <section class="mt-16 pt-10 border-t border-gray-300">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6">Rating & Review</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="flex flex-col items-center md:items-start space-y-2">
+                    <p class="text-6xl font-extrabold text-green-700">5.0<span class="text-3xl text-gray-500">/5</span>
+                    </p>
+                    <div class="flex space-x-0.5 text-2xl">
+                        <span class="star-filled">&#9733;</span>
+                        <span class="star-filled">&#9733;</span>
+                        <span class="star-filled">&#9733;</span>
+                        <span class="star-filled">&#9733;</span>
+                        <span class="star-filled">&#9733;</span>
+                    </div>
+                    <p class="text-gray-500 text-sm">Based on <span class="font-semibold">15</span> reviews</p>
+                </div>
+
+                <div class="space-y-2 col-span-1 md:col-span-2">
+                    <div class="flex items-center space-x-2">
+                        <span class="text-sm font-semibold">5 Star</span>
+                        <div class="flex-1 bg-gray-200 rounded-full h-2.5">
+                            <div class="bg-green-700 h-2.5 rounded-full" style="width: 95%"></div>
+                        </div>
+                        <span class="text-sm text-gray-600">95%</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="text-sm font-semibold">4 Star</span>
+                        <div class="flex-1 bg-gray-200 rounded-full h-2.5">
+                            <div class="bg-green-700 h-2.5 rounded-full" style="width: 5%"></div>
+                        </div>
+                        <span class="text-sm text-gray-600">5%</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="text-sm font-semibold">3 Star</span>
+                        <div class="flex-1 bg-gray-200 rounded-full h-2.5">
+                            <div class="bg-green-700 h-2.5 rounded-full" style="width: 0%"></div>
+                        </div>
+                        <span class="text-sm text-gray-600">0%</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="text-sm font-semibold">2 Star</span>
+                        <div class="flex-1 bg-gray-200 rounded-full h-2.5">
+                            <div class="bg-green-700 h-2.5 rounded-full" style="width: 0%"></div>
+                        </div>
+                        <span class="text-sm text-gray-600">0%</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="text-sm font-semibold">1 Star</span>
+                        <div class="flex-1 bg-gray-200 rounded-full h-2.5">
+                            <div class="bg-green-700 h-2.5 rounded-full" style="width: 0%"></div>
+                        </div>
+                        <span class="text-sm text-gray-600">0%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 space-y-4">
+                <h3 class="text-xl font-bold text-gray-800">Review</h3>
+
+                <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <div class="flex space-x-0.5 text-lg">
+                            <span class="star-filled">&#9733;</span>
+                            <span class="star-filled">&#9733;</span>
+                            <span class="star-filled">&#9733;</span>
+                            <span class="star-filled">&#9733;</span>
+                            <span class="star-filled">&#9733;</span>
+                        </div>
+                        <p class="text-xs text-gray-500">Via Shopee, 2 hari lalu</p>
+                    </div>
+                    <p class="mt-2 text-gray-700">enak... dan renyah... esta repeat order juga disini. packing aman
+                        dan pengiriman cepat.</p>
+                    <p class="text-xs text-gray-500 mt-1">oleh: <span class="font-semibold">customer****</span></p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <div class="flex space-x-0.5 text-lg">
+                            <span class="star-filled">&#9733;</span>
+                            <span class="star-filled">&#9733;</span>
+                            <span class="star-filled">&#9733;</span>
+                            <span class="star-filled">&#9733;</span>
+                            <span class="star-filled">&#9733;</span>
+                        </div>
+                        <p class="text-xs text-gray-500">Via Tokopedia, 4 hari lalu</p>
+                    </div>
+                    <p class="mt-2 text-gray-700">Kacangnya fresh banget, rasanya pas. Anak-anak suka! Sudah order
+                        berkali-kali.</p>
+                    <p class="text-xs text-gray-500 mt-1">oleh: <span class="font-semibold">user_toped_A</span></p>
+                </div>
+
+                <div class="text-center pt-4">
+                    <button class="text-green-700 font-semibold hover:text-green-800">Lihat Semua Review
+                        (15)</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="mt-16 pt-10 border-t border-gray-300">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-8 text-center">PRODUK LAINNYA</h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <div class="bg-white p-4 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
+                    <a href="nyoba.html" class="block cursor-pointer">
+                        <img src="/content/roasted_cashew_card.png" alt="Roasted Cashew"
+                            class="w-full h-auto object-cover mb-4 rounded-lg" />
+                        <h3 class="text-lg font-bold text-gray-800">Roasted Cashew (200g)</h3>
+                        <div class="flex space-x-0.5 text-sm text-yellow-500 my-1">
+                            <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+                        </div>
+                        <p class="text-gray-500 line-through text-sm">35.000</p>
+                        <p class="text-xl font-bold text-green-700">30.000</p>
+                    </a>
+                </div>
+
+                <div class="bg-white p-4 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
+                    <a href="/product-detail.html?id=energy-booster-mix" class="block cursor-pointer">
+                        <img src="/content/energy_booster_card.png" alt="Energy Booster Mix"
+                            class="w-full h-auto object-cover mb-4 rounded-lg" />
+                        <h3 class="text-lg font-bold text-gray-800">Energy Booster Mix</h3>
+                        <div class="flex space-x-0.5 text-sm text-yellow-500 my-1">
+                            <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span class="star-empty">&#9733;</span>
+                        </div>
+                        <p class="text-gray-500 line-through text-sm">135.000</p>
+                        <p class="text-xl font-bold text-green-700">120.000</p>
+                    </a>
+                </div>
+
+                <div class="bg-white p-4 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
+                    <a href="/product-detail.html?id=almond-roasted" class="block cursor-pointer">
+                        <img src="/content/almond_roasted_card.png" alt="Almond Roasted"
+                            class="w-full h-auto object-cover mb-4 rounded-lg" />
+                        <h3 class="text-lg font-bold text-gray-800">Almond Roasted</h3>
+                        <div class="flex space-x-0.5 text-sm text-yellow-500 my-1">
+                            <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+                        </div>
+                        <p class="text-gray-500 line-through text-sm">45.000</p>
+                        <p class="text-xl font-bold text-green-700">40.000</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+    <img src="content/sret-krem.png" alt="sret krem" class=" w-full rota">
+    <footer class="bg-[#F4E9BB] mt-16 py-10 border-t ">
+        <div
+            class="container mx-auto px-6 md:px-16 flex flex-col lg:flex-row justify-between items-start space-y-8 lg:space-y-0">
+            <div class="lg:w-1/3 space-y-4">
+                <img src="/content/logo.png" alt="Orinuts Logo" class="h-14" />
+                <p class="text-gray-600 text-sm max-w-sm">
+                    The nuts & seeds in Orinuts products are carefully selected and roasted, providing a pure and
+                    healthy taste in every bite.
+                </p>
+                <div class="flex space-x-3">
+                    <img src="/content/icon/instagram.svg" alt="Instagram" class="h-6 w-6 opacity-70" />
+                    <img src="/content/icon/facebook.svg" alt="Facebook" class="h-6 w-6 opacity-70" />
+                    <img src="/content/icon/twitter.svg" alt="Twitter" class="h-6 w-6 opacity-70" />
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <h4 class="font-bold text-gray-800">Main office</h4>
+                <p class="text-gray-600 text-sm max-w-xs">
+                    Sentra Prima Tekno Blok F/23, Duren Seribu, Kec. Bojongsari, Depok, Jawa Barat 16518
+                </p>
+            </div>
+
+            <div class="space-y-2">
+                <h4 class="font-bold text-gray-800">Main menu</h4>
+                <nav class="flex flex-col space-y-1 text-sm">
+                    <a href="#" class="text-gray-600 hover:text-green-700">HOME</a>
+                    <a href="#" class="text-gray-600 hover:text-green-700">ABOUT US</a>
+                    <a href="#" class="text-gray-600 hover:text-green-700">PRODUCT</a>
+                    <a href="#" class="text-gray-600 hover:text-green-700">CONTACT</a>
+                </nav>
+            </div>
+
+            <div class="space-y-2">
+                <h4 class="font-bold text-gray-800">Official Online Store</h4>
+                <p class="text-gray-600 text-sm">Official Tokopedia</p>
+                <p class="text-gray-600 text-sm">Official Shopee</p>
+                <p class="text-gray-600 text-sm">+62 812-921-999</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Data Produk Dummy (untuk simulasi loadProductDetails)
+        const allProducts = {
+            'cashew-roasted-75': {
+                name: 'ORINUTS KACANG PANGGANG ROASTED CASHEW (75gr)',
+                price: 30000,
+                description: 'Kacang mede panggang kualitas premium.',
+                // Tambahkan detail lain untuk demo:
+                gramasiOptions: [{ gram: 75, price: 30000 }, { gram: 200, price: 65000 }, { gram: 500, price: 150000 }]
+            },
+            'energy-booster-mix': {
+                name: 'ORINUTS ENERGY BOOSTER MIX',
+                price: 120000,
+                description: 'Campuran energi dari kacang-kacangan dan buah kering.',
+                gramasiOptions: [{ gram: 200, price: 120000 }]
+            },
+            'almond-roasted': {
+                name: 'ORINUTS ALMOND PANGGANG',
+                price: 40000,
+                description: 'Almond utuh dipanggang tanpa garam.',
+                gramasiOptions: [{ gram: 100, price: 40000 }, { gram: 300, price: 90000 }]
+            },
+        };
+
+        // Helper function untuk format Rupiah
+        const formatRupiah = (angka) => {
+            return 'Rp' + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        };
+
+        // ============== 1. LOGIC NAVBAR & QUANTITY START ==============
+
+        // Script untuk shadow navbar
+        const navbar = document.getElementById("navbar");
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add("shadow-lg");
+            } else {
+                navbar.classList.remove("shadow-lg");
+            }
+        });
+
+        // Script Hamburger Menu
+        const hamburgerButton = document.getElementById("hamburger-button");
+        const mobileMenu = document.getElementById("mobile-menu");
+        const closeMenuButton = document.getElementById("close-menu");
+
+        function openMenu() {
+            mobileMenu.classList.remove("translate-x-full");
+        }
+
+        function closeMenu() {
+            mobileMenu.classList.add("translate-x-full");
+        }
+
+        hamburgerButton.addEventListener("click", openMenu);
+        closeMenuButton.addEventListener("click", closeMenu);
+
+        // Script untuk Quantity Input
+        const quantityInput = document.getElementById("quantity");
+        const incrementButton = document.getElementById("increment");
+        const decrementButton = document.getElementById("decrement");
+
+        incrementButton.addEventListener("click", () => {
+            let currentValue = parseInt(quantityInput.value);
+            quantityInput.value = currentValue + 1;
+        });
+
+        decrementButton.addEventListener("click", () => {
+            let currentValue = parseInt(quantityInput.value);
+            if (currentValue > 1) {
+                quantityInput.value = currentValue - 1;
+            }
+        });
+
+        quantityInput.addEventListener('change', (e) => {
+            if (parseInt(e.target.value) < 1 || isNaN(parseInt(e.target.value))) {
+                e.target.value = 1;
+            }
+        });
+
+        // ============== 2. LOGIC GRAMASI/HARGA START ==============
+
+        const priceDisplay = document.getElementById('product-price');
+        const gramasiOptionsContainer = document.getElementById('gramasi-options');
+        const gramasiButtons = document.querySelectorAll('.gramasi-btn');
+
+        gramasiOptionsContainer.addEventListener('click', function (e) {
+            const button = e.target.closest('.gramasi-btn');
+            if (!button) return;
+
+            // 1. Reset tampilan semua tombol
+            gramasiButtons.forEach(btn => {
+                btn.classList.remove('bg-green-700', 'text-white', 'border-green-700');
+                btn.classList.add('bg-white', 'text-gray-700', 'border-gray-300');
+            });
+
+            // 2. Terapkan tampilan aktif pada tombol yang diklik
+            button.classList.add('bg-green-700', 'text-white', 'border-green-700');
+            button.classList.remove('bg-white', 'text-gray-700', 'border-gray-300');
+
+            // 3. Ambil data harga dan ubah tampilan harga
+            const newPrice = parseInt(button.dataset.price);
+            priceDisplay.textContent = formatRupiah(newPrice);
+        });
+
+        // ============== 3. LOGIC WISHLIST START ==============
+
+        const wishlistButton = document.getElementById('wishlist-button');
+        const wishlistIcon = document.getElementById('wishlist-icon');
+        const PRODUCT_ID = 'cashew-roasted-75'; // ID produk yang sedang ditampilkan
+        let isWishlisted = false;
+
+        wishlistButton.addEventListener('click', async () => {
+            isWishlisted = !isWishlisted; // Toggle status
+
+            // 1. Ubah tampilan ikon secara instan (Front-end)
+            if (isWishlisted) {
+                // Jika di-love, buat ikon terisi
+                wishlistIcon.setAttribute('fill', 'currentColor');
+                wishlistIcon.classList.remove('text-gray-400', 'hover:text-red-500');
+                wishlistIcon.classList.add('text-red-500');
+                console.log(`Produk ${PRODUCT_ID} ditambahkan ke Wishlist (Simulasi)`);
+            } else {
+                // Jika di-unlike, buat ikon kosong
+                wishlistIcon.setAttribute('fill', 'none');
+                wishlistIcon.classList.remove('text-red-500');
+                wishlistIcon.classList.add('text-gray-400', 'hover:text-red-500');
+                console.log(`Produk ${PRODUCT_ID} dihapus dari Wishlist (Simulasi)`);
+            }
+
+            // 2. Kirim permintaan ke Back-end (Simulasi Fetch API)
+            // (Dalam pengembangan nyata, Anda akan mengganti ini dengan fetch())
+            // try {
+            //     const response = await fetch('/api/user/wishlist', {
+            //         method: 'POST',
+            //         body: JSON.stringify({ product_id: PRODUCT_ID, action: isWishlisted ? 'add' : 'remove' })
+            //     });
+            //     if (!response.ok) throw new Error('Server error');
+            // } catch (error) {
+            //     console.error('API Error:', error);
+            //     // Rollback tampilan jika API gagal
+            //     isWishlisted = !isWishlisted; 
+            // }
+        });
+
+        // ============== 4. LOGIC PRODUK LAINNYA (SIMULASI DINAMIS) ==============
+
+        // Fungsi untuk mendapatkan Product ID dari URL
+        function getProductIdFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            // Default ke 'cashew-roasted-75' (ID produk yang pertama kali ditampilkan)
+            return params.get('id') || 'cashew-roasted-75';
+        }
+
+        function loadProductDetails(productId) {
+            const productData = allProducts[productId];
+
+            if (!productData) {
+                console.error("Produk tidak ditemukan:", productId);
+                document.getElementById('product-title').textContent = "Produk Tidak Ditemukan";
+                return;
+            }
+
+            // 1. Perbarui Informasi Utama
+            document.getElementById('product-title').textContent = productData.name;
+            document.getElementById('product-price').textContent = formatRupiah(productData.price);
+
+            // 2. Perbarui Pilihan Gramasi
+            gramasiOptionsContainer.innerHTML = ''; // Kosongkan container lama
+            productData.gramasiOptions.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.setAttribute('data-gram', option.gram);
+                button.setAttribute('data-price', option.price);
+                button.classList.add('gramasi-btn', 'py-2', 'px-6', 'border-2', 'rounded-full', 'font-semibold', 'text-sm', 'hover:border-green-700');
+
+                if (index === 0) { // Pilih gramasi pertama sebagai default
+                    button.classList.add('bg-green-700', 'text-white', 'border-green-700');
+                    // Perbarui harga display awal sesuai default
+                    document.getElementById('product-price').textContent = formatRupiah(option.price);
+                } else {
+                    button.classList.add('bg-white', 'text-gray-700', 'border-gray-300');
+                }
+                button.textContent = `${option.gram} gram`;
+                gramasiOptionsContainer.appendChild(button);
+            });
+
+            // Catatan: Dalam implementasi nyata, Anda akan memperbarui gambar dan deskripsi di sini.
+        }
+
+        // Panggil fungsi pemuatan detail saat halaman dimuat
+        const initialProductId = getProductIdFromUrl();
+        // Hanya jalankan jika halaman ini bukan halaman utama atau jika ada ID spesifik
+        if (window.location.pathname.includes('product-detail.html')) {
+            loadProductDetails(initialProductId);
+        }
+
+        // Anda harus me-re-query gramasiButtons setelah DOM diubah oleh loadProductDetails
+        // Atau biarkan event listener di container (seperti di poin 2) yang menangani klik.
+        // Dalam kode ini, event listener di container sudah diterapkan, jadi aman.
+    </script>
+</body>
+
+</html>

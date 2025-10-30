@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin - Message | Orinuts</title>
+    <link rel="stylesheet" href="src/outputail.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body class="flex min-h-screen bg-[#F0F0E8]">
+    <aside
+      class="bg-white p-5 text-[#8B4513] overflow-y-auto shadow-lg rounded-r-3xl min-h-screen flex-shrink-0 w-63"
+    >
+      <div class="logo mb-6">
+        <img src="content/logo.png" alt="Logo Orinuts" class="w-28" />
+      </div>
+      <nav>
+        <ul class="space-y-1 text-sm">
+          <a href="dashboard-admin.html">
+            <li
+              class="nav-item p-2.5 flex items-center gap-3 cursor-pointer hover:bg-[#E0BBA1]/20 rounded-r-3xl transition"
+            >
+              <i class="fas fa-home w-4"></i> Beranda
+            </li>
+          </a>
+          <a href="product-admin.html">
+            <li
+              class="nav-item p-2.5 flex items-center gap-3 cursor-pointer hover:bg-[#E0BBA1]/20 rounded-r-3xl transition"
+            >
+              <i class="fas fa-box-open w-4"></i> Produk
+            </li>
+          </a>
+          <li
+            class="nav-item font-bold p-2.5 flex items-center gap-3 cursor-pointer text-[#8B4513] bg-[#D2A278] rounded-r-3xl"
+          >
+            <i class="fas fa-comment w-4"></i> Message
+            <span
+              class="ml-auto bg-red-600 text-white text-xs font-semibold px-2 py-0.5 rounded-full"
+              >2</span
+            >
+          </li>
+          <a href="order-admin.html">
+          <li
+            class="nav-item p-2.5 flex items-center gap-3 cursor-pointer hover:bg-[#E0BBA1]/20 rounded-r-3xl transition"
+          >
+            <i class="fas fa-shopping-cart w-4"></i> Order
+          </li>
+          </a>
+          <a href="profile-admin.html">
+          <li
+            class="nav-item p-2.5 flex items-center gap-3 cursor-pointer hover:bg-[#E0BBA1]/20 rounded-r-3xl transition"
+          >
+            <i class="fas fa-user-circle w-4"></i> Profile
+          </li>
+          </a>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="flex-grow flex flex-col p-5">
+      <header
+        class="flex justify-end items-center mb-5 p-3 rounded-xl text-[#8B4513] font-semibold"
+      >
+        <h1 class="text-2xl font-normal mr-auto text-[#8B4513]">HALAMAN ADMIN!!</h1>
+        <div class="flex items-center space-x-2 cursor-pointer">
+          <i class="fas fa-user-circle text-2xl"></i>
+        </div>
+      </header>
+
+      <div class="flex-grow bg-white rounded-3xl shadow-lg flex overflow-hidden">
+        <div
+          class="w-80 border-r border-gray-200 flex-shrink-0 overflow-y-auto"
+          id="contact-list"
+        >
+          <div
+            class="chat-item p-4 flex items-start gap-3 cursor-pointer hover:bg-gray-50 transition active-chat"
+            data-name="Arshenay AA"
+            data-email="arsinaddawliyah21@gmail.com"
+            data-initial="A"
+            data-chat-id="chat-1"
+          >
+            <div
+              class="w-10 h-10 bg-gray-400 rounded-full flex items-center justify-center text-white text-xl font-bold flex-shrink-0 chat-initial"
+            >
+              A
+            </div>
+            <div class="flex-grow min-w-0">
+              <p class="text-sm font-semibold text-[#8B4513] truncate chat-email">
+                arsinaddawliyah21@gmail.com
+              </p>
+              <p class="text-md font-bold text-[#8B4513] truncate chat-name">Arshenay AA</p>
+              <p class="text-xs text-gray-500 chat-time">2 menit yang lalu</p>
+            </div>
+          </div>
+
+          <div
+            class="chat-item p-4 flex items-start gap-3 cursor-pointer hover:bg-gray-50 transition"
+            data-name="User Kedua"
+            data-email="user2@gmail.com"
+            data-initial="U"
+            data-chat-id="chat-2"
+          >
+            <div
+              class="w-10 h-10 bg-gray-400 rounded-full flex items-center justify-center text-white text-xl font-bold flex-shrink-0 chat-initial"
+            >
+              U
+            </div>
+            <div class="flex-grow min-w-0">
+              <p class="text-sm font-semibold text-[#8B4513] truncate chat-email">
+                user2@gmail.com
+              </p>
+              <p class="text-md font-bold text-[#8B4513] truncate chat-name">User Kedua</p>
+              <p class="text-xs text-gray-500 chat-time">1 jam yang lalu</p>
+            </div>
+          </div>
+          
+          <div class="h-4"></div>
+        </div>
+
+        <div class="flex-grow flex flex-col" id="chat-window">
+          <div
+            class="p-4 bg-[#A0522D] text-white flex items-center rounded-tr-3xl"
+            id="chat-header"
+          >
+            <div
+              class="w-12 h-12 bg-white text-[#A0522D] rounded-full flex items-center justify-center text-2xl font-bold mr-3"
+              id="header-initial"
+            >
+              A
+            </div>
+            <h2 class="text-xl font-semibold" id="header-name">Arshenay AA</h2>
+          </div>
+
+          <div class="flex-grow p-5 overflow-y-auto space-y-4" id="messages-container">
+            <div class="flex justify-end message-bubble" data-chat-id="chat-1">
+              <div
+                class="max-w-xl bg-[#F0F0E8] p-4 rounded-xl rounded-br-none shadow-md text-sm text-[#8B4513]"
+              >
+                Permisi, saya dari tim Google ingin menanyakan mengenai website.
+                Saya ingin mengetahui siapa yang membuat website yang anda pakai.
+                Saya ingin berkolaborasi dikarenakan kemampuannya untuk
+                mengembangkan sangat2 unik dan berbeda dari yang lain... anjay
+              </div>
+            </div>
+            
+            <div class="flex justify-start message-bubble hidden" data-chat-id="chat-2">
+                <div
+                  class="max-w-xl bg-[#D2A278] text-white p-4 rounded-xl rounded-bl-none shadow-md text-sm"
+                >
+                  Halo User Kedua, terima kasih sudah menghubungi kami! Ada yang bisa kami bantu?
+                </div>
+            </div>
+            
+          </div>
+
+          <div class="p-4 border-t border-gray-200">
+            <div class="flex items-center">
+              <input
+                type="text"
+                placeholder="Ketik pesan"
+                class="flex-grow border border-gray-300 p-2.5 rounded-l-lg focus:outline-none focus:border-[#D2A278]"
+                id="message-input"
+              />
+              <button
+                class="bg-[#A0522D] text-white p-2.5 rounded-r-lg hover:bg-[#8B4513] transition"
+                id="send-button"
+              >
+                <i class="fas fa-paper-plane text-xl px-2"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      // 1. Dapatkan semua elemen yang diperlukan
+      const chatItems = document.querySelectorAll('.chat-item');
+      const headerName = document.getElementById('header-name');
+      const headerInitial = document.getElementById('header-initial');
+      const messagesContainer = document.getElementById('messages-container');
+      const allMessages = document.querySelectorAll('.message-bubble'); // Semua gelembung pesan
+
+      let currentChatId = 'chat-1'; // Default chat yang aktif
+
+      // 2. Fungsi untuk menampilkan pesan berdasarkan Chat ID
+      function displayMessages(chatId) {
+        messagesContainer.scrollTop = messagesContainer.scrollHeight; // Scroll ke bawah
+        allMessages.forEach(message => {
+          // Sembunyikan semua pesan
+          message.classList.add('hidden'); 
+          
+          // Tampilkan hanya pesan yang sesuai dengan chatId yang dipilih
+          if (message.getAttribute('data-chat-id') === chatId) {
+            message.classList.remove('hidden');
+          }
+        });
+        
+        // Simulasikan pesan baru agar scroll berfungsi
+        setTimeout(() => {
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }, 50);
+      }
+      
+      // 3. Fungsi untuk menangani klik pada Item Kontak
+      function handleChatClick(event) {
+        // Hapus status aktif dari item sebelumnya
+        document.querySelector('.active-chat').classList.remove('active-chat');
+
+        // Temukan item kontak yang diklik (parent div)
+        const clickedItem = event.currentTarget;
+        
+        // Tambahkan status aktif ke item yang baru
+        clickedItem.classList.add('active-chat');
+
+        // Ambil data dari item yang diklik (menggunakan data-* attributes)
+        const name = clickedItem.getAttribute('data-name');
+        const initial = clickedItem.getAttribute('data-initial');
+        const chatId = clickedItem.getAttribute('data-chat-id');
+        
+        // Simpan chat ID yang sedang aktif
+        currentChatId = chatId;
+
+        // Perbarui Header Chat
+        headerName.textContent = name;
+        headerInitial.textContent = initial;
+
+        // Perbarui Tampilan Pesan
+        displayMessages(chatId);
+      }
+
+      // 4. Tambahkan Event Listener ke semua Item Kontak
+      chatItems.forEach(item => {
+        item.addEventListener('click', handleChatClick);
+      });
+
+      // 5. Inisialisasi tampilan awal (untuk chat-1)
+      displayMessages(currentChatId);
+      
+      // 6. Terapkan kelas Tailwind secara dinamis untuk status aktif
+      // Kita perlu definisikan tampilan 'active' di CSS agar JS bisa menggunakannya
+      const style = document.createElement('style');
+      style.textContent = `
+        .active-chat {
+          background-color: #D2A27850; /* bg-[#D2A278]/50 */
+          border-right: 4px solid #8B4513; /* border-r-4 border-[#8B4513] */
+        }
+        .chat-item:not(.active-chat):hover {
+          background-color: #f9fafb; /* hover:bg-gray-50 */
+        }
+      `;
+      document.head.appendChild(style);
+      
+      // --- Logika Simulasi Pengiriman Pesan Admin (Opsional) ---
+      const messageInput = document.getElementById('message-input');
+      const sendButton = document.getElementById('send-button');
+
+      function sendAdminMessage() {
+          const text = messageInput.value.trim();
+          if (text === "") return;
+
+          // 1. Buat gelembung pesan baru (simulasi dari admin)
+          const messageHtml = `
+            <div class="flex justify-start message-bubble" data-chat-id="${currentChatId}">
+                <div
+                  class="max-w-xl bg-[#D2A278] text-white p-4 rounded-xl rounded-bl-none shadow-md text-sm"
+                >
+                  ${text}
+                </div>
+            </div>
+          `;
+          
+          // 2. Tambahkan ke container
+          messagesContainer.insertAdjacentHTML('beforeend', messageHtml);
+          
+          // 3. Kosongkan input dan scroll ke bawah
+          messageInput.value = '';
+          messagesContainer.scrollTop = messagesContainer.scrollHeight;
+          
+          // Catatan: Dalam sistem nyata, pesan ini akan dikirim ke backend (WebSockets)
+          // dan mungkin juga ditambahkan ke daftar allMessages.
+      }
+      
+      sendButton.addEventListener('click', sendAdminMessage);
+      messageInput.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+              sendAdminMessage();
+          }
+      });
+      
+    </script>
+  </body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Ringkas - Partner Coding</title>
+    <link rel="stylesheet" href="src/outputail.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+      /* CSS Tambahan untuk Custom Styling */
+      body {
+        /* Pastikan tidak ada margin/padding default */
+        margin: 0;
+        padding: 0;
+        background-repeat: no-repeat;
+        background-position: left bottom;
+        background-size: 15%;
+        background-attachment: fixed;
+      }
+      /* Menggunakan h-screen (100vh) pada container utama */
+      .dashboard-container {
+        height: 100vh;
+      }
+      .nav-item.active {
+        border-top-right-radius: 2rem;
+        border-bottom-right-radius: 2rem;
+        margin-right: 1rem;
+      }
+      .day-num {
+        cursor: pointer;
+        transition: background-color 0.15s;
+      }
+      .day-num:hover {
+        background-color: rgba(139, 69, 19, 0.1);
+        border-radius: 9999px;
+      }
+      .day-num.selected {
+        background-color: #f0c39f;
+        color: #8b4513;
+        font-weight: bold;
+        border-radius: 9999px;
+      }
+    </style>
+  </head>
+  <body class="bg-[#D2A278] text-gray-800">
+    <!-- navbar.html -->
+    <aside
+      class="bg-white p-5 text-[#8B4513] overflow-y-auto shadow-lg rounded-r-3xl min-h-screen"
+    >
+      <div class="logo mb-6">
+        <img src="content/logo.png" alt="Logo Orinuts" class="w-28" />
+      </div>
+      <nav>
+        <ul class="space-y-1 text-sm">
+          <li
+            class="nav-item font-bold p-2.5 flex items-center gap-3 cursor-pointer text-[#8B4513] bg-[#D2A278] rounded-r-3xl"
+          >
+            <i class="fas fa-home w-4"></i> Beranda
+          </li>
+          <a href="product-admin.html">
+            <li
+              class="nav-item p-2.5 flex items-center gap-3 cursor-pointer hover:bg-[#E0BBA1]/20 rounded-r-3xl transition"
+            >
+              <i class="fas fa-box-open w-4"></i> Produk
+            </li>
+          </a>
+          <li
+            class="nav-item p-2.5 flex items-center gap-3 cursor-pointer hover:bg-[#E0BBA1]/20 rounded-r-3xl transition"
+          >
+            <i class="fas fa-comment w-4"></i> Message
+            <span
+              class="ml-auto bg-red-600 text-white text-xs font-semibold px-2 py-0.5 rounded-full"
+              >2</span
+            >
+          </li>
+          <li
+            class="nav-item p-2.5 flex items-center gap-3 cursor-pointer hover:bg-[#E0BBA1]/20 rounded-r-3xl transition"
+          >
+            <i class="fas fa-shopping-cart w-4"></i> Order
+          </li>
+          <li
+            class="nav-item p-2.5 flex items-center gap-3 cursor-pointer hover:bg-[#E0BBA1]/20 rounded-r-3xl transition"
+          >
+            <i class="fas fa-user-circle w-4"></i> User
+          </li>
+        </ul>
+      </nav>
+    </aside>
+  </body>
+</html>

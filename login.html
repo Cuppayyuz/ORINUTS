@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="stylesheet" href="src/outputail.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+        /* Gaya Kustom Gambar */
+        .imgl {
+            filter: drop-shadow(-24px 40px 5px rgba(0, 0, 0, 0.3));
+        }
+        .imgr {
+            filter: drop-shadow(20px 15px 5px rgba(0, 0, 0, 0.3));
+        }
+        
+        /* GAYA TOMBOL DISABLED */
+        .btn-disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* GAYA IKON PASSWORD */
+        .password-input-wrapper {
+            position: relative;
+            width: 100%;
+        }
+        .password-toggle-icon {
+            position: absolute;
+            right: 0.75rem; /* right-3 */
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: rgb(107 114 128 / 1); /* text-gray-500 */
+            z-index: 20;
+            font-size: 1.125rem; /* text-lg */
+        }
+        .password-toggle-icon:hover {
+            color: #a7483d; 
+        }
+    </style>
+  </head>
+  <body class="bg-[#F4EFD8] flex justify-center items-center min-h-screen">
+    <div
+      class="register-container flex w-full sm:w-[85%] max-w-[1000px] shadow-2xl rounded-lg overflow-hidden"
+    >
+      <div
+        class="image-area hidden md:block md:w-[40%] bg-[#cb3d3d] p-10 relative overflow-hidden"
+      >
+        <div class="absolute inset-0 flex justify-center items-end">
+          <img
+            src="content/kacang/mente1-removebg-preview.png"
+            alt="Kacang Mente Kiri"
+            class="absolute w-32 h-auto z-100 bottom-75 -rotate-70 left-27 "
+          />
+
+          <img
+            src="content/kacang/mente1-removebg-preview.png"
+            alt="Kacang Mente Kecil"
+            class="absolute w-24 h-auto bottom-4 z-30 rotate-145 left-41 "
+          />
+
+          <img
+            src="content/product/ori-merah-removebg-preview.png"
+            alt="Produk Orinuts Merah"
+            class="imgr absolute h-auto w-48 bottom-15 -right-10 z-20"
+          />
+
+          <img
+            src="content/product/ori-4mighty-removebg-preview.png"
+            alt="Energy Booster Mix"
+            class="imgl absolute h-auto w-80 bottom-15 -right-48 transform -translate-x-1/2 z-10"
+          />
+        </div>
+      </div>
+      <div
+        class="form-area w-full md:w-[60%] bg-white p-10 sm:p-12 md:p-16 lg:p-20 flex flex-col items-center justify-center"
+      >
+        <h1
+          class="text-3xl sm:text-4xl text-[#a76657] font-semibold mb-8 tracking-widest uppercase font-reglog"
+        >
+          LOGIN
+        </h1>
+
+        <div class="social-login-buttons flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 mb-8 w-full">
+          <button
+            type="button"
+            class="flex-1 flex items-center justify-center gap-2 py-2 px-4 border-2 border-gray-200 rounded-md text-sm hover:bg-gray-50 transition duration-150 shadow-sm hover:border-[#a7483d] hover:shadow-md"
+          >
+            <img
+              src="content/icon/google.png"
+              alt="Google"
+              class="w-5 h-auto"
+            />
+            <p class="font-reglog">sign in with google</p>
+          </button>
+          <button
+            type="button"
+            class="flex-1 flex items-center justify-center gap-2 py-2 px-4 border-2 border-gray-200 rounded-md text-sm hover:bg-gray-50 transition duration-150 shadow-sm hover:border-[#a7483d] hover:shadow-md"
+          >
+            <img
+              src="content/icon/facebook.png"
+              alt="Facebook"
+              class="w-5 h-auto"
+            />
+            <p class="font-reglog">sign in with facebook</p>
+          </button>
+        </div>
+
+        <form id="loginForm" class="register-form w-full">
+          <div class="input-group relative mb-6">
+            <input
+              type="text"
+              id="login-username"
+              placeholder="Username atau Email"
+              required
+              class="w-full py-2.5 px-4 border border-gray-300 rounded-lg shadow-sm text-base text-gray-800 placeholder-gray-400 bg-white transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-[#a7483d] focus:ring-opacity-50 focus:border-[#a7483d] focus:shadow-md"
+              onblur="validateField('login-username'); checkLoginButton()"
+              oninput="clearErrorStyle('login-username'); checkLoginButton()"
+            />
+            <p id="error-login-username" class="text-sm text-red-500 mt-1 hidden">Pesan Error</p>
+          </div>
+
+          <div class="input-group relative mb-6">
+            <div class="password-input-wrapper">
+                <input
+                  type="password"
+                  id="login-password"
+                  placeholder="Password"
+                  required
+                  class="w-full py-2.5 px-4 border border-gray-300 rounded-lg shadow-sm text-base text-gray-800 placeholder-gray-400 bg-white transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-[#a7483d] focus:ring-opacity-50 focus:border-[#a7483d] focus:shadow-md pr-10"
+                  onblur="validateField('login-password'); checkLoginButton()"
+                  oninput="clearErrorStyle('login-password'); checkLoginButton()"
+                />
+                <span
+                  class="password-toggle-icon"
+                  onclick="togglePasswordVisibility()"
+                >
+                  <i class="fas fa-eye"></i>
+                </span>
+            </div>
+            <p id="error-login-password" class="text-sm text-red-500 mt-1 hidden">Pesan Error</p>
+          </div>
+
+          <button
+            type="submit"
+            id="btn-login"
+            class="create-account-btn w-full bg-[#a7483d] text-white py-3 mt-5 rounded-md text-lg font-semibold transition duration-300 shadow-md btn-disabled"
+            disabled
+          >
+            Login
+          </button>
+        </form>
+
+        <a href="#" class="font-reglog pt-5 text-sm text-blue-700 hover:underline">Lupa Password?</a>
+        <p class="login-prompt mt-6 text-sm text-gray-600">
+          Belum mempunyai akun?
+          <a
+            href="register.html"
+            class="login-link text-blue-700 font-semibold hover:underline"
+            >Register</a
+          >
+        </p>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+          checkLoginButton(); // Cek status tombol saat halaman dimuat
+      });
+
+      // --- Fungsi Pengaturan Gaya Error ---
+      function applyErrorStyle(id, message) {
+          const input = document.getElementById(id);
+          const errorElement = document.getElementById(`error-${id}`);
+          
+          input.classList.add('border-red-500', 'focus:ring-red-500', 'focus:border-red-500', 'ring-red-500');
+          input.classList.remove('border-gray-300', 'focus:ring-[#a7483d]', 'focus:border-[#a7483d]');
+          input.classList.remove('focus:shadow-md'); 
+
+          if (errorElement) {
+              errorElement.textContent = message;
+              errorElement.classList.remove('hidden');
+          }
+      }
+
+      function clearErrorStyle(id) {
+          const input = document.getElementById(id);
+          const errorElement = document.getElementById(`error-${id}`);
+          
+          input.classList.remove('border-red-500', 'focus:ring-red-500', 'focus:border-red-500', 'ring-red-500');
+          input.classList.add('border-gray-300', 'focus:ring-[#a7483d]', 'focus:border-[#a7483d]');
+
+          if (errorElement) {
+              errorElement.classList.add('hidden');
+              errorElement.textContent = '';
+          }
+      }
+
+      // --- Fungsi Validasi Field ---
+      function validateField(id, isSilent = false) {
+          const input = document.getElementById(id);
+          if (!input || input.disabled) return true;
+
+          let errorMessage = '';
+          let isFieldValid = true;
+
+          // Cek kosong (wajib diisi)
+          if (input.value.trim() === '') {
+              errorMessage = 'Bidang ini wajib diisi.';
+              isFieldValid = false;
+          } 
+          
+          // Cek panjang Password
+          else if (input.id === 'login-password') {
+              if (input.value.length < 6) {
+                  errorMessage = 'Password minimal harus 6 karakter.';
+                  isFieldValid = false;
+              }
+          }
+
+          if (!isFieldValid) {
+              if (!isSilent) applyErrorStyle(id, errorMessage);
+              return false;
+          }
+
+          if (!isSilent) clearErrorStyle(id);
+          return true;
+      }
+
+      // --- Fungsi Cek Tombol Login ---
+      function checkLoginButton() {
+          const usernameValid = validateField('login-username', true);
+          const passwordValid = validateField('login-password', true);
+          
+          const btn = document.getElementById('btn-login');
+          const isFormValid = usernameValid && passwordValid;
+
+          if (btn) {
+              if (isFormValid) {
+                  btn.disabled = false;
+                  btn.classList.remove('btn-disabled');
+                  btn.classList.add('hover:bg-opacity-90');
+              } else {
+                  btn.disabled = true;
+                  btn.classList.add('btn-disabled');
+                  btn.classList.remove('hover:bg-opacity-90');
+              }
+          }
+      }
+      
+      // --- Fungsi Toggle Password Visibility ---
+      function togglePasswordVisibility() {
+        const passwordInput = document.getElementById("login-password");
+        const toggleIcon = document.querySelector(".password-toggle-icon i");
+
+        if (passwordInput.type === "password") {
+          passwordInput.type = "text";
+          toggleIcon.classList.remove("fa-eye");
+          toggleIcon.classList.add("fa-eye-slash");
+        } else {
+          passwordInput.type = "password";
+          toggleIcon.classList.remove("fa-eye-slash");
+          toggleIcon.classList.add("fa-eye");
+        }
+      }
+
+      // --- Logika Submit Formulir ---
+      document
+        .getElementById('loginForm')
+        .addEventListener('submit', function (event) {
+          event.preventDefault();
+          
+          // Lakukan validasi non-silent (untuk menampilkan error visual) saat submit
+          const usernameValid = validateField('login-username');
+          const passwordValid = validateField('login-password');
+          
+          if (usernameValid && passwordValid) {
+            const username = document.getElementById('login-username').value;
+            
+            // 1. SIMULASI PENCARIAN DATA DI BASIS DATA (BACKEND)
+            console.log(`Mengirim data login untuk pengguna: ${username} ke backend...`);
+            
+            // 2. Tampilkan pesan sukses singkat
+            alert(`✅ Login Berhasil! Mencari data pengguna... Anda akan diarahkan ke Home.`);
+            
+            // 3. REDIRECT ke halaman home/dashboard
+            // Ganti 'index.html' dengan path file home/dashboard Anda
+            window.location.href = 'index.html'; 
+          } else {
+            // Jika ada error, pastikan tombol diperiksa lagi
+            checkLoginButton();
+          }
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Order Admin - Orinuts</title>
+    <link rel="stylesheet" href="src/outputail.css" />
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+</head>
+<body class="flex min-h-screen bg-[#FDF5E6]">
+    
+    <aside
+        class="bg-white p-5 text-[#8B4513] overflow-y-auto shadow-lg rounded-r-3xl min-h-screen fixed z-10"
+        style="width: 250px;"
+    >
+        <div class="logo mb-6">
+            <img src="content/logo.png" alt="Logo Orinuts" class="w-28" /> 
+        </div>
+        <nav>
+            <ul class="space-y-1 text-sm">
+                <a href="dashboard-admin.html">
+                    <li class="nav-item p-2.5 flex items-center gap-3 cursor-pointer hover:bg-[#E0BBA1]/20 rounded-r-3xl transition">
+                        <i class="fas fa-home w-4"></i> Beranda
+                    </li>
+                </a>
+                <a href="product-admin.html">
+                    <li class="nav-item p-2.5 flex items-center gap-3 cursor-pointer hover:bg-[#E0BBA1]/20 rounded-r-3xl transition">
+                        <i class="fas fa-box-open w-4"></i> Produk
+                    </li>
+                </a>
+                <a href="massage-admin.html">
+                <li class="nav-item p-2.5 flex items-center gap-3 cursor-pointer hover:bg-[#E0BBA1]/20 rounded-r-3xl transition">
+                    <i class="fas fa-comment w-4"></i> Message
+                    <span class="ml-auto bg-red-600 text-white text-xs font-semibold px-2 py-0.5 rounded-full">2</span>
+                </li>
+                </a>
+                <li class="nav-item font-bold p-2.5 flex items-center gap-3 cursor-pointer  bg-[#D2A278] rounded-r-3xl shadow-md" style="background-color: #D2A278;">
+                    <i class="fas fa-shopping-cart w-4"></i> Order
+                </li>
+                <a href="profile-admin.html">
+                    <li class="nav-item p-2.5 flex items-center gap-3 cursor-pointer hover:bg-[#E0BBA1]/20 rounded-r-3xl transition">
+                        <i class="fas fa-user-circle w-4"></i> Profile
+                    </li>
+                </a>
+            </ul>
+        </nav>
+        <div class="absolute bottom-0 left-0 right-0 h-40 overflow-hidden rounded-r-3xl pointer-events-none">
+            <img src="content/almond-background.png" alt="Almond Background" class="object-cover w-full h-full opacity-10" /> 
+        </div>
+    </aside>
+
+    <main class="flex-1 p-8 ml-[250px]">
+        
+        <header class="flex justify-between items-center mb-8 bg-[#D2A278] p-4 rounded-xl shadow-md">
+            <h1 class="text-white text-2xl font-bold uppercase tracking-wider">HALAMAN ADMIN</h1>
+            <div class="text-white">
+                <i class="fas fa-user-circle text-3xl cursor-pointer hover:text-gray-200 transition"></i>
+            </div>
+        </header>
+
+        <div class="bg-white p-6 rounded-xl shadow-lg">
+            <h2 class="text-xl font-semibold text-[#8B4513] mb-4">Daftar Pesanan Terbaru</h2>
+            
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-[#FDF5E6]">
+                        <tr>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-[#8B4513] uppercase tracking-wider w-1/12">ID</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-[#8B4513] uppercase tracking-wider w-3/12">Nama Customer</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-[#8B4513] uppercase tracking-wider w-3/12">Total Pembelian</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-[#8B4513] uppercase tracking-wider w-2/12">Tanggal</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-[#8B4513] uppercase tracking-wider w-3/12">Lengkap</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody class="divide-y divide-gray-100">
+                        <tr class="bg-white hover:bg-[#FDF5E6] transition-colors">
+                            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">#00867</td>
+                            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-700">Arshenay Madadia</td>
+                            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-700">Rp. 150.000,00</td>
+                            <td class="px-4 py-4 whitespace-nowrap text-sm text-red-600 font-medium">32/ 02/ 2025</td>
+                            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">
+                                <button 
+                                    class="text-[#8B4513] hover:text-[#D2A278] font-semibold py-1 px-3 rounded-full transition-colors flex items-center gap-1 group"
+                                    onclick="showDetailModal('order1')"
+                                >
+                                    <i class="fas fa-eye w-4 group-hover:text-[#D2A278]"></i> lihat detail
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr class="bg-white hover:bg-[#FDF5E6] transition-colors">
+                            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">#00868</td>
+                            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-700">Bambang Wijaya</td>
+                            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-700">Rp. 225.000,00</td>
+                            <td class="px-4 py-4 whitespace-nowrap text-sm text-red-600 font-medium">01/ 03/ 2025</td>
+                            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">
+                                <button 
+                                    class="text-[#8B4513] hover:text-[#D2A278] font-semibold py-1 px-3 rounded-full transition-colors flex items-center gap-1 group"
+                                    onclick="showDetailModal('order2')"
+                                >
+                                    <i class="fas fa-eye w-4 group-hover:text-[#D2A278]"></i> lihat detail
+                                </button>
+                            </td>
+                        </tr>
+                         <tr class="bg-white hover:bg-[#FDF5E6] transition-colors">
+                            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">#00869</td>
+                            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-700">Citra Dewi</td>
+                            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-700">Rp. 50.000,00</td>
+                            <td class="px-4 py-4 whitespace-nowrap text-sm text-red-600 font-medium">02/ 03/ 2025</td>
+                            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">
+                                <button 
+                                    class="text-[#8B4513] hover:text-[#D2A278] font-semibold py-1 px-3 rounded-full transition-colors flex items-center gap-1 group"
+                                    onclick="showDetailModal('order3')"
+                                >
+                                    <i class="fas fa-eye w-4 group-hover:text-[#D2A278]"></i> lihat detail
+                                </button>
+                            </td>
+                        </tr>
+                         <tr class="bg-white hover:bg-[#FDF5E6] transition-colors">
+                            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">#00870</td>
+                            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-700">Doni Saputra</td>
+                            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-700">Rp. 75.000,00</td>
+                            <td class="px-4 py-4 whitespace-nowrap text-sm text-red-600 font-medium">03/ 03/ 2025</td>
+                            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">
+                                <button 
+                                    class="text-[#8B4513] hover:text-[#D2A278] font-semibold py-1 px-3 rounded-full transition-colors flex items-center gap-1 group"
+                                    onclick="showDetailModal('order4')"
+                                >
+                                    <i class="fas fa-eye w-4 group-hover:text-[#D2A278]"></i> lihat detail
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <div id="detailModal" class="fixed inset-0 bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white p-6 rounded-lg shadow-2xl max-w-xl w-full relative transform transition-all duration-300 scale-95 opacity-0" id="modalContent">
+            
+            <button 
+                class="absolute top-3 right-3 text-gray-600 hover:text-red-500 text-2xl"
+                onclick="hideDetailModal()"
+            >
+                &times;
+            </button>
+
+            <div class="flex flex-col items-center border-b pb-4 mb-4">
+                <img src="content/logo.png" alt="Logo Orinuts" class="w-24 mb-3" /> 
+                <h3 class="text-xl font-bold text-[#8B4513]">DETAIL PESANAN</h3>
+            </div>
+
+            <div class="text-sm text-gray-700 space-y-1 mb-4">
+                <p><strong>ID Pesanan:</strong> <span id="modal-order-id" class="font-medium text-[#D2A278]">#00867</span></p>
+                <p><strong>Nama Customer:</strong> <span id="modal-customer-name">Arshenay Madadia</span></p>
+                <p><strong>Tanggal/Jam:</strong> <span id="modal-datetime">32/02/2025, 02:32:25 WIB</span></p>
+                <p><strong>Alamat Pengiriman:</strong> <span id="modal-address">Jl. Anggrek No. 10, Kel. Sukamaju, Kota Jakarta Selatan, DKI Jakarta (12345)</span></p>
+            </div>
+            
+            <h4 class="font-semibold text-md text-[#8B4513] mt-4 mb-2">Daftar Produk:</h4>
+            <div class="overflow-x-auto border rounded-lg">
+                <table class="min-w-full text-sm">
+                    <thead class="bg-[#FDF5E6]">
+                        <tr>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-600 uppercase w-1/12">No.</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-600 uppercase w-5/12">Produk</th>
+                            <th class="px-3 py-2 text-right text-xs font-medium text-gray-600 uppercase w-2/12">Qty</th>
+                            <th class="px-3 py-2 text-right text-xs font-medium text-gray-600 uppercase w-3/12">Harga Satuan</th>
+                            <th class="px-3 py-2 text-right text-xs font-medium text-gray-600 uppercase w-3/12">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="modal-product-list" class="divide-y divide-gray-100">
+                        </tbody>
+                </table>
+            </div>
+
+            <div class="mt-4 space-y-1 text-sm text-gray-700 border-t pt-3">
+                <div class="flex justify-between">
+                    <span class="font-medium">Subtotal Produk:</span>
+                    <span id="modal-subtotal" class="font-medium">Rp. 150.000,00</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="font-medium">Biaya Pengiriman (JNE Reg):</span>
+                    <span id="modal-shipping-cost">Rp. 15.000,00</span>
+                </div>
+                <div class="flex justify-between font-bold text-lg text-[#8B4513] border-t mt-2 pt-2">
+                    <span>TOTAL PEMBAYARAN:</span>
+                    <span id="modal-total">Rp. 165.000,00</span>
+                </div>
+            </div>
+
+            <div class="mt-6 border-t pt-4 flex justify-between items-center">
+                <div>
+                    <p class="text-xs text-gray-500">Metode Pembayaran:</p>
+                    <p class="font-bold text-sm text-gray-800" id="modal-payment-method">Transfer Bank BCA</p>
+                </div>
+                <div>
+                    <p class="text-xs text-gray-500 text-right">Status Pesanan:</p>
+                    <p id="modal-status" class="text-base font-bold text-white px-3 py-1 rounded-full text-center">
+                        <span class="bg-green-500 px-3 py-1 rounded-full shadow">SUDAH SELESAI</span>
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('detailModal');
+        const modalContent = document.getElementById('modalContent');
+        const productList = document.getElementById('modal-product-list');
+
+        // Contoh Data Dummy Detail Pesanan (Untuk Simulasi Backend)
+        const orderData = {
+            'order1': {
+                id: '#00867',
+                customer: 'Arshenay Madadia',
+                datetime: '32/02/2025, 02:32:25 WIB',
+                address: 'Jl. Anggrek No. 10, Kel. Sukamaju, Kota Jakarta Selatan, DKI Jakarta (12345)',
+                payment: 'Transfer Bank BCA',
+                status: 'SUDAH SELESAI',
+                products: [
+                    { no: 1, name: 'Roasted Cashew 500gr', qty: 1, price: 75000, total: 75000 },
+                    { no: 2, name: 'Almond Panggang 500gr', qty: 1, price: 75000, total: 75000 },
+                ],
+                subtotal: 150000,
+                shipping: 15000,
+                total: 165000,
+            },
+            'order2': {
+                id: '#00868',
+                customer: 'Bambang Wijaya',
+                datetime: '01/03/2025, 10:05:00 WIB',
+                address: 'Perumahan Indah Blok C No. 5, Kota Bandung, Jawa Barat (40123)',
+                payment: 'Gopay',
+                status: 'DALAM PROSES',
+                products: [
+                    { no: 1, name: 'Pistachio Mentah 1kg', qty: 3, price: 75000, total: 225000 },
+                ],
+                subtotal: 225000,
+                shipping: 10000,
+                total: 235000,
+            },
+            // Anda bisa tambahkan data order3, order4, dst.
+        };
+
+        function formatRupiah(number) {
+            return 'Rp. ' + new Intl.NumberFormat('id-ID').format(number) + ',00';
+        }
+
+        function showDetailModal(orderKey) {
+            const data = orderData[orderKey];
+            if (!data) return alert('Data pesanan tidak ditemukan!');
+
+            // 1. Update Detail Dasar
+            document.getElementById('modal-order-id').textContent = data.id;
+            document.getElementById('modal-customer-name').textContent = data.customer;
+            document.getElementById('modal-datetime').textContent = data.datetime;
+            document.getElementById('modal-address').textContent = data.address;
+            document.getElementById('modal-payment-method').textContent = data.payment;
+
+            // 2. Update Status
+            const statusElement = document.getElementById('modal-status').querySelector('span');
+            statusElement.textContent = data.status;
+            // Menghapus kelas warna lama dan menambahkan yang baru
+            statusElement.className = 'px-3 py-1 rounded-full shadow';
+            if (data.status === 'SUDAH SELESAI') {
+                statusElement.classList.add('bg-green-500', 'text-white');
+            } else if (data.status === 'DALAM PROSES') {
+                statusElement.classList.add('bg-yellow-500', 'text-white');
+            } else if (data.status === 'DIBATALKAN') {
+                statusElement.classList.add('bg-red-500', 'text-white');
+            } else {
+                statusElement.classList.add('bg-gray-500', 'text-white');
+            }
+
+
+            // 3. Isi Tabel Produk
+            productList.innerHTML = ''; // Kosongkan isi tabel
+            data.products.forEach(product => {
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-gray-50 transition-colors';
+                row.innerHTML = `
+                    <td class="px-3 py-2 whitespace-nowrap text-xs font-medium text-gray-900">${product.no}</td>
+                    <td class="px-3 py-2 text-xs text-gray-700">${product.name}</td>
+                    <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-700 text-right">${product.qty}</td>
+                    <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-700 text-right">${formatRupiah(product.price)}</td>
+                    <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-900 font-medium text-right">${formatRupiah(product.total)}</td>
+                `;
+                productList.appendChild(row);
+            });
+
+            // 4. Update Detail Pembayaran
+            document.getElementById('modal-subtotal').textContent = formatRupiah(data.subtotal);
+            document.getElementById('modal-shipping-cost').textContent = formatRupiah(data.shipping);
+            document.getElementById('modal-total').textContent = formatRupiah(data.total);
+
+            // Tampilkan Modal dengan animasi
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => {
+                modalContent.classList.remove('scale-95', 'opacity-0');
+                modalContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function hideDetailModal() {
+            // Sembunyikan Modal dengan animasi
+            modalContent.classList.remove('scale-100', 'opacity-100');
+            modalContent.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+            }, 300); // Harus sesuai dengan durasi transisi (duration-300)
+        }
+
+        // Tutup modal jika user klik di luar area modal
+        modal.addEventListener('click', (e) => {
+            if (e.target.id === 'detailModal') {
+                hideDetailModal();
+            }
+        });
+    </script>
+</body>
+</html>
