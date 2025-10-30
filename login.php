@@ -1,3 +1,32 @@
+<?php
+session_start();
+if(isset($_SESSION['user'])) {
+    header("Location: index.html");
+    exit();
+}
+
+$hasil = true;
+if (!empty($_POST)) {
+    $pdo = require 'koneksi.php';
+    $sql = "SELECT * from users where email =:email";
+    $query = $pdo->prepare($sql);
+    $query->execute(array('email' => $_POST['email']));
+    $user = $query->fetch();
+    if (!$user) {
+        $hasil = false;
+    } elseif(sha1($_POST['password']) != $user['password']) {
+        $hasil = false;
+    } else {
+        $hasil = true;
+        $_SESSION['user']= [
+            'id' => $user['id'],
+            'username' => $user['username'],
+
+        ];
+        header("Location: login.php");
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -116,12 +145,18 @@
           </button>
         </div>
 
-        <form id="loginForm" class="register-form w-full">
+        <form id="loginForm" class="register-form w-full" method="post" action="">
           <div class="input-group relative mb-6">
+            <?php 
+              if(!$hasil) {
+                  echo '<p class="text-sm text-red-500 mb-2">Email atau Password salah.</p>';
+              }
+            ?>
             <input
+              name="email"
               type="text"
               id="login-username"
-              placeholder="Username atau Email"
+              placeholder="Email"
               required
               class="w-full py-2.5 px-4 border border-gray-300 rounded-lg shadow-sm text-base text-gray-800 placeholder-gray-400 bg-white transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-[#a7483d] focus:ring-opacity-50 focus:border-[#a7483d] focus:shadow-md"
               onblur="validateField('login-username'); checkLoginButton()"
@@ -133,6 +168,7 @@
           <div class="input-group relative mb-6">
             <div class="password-input-wrapper">
                 <input
+                  name="password"
                   type="password"
                   id="login-password"
                   placeholder="Password"
@@ -220,13 +256,6 @@
               isFieldValid = false;
           } 
           
-          // Cek panjang Password
-          else if (input.id === 'login-password') {
-              if (input.value.length < 6) {
-                  errorMessage = 'Password minimal harus 6 karakter.';
-                  isFieldValid = false;
-              }
-          }
 
           if (!isFieldValid) {
               if (!isSilent) applyErrorStyle(id, errorMessage);
@@ -274,33 +303,7 @@
         }
       }
 
-      // --- Logika Submit Formulir ---
-      document
-        .getElementById('loginForm')
-        .addEventListener('submit', function (event) {
-          event.preventDefault();
-          
-          // Lakukan validasi non-silent (untuk menampilkan error visual) saat submit
-          const usernameValid = validateField('login-username');
-          const passwordValid = validateField('login-password');
-          
-          if (usernameValid && passwordValid) {
-            const username = document.getElementById('login-username').value;
-            
-            // 1. SIMULASI PENCARIAN DATA DI BASIS DATA (BACKEND)
-            console.log(`Mengirim data login untuk pengguna: ${username} ke backend...`);
-            
-            // 2. Tampilkan pesan sukses singkat
-            alert(`✅ Login Berhasil! Mencari data pengguna... Anda akan diarahkan ke Home.`);
-            
-            // 3. REDIRECT ke halaman home/dashboard
-            // Ganti 'index.html' dengan path file home/dashboard Anda
-            window.location.href = 'index.html'; 
-          } else {
-            // Jika ada error, pastikan tombol diperiksa lagi
-            checkLoginButton();
-          }
-        });
+      
     </script>
   </body>
 </html>
