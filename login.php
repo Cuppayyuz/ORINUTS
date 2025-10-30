@@ -165,7 +165,7 @@
         <p class="login-prompt mt-6 text-sm text-gray-600">
           Belum mempunyai akun?
           <a
-            href="register.html"
+            href="register.php"
             class="login-link text-blue-700 font-semibold hover:underline"
             >Register</a
           >

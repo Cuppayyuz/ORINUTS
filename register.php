@@ -1,3 +1,25 @@
+<?php
+
+if (!empty($_POST)) {
+  $pdo = require 'koneksi.php';
+  $sql = "INSERT INTO users (username, fullname, email, password, provinsi, kabupaten, alamat_lengkap, no_telp) VALUES (:username, :fullname, :email, :password, :provinsi, :kabupaten, :alamat_lengkap, :no_telp)";
+  $query = $pdo->prepare($sql);
+  $query->execute([
+    "username" => $_POST['username'],
+    "fullname" => $_POST['fullname'],
+    "email" => $_POST['email'],
+    "password" => sha1($_POST['password']),
+    "provinsi" => $_POST['provinsi'],
+    "kabupaten" => $_POST['kabupaten'],
+    "alamat_lengkap" => $_POST['alamat'],
+    "no_telp" => $_POST['no_telp']
+  ]);
+  echo "<script>alert('Registrasi berhasil! Silakan login dengan akun Anda.');</script>";
+  header("location: login.php");
+}
+
+
+?>
 <!DOCTYPE html>
 <html lang="id">
   <head>
@@ -97,7 +119,7 @@
         class="form-area w-full md:w-[60%] bg-white p-10 sm:p-12 md:p-16 lg:p-20 flex flex-col items-center justify-center relative"
       >
         <div
-          class="flex justify-center items-center gap-8 mb-10 relative z-10 absolute top-4 w-full px-10 sm:px-0"
+          class="flex justify-center items-center gap-8 mb-10 relative z-10 top-4 w-full px-10 sm:px-0"
         >
           <div
             class="absolute top-1/2 left-0 right-0 h-[2px] bg-gray-300 z-5 -translate-y-1/2"
@@ -128,7 +150,7 @@
           </div>
         </div>
 
-        <form id="registerForm" class="w-full mt-16">
+        <form id="registerForm" class="w-full mt-16" method="post" action="">
           <div id="step-1" class="step-content">
             <h2
               class="text-3xl sm:text-4xl text-[#a76657] font-semibold mb-8 tracking-widest uppercase font-reglog text-center"
@@ -168,6 +190,7 @@
             <div class="space-y-6">
               <div class="input-group relative">
                 <input
+                  name="username"
                   type="text"
                   id="username"
                   placeholder="Username"
@@ -181,12 +204,13 @@
               </div>
               <div class="input-group relative">
                 <input
+                  name="email"
                   type="email"
                   id="email"
                   placeholder="Email"
                   class="w-full py-2.5 px-4 border border-gray-300 rounded-lg shadow-sm text-base text-gray-800 placeholder-gray-400 bg-white transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-[#a7483d] focus:ring-opacity-50 focus:border-[#a7483d] focus:shadow-md"
                   onblur="validateField('email'); checkStepButton(1)"
-                  oninput="clearErrorStyle('email'); checkStepButton(1)"
+                  oninput="debounceEmailCheck(this)"
                 />
                 <p id="error-email" class="text-sm text-red-500 mt-1 hidden">
                   Pesan Error
@@ -195,6 +219,7 @@
               <div class="input-group relative">
                 <div class="password-input-wrapper">
                   <input
+                    name="password"
                     type="password"
                     id="password"
                     placeholder="Password"
@@ -254,7 +279,7 @@
               <p class="login-prompt mt-6 text-sm text-gray-600">
                 Sudah mempunyai akun?
                 <a
-                  href="login.html"
+                  href="login.php"
                   class="login-link text-blue-700 font-semibold hover:underline"
                   >Login</a
                 >
@@ -276,6 +301,7 @@
                 >
                 <div class="full-input-container">
                   <input
+                    name="fullname"
                     type="text"
                     id="fullName"
                     required
@@ -300,6 +326,7 @@
                 >
                 <div class="full-input-container">
                   <input
+                    name="provinsi"
                     type="text"
                     id="provinsi"
                     required
@@ -324,6 +351,7 @@
                 >
                 <div class="full-input-container">
                   <input
+                    name="kabupaten"
                     type="text"
                     id="kota"
                     required
@@ -345,6 +373,7 @@
                 >
                 <div class="full-input-container">
                   <textarea
+                    name="alamat"
                     id="address"
                     required
                     class="w-full py-2.5 px-4 border border-gray-300 rounded-lg shadow-sm text-base text-gray-800 placeholder-gray-400 bg-white transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-[#a7483d] focus:ring-opacity-50 focus:border-[#a7483d] focus:shadow-md pt-2 h-16 resize-none"
@@ -368,6 +397,7 @@
                 >
                 <div class="full-input-container">
                   <input
+                    name="no_telp"
                     type="tel"
                     id="phone"
                     required
@@ -499,6 +529,19 @@
     <script>
       let currentStep = 1;
       const totalSteps = 3;
+      
+      // Fungsi debounce untuk menunda pengecekan email
+      let emailCheckTimeout;
+      function debounceEmailCheck(input) {
+        clearErrorStyle('email');
+        clearTimeout(emailCheckTimeout);
+        emailCheckTimeout = setTimeout(() => {
+          if (input.value.trim() !== '') {
+            validateField('email');
+          }
+          checkStepButton(1);
+        }, 500);
+      }
 
       function togglePasswordVisibility(id) {
         const inputWrapper = document.getElementById(id).parentElement;
@@ -612,9 +655,33 @@
           if (!emailRegex.test(input.value.trim())) {
             errorMessage = "Format Email tidak valid.";
             isFieldValid = false;
+          } else {
+            // Cek email sudah terdaftar atau belum menggunakan AJAX
+            return new Promise((resolve) => {
+              const formData = new FormData();
+              formData.append('email', input.value.trim());
+              
+              fetch('check_email.php', {
+                method: 'POST',
+                body: formData
+              })
+              .then(response => response.json())
+              .then(data => {
+                if (data.exists) {
+                  applyErrorStyle('email', 'Email sudah terdaftar.');
+                  resolve(false);
+                } else {
+                  clearErrorStyle('email');
+                  resolve(true);
+                }
+              })
+              .catch(error => {
+                console.error('Error:', error);
+                resolve(true); // Lanjutkan jika ada error koneksi
+              });
+            });
           }
         }
-
         // Cek format Telepon
         else if (input.id === "phone") {
           const phoneRegex = /^\+?[0-9]{8,15}$/;
@@ -642,24 +709,30 @@
       }
 
       // Fungsi untuk mengaktifkan/menonaktifkan tombol
-      function checkStepButton(step) {
+      async function checkStepButton(step) {
         const btn = document.getElementById(`btn-step-${step}`);
         if (!btn) return;
 
-        const isFormValid = validateStep(step, true);
-
-        if (isFormValid) {
-          btn.disabled = false;
-          btn.classList.remove("btn-disabled");
-          btn.classList.add("hover:bg-opacity-90");
-        } else {
+        try {
+          const isFormValid = await validateStep(step, true);
+          if (isFormValid) {
+            btn.disabled = false;
+            btn.classList.remove("btn-disabled");
+            btn.classList.add("hover:bg-opacity-90");
+          } else {
+            btn.disabled = true;
+            btn.classList.add("btn-disabled");
+            btn.classList.remove("hover:bg-opacity-90");
+          }
+        } catch (error) {
+          console.error('Error in validation:', error);
           btn.disabled = true;
           btn.classList.add("btn-disabled");
           btn.classList.remove("hover:bg-opacity-90");
         }
       }
 
-      function validateStep(step, isSilent = false) {
+      async function validateStep(step, isSilent = false) {
         let isValid = true;
         const currentStepElement = document.getElementById(`step-${step}`);
 
@@ -667,11 +740,12 @@
           'input:required, textarea:required, input[type="email"], input[type="tel"]'
         );
 
-        inputsToValidate.forEach((input) => {
-          if (!validateField(input.id, isSilent)) {
+        for (const input of inputsToValidate) {
+          const result = await validateField(input.id, isSilent);
+          if (result === false) {
             isValid = false;
           }
-        });
+        }
 
         // Validasi tambahan (Hanya untuk Langkah 1)
         if (step === 1) {
@@ -786,8 +860,9 @@
         ).value = `${addressDetail}, ${kota}, ${provinsi}`;
       }
 
-      function nextStep(stepFrom) {
-        if (validateStep(stepFrom)) {
+      async function nextStep(stepFrom) {
+        const isValid = await validateStep(stepFrom);
+        if (isValid) {
           if (currentStep < totalSteps) {
             currentStep++;
             updateUI();
@@ -810,7 +885,6 @@
       document
         .getElementById("registerForm")
         .addEventListener("submit", function (event) {
-          event.preventDefault();
           if (
             currentStep === 3 &&
             !document.getElementById("btn-step-3").disabled
@@ -818,11 +892,7 @@
             const formData = {
               /* Kumpulkan data */
             };
-            // Redirect setelah sukses
-            alert(
-              "🎉 Registrasi Berhasil! Anda akan diarahkan ke halaman Login."
-            );
-            window.location.href = "login.html";
+            
           }
         });
     </script>
