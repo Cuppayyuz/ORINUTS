@@ -17,7 +17,7 @@
       /* CSS yang DIBIAKAN karena Sulit diubah ke Utilitas Tunggal Tailwind */
       body {
         /* Properti background-image, background-position, dan background-size dibiarkan 
-        karena membutuhkan konfigurasi khusus atau properti native */
+         karena membutuhkan konfigurasi khusus atau properti native */
         background-repeat: no-repeat;
         background-position: left bottom;
         background-size: 15%;
@@ -28,53 +28,53 @@
   <body class="bg-[#D2A278] text-gray-800">
     <div class="h-screen grid grid-cols-[250px_1fr]">
       <aside
-      class="bg-white p-5 taxt-[#8B4513] overflow-y-auto shadow-lg rounded-r-3xl min-h-screen"
-    >
-      <div class="logo mb-6">
-        <img src="content/logo.png" alt="Logo Orinuts" class="w-28" />
-      </div>
-      <nav>
-        <ul class="space-y-1 text-sm">
-          <li
-            class="nav-item font-bold p-2.5 flex items-center gap-3 cursor-pointer text-[#8B4513] bg-[#D2A278] rounded-r-3xl"
-          >
-            <i class="fas fa-home w-4"></i> Beranda
-          </li>
-          <a href="product-admin.html">
+        class="bg-white p-5 text-[#8B4513] overflow-y-auto shadow-lg rounded-r-3xl min-h-screen"
+      >
+        <div class="logo mb-6">
+          <img src="content/logo.png" alt="Logo Orinuts" class="w-28" />
+        </div>
+        <nav>
+          <ul class="space-y-1 text-sm">
             <li
-              class="nav-item p-2.5 flex items-center gap-3 cursor-pointer hover:bg-[#E0BBA1]/20 rounded-r-3xl transition"
+              class="nav-item font-bold p-2.5 flex items-center gap-3 cursor-pointer text-[#8B4513] bg-[#D2A278] rounded-r-3xl"
             >
-              <i class="fas fa-box-open w-4"></i> Produk
+              <i class="fas fa-home w-4"></i> Beranda
             </li>
-          </a>
-          <a href="massage-admin.html">
-          <li
-            class="nav-item p-2.5 flex items-center gap-3 cursor-pointer hover:bg-[#E0BBA1]/20 rounded-r-3xl transition"
-          >
-            <i class="fas fa-comment w-4"></i> Message
-            <span
-              class="ml-auto bg-red-600 text-white text-xs font-semibold px-2 py-0.5 rounded-full"
-              >2</span
-            >
-          </li>
-          </a>
-          <a href="order-admin.html">
-          <li
-            class="nav-item p-2.5 flex items-center gap-3 cursor-pointer hover:bg-[#E0BBA1]/20 rounded-r-3xl transition"
-          >
-            <i class="fas fa-shopping-cart w-4"></i> Order
-          </li>
-          </a>
-          <a href="profile-admin.html">
-          <li
-            class="nav-item p-2.5 flex items-center gap-3 cursor-pointer hover:bg-[#E0BBA1]/20 rounded-r-3xl transition"
-          >
-            <i class="fas fa-user-circle w-4"></i> Profile
-          </li>
-          </a>
-        </ul>
-      </nav>
-    </aside>
+            <a href="product-admin.html">
+              <li
+                class="nav-item p-2.5 flex items-center gap-3 cursor-pointer hover:bg-[#E0BBA1]/20 rounded-r-3xl transition"
+              >
+                <i class="fas fa-box-open w-4"></i> Produk
+              </li>
+            </a>
+            <a href="massage-admin.html">
+              <li
+                class="nav-item p-2.5 flex items-center gap-3 cursor-pointer hover:bg-[#E0BBA1]/20 rounded-r-3xl transition"
+              >
+                <i class="fas fa-comment w-4"></i> Message
+                <span
+                  class="ml-auto bg-red-600 text-white text-xs font-semibold px-2 py-0.5 rounded-full"
+                  >2</span
+                >
+              </li>
+            </a>
+            <a href="order-admin.html">
+              <li
+                class="nav-item p-2.5 flex items-center gap-3 cursor-pointer hover:bg-[#E0BBA1]/20 rounded-r-3xl transition"
+              >
+                <i class="fas fa-shopping-cart w-4"></i> Order
+              </li>
+            </a>
+            <a href="profile-admin.html">
+              <li
+                class="nav-item p-2.5 flex items-center gap-3 cursor-pointer hover:bg-[#E0BBA1]/20 rounded-r-3xl transition"
+              >
+                <i class="fas fa-user-circle w-4"></i> Profile
+              </li>
+            </a>
+          </ul>
+        </nav>
+      </aside>
 
       <main class="p-6 flex flex-col">
         <header
@@ -101,42 +101,36 @@
 
           <div class="grid grid-cols-3 gap-4 mb-4 flex-grow">
             <div
-              class="col-span-2 bg-white p-4 rounded-xl shadow-lg flex flex-col"
+              class="col-span-3 bg-white p-4 rounded-xl shadow-lg flex flex-col"
             >
-              <h4
-                class="text-base font-semibold mb-2 text-[#8B4513] flex-shrink-0"
+              <div
+                class="flex justify-between items-center mb-2 flex-shrink-0"
               >
-                Data Penjualan (Mingguan)
-              </h4>
+                <h4
+                  id="chart-title"
+                  class="text-base font-semibold text-[#8B4513]"
+                >
+                  Data Penjualan (Bulanan)
+                </h4>
+                <div class="flex gap-2">
+                  <button
+                    id="prev-month"
+                    class="bg-[#8B4513] text-white px-3 py-1 rounded-lg hover:bg-[#A0522D] transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <i class="fas fa-chevron-left"></i>
+                  </button>
+                  <button
+                    id="next-month"
+                    class="bg-[#8B4513] text-white px-3 py-1 rounded-lg hover:bg-[#A0522D] transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <i class="fas fa-chevron-right"></i>
+                  </button>
+                </div>
+              </div>
+
               <div class="flex-grow min-h-0">
                 <canvas id="penjualanChart" class="h-full w-full"></canvas>
               </div>
-              <p
-                class="text-center text-xs mt-1 text-gray-500 flex-shrink-0"
-                id="chart-info"
-              >
-                Menampilkan data bulan ini
-              </p>
-            </div>
-
-            <div
-              class="bg-white p-4 rounded-xl shadow-lg flex flex-col flex-shrink-0"
-            >
-              <div class="flex justify-between items-center mb-3 text-sm">
-                <h4 class="font-semibold text-gray-700">KALENDER</h4>
-                <span class="text-gray-500 font-bold" id="calendar-year"></span>
-              </div>
-              <h5
-                class="text-center font-medium mb-2 text-[#8B4513] text-sm"
-                id="calendar-month"
-              ></h5>
-
-              <div
-                class="grid grid-cols-7 text-center gap-0.5 text-xs"
-                id="calendar-grid-container"
-              ></div>
-
-              <p class="text-xs mt-3 text-green-600">1. Hari buruh sedunia</p>
             </div>
           </div>
 
@@ -175,29 +169,49 @@
     </div>
 
     <script>
-      // Data dan Konfigurasi Chart.js
-      let chartData = Array(7)
-        .fill(0)
-        .map(() => Math.floor(Math.random() * 40) + 40);
-      const chartLabels = ["Sen", "Sel", "Rab", "Kam", "Jum", "Sab", "Min"];
-      // Warna kustom di Chart.js dibiarkan di JS
-      const barColors = Array(chartData.length).fill("#A0522D");
+      // ========================================================
+      // VARIABEL GLOBAL DAN STATE
+      // ========================================================
+      const today = new Date();
+      // Tetapkan 'today' ke waktu 00:00:00 untuk perbandingan yang konsisten
+      today.setHours(0, 0, 0, 0);
 
+      let currentYear = today.getFullYear();
+      let currentMonth = today.getMonth(); // 0 = Januari, 11 = Desember
+      const monthNames = [
+        "JANUARI", "FEBRUARI", "MARET", "APRIL", "MEI", "JUNI",
+        "JULI", "AGUSTUS", "SEPTEMBER", "OKTOBER", "NOVEMBER", "DESEMBER",
+      ];
+      
+      // --- PERUBAHAN: Tentukan Batas Waktu Mundur ---
+      const limitYear = 2025;
+      const limitMonth = 10; // 10 adalah November
+
+      // --- PERUBAHAN: Tentukan Warna Bar ---
+      const baseColor = "#A0522D";
+      const highlightColor = "#D2A278"; // Warna sorotan untuk 'hari ini'
+      const disabledColor = "#E0BBA1"; // Warna redup untuk 'masa depan'
+
+      // Ambil elemen UI
+      const chartTitleEl = document.getElementById("chart-title");
+      const prevMonthBtn = document.getElementById("prev-month");
+      const nextMonthBtn = document.getElementById("next-month");
       const ctx = document.getElementById("penjualanChart").getContext("2d");
-      const chartInfoEl = document.getElementById("chart-info");
 
-      // Inisialisasi Grafik
+      // ========================================================
+      // INISIALISASI CHART.JS (Tidak Berubah)
+      // ========================================================
       const penjualanChart = new Chart(ctx, {
         type: "bar",
         data: {
-          labels: chartLabels,
+          labels: [],
           datasets: [
             {
-              data: chartData,
-              backgroundColor: barColors,
+              data: [],
+              backgroundColor: [], // Akan diisi oleh fungsi
               borderWidth: 1,
               borderRadius: 5,
-              barThickness: 15, // Dikecilkan
+              barThickness: 10,
             },
           ],
         },
@@ -215,146 +229,112 @@
                 callback: function (value) {
                   return "$" + value;
                 },
-                font: { size: 10 }, // Dikecilkan
+                font: { size: 10 },
               },
             },
             x: {
               grid: { display: false },
-              ticks: { font: { size: 10 } }, // Dikecilkan
+              ticks: { font: { size: 10 } },
             },
           },
         },
       });
 
       // ========================================================
-      // FUNGSI UTAMA: KALENDER DAN INTERAKSI
+      // FUNGSI UTAMA: DIAGRAM BULANAN (Telah Dimodifikasi)
       // ========================================================
-      const calendarGridContainer = document.getElementById(
-        "calendar-grid-container"
-      );
-      const calendarMonthEl = document.getElementById("calendar-month");
-      const calendarYearEl = document.getElementById("calendar-year");
-
-      const today = new Date();
-      let currentYear = today.getFullYear();
-      let currentMonth = today.getMonth();
-      const dayNames = ["Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"];
-      const monthNames = [
-        "JANUARI",
-        "FEBRUARI",
-        "MARET",
-        "APRIL",
-        "MEI",
-        "JUNI",
-        "JULI",
-        "AGUSTUS",
-        "SEPTEMBER",
-        "OKTOBER",
-        "NOVEMBER",
-        "DESEMBER",
-      ];
-
-      function generateCalendar(year, month) {
-        calendarGridContainer.innerHTML = "";
-        calendarMonthEl.textContent = monthNames[month];
-        calendarYearEl.textContent = year;
-
-        // 1. Tambahkan nama hari
-        dayNames.forEach((day) => {
-          const dayEl = document.createElement("span");
-          dayEl.className = "text-xs font-semibold text-gray-500";
-          dayEl.textContent = day.substring(0, 2);
-          calendarGridContainer.appendChild(dayEl);
-        });
-
-        const firstDayOfMonth = new Date(year, month, 1).getDay();
-        const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-        // 2. Tambahkan slot kosong (padding)
-        for (let i = 0; i < firstDayOfMonth; i++) {
-          calendarGridContainer.appendChild(document.createElement("span"));
-        }
-
-        // 3. Tambahkan tanggal
-        for (let day = 1; day <= daysInMonth; day++) {
-          const dayEl = document.createElement("span");
-          
-          // MENGGANTI CSS NATIVE .day-num KE KELAS TAILWIND:
-          // .day-num { cursor: pointer; transition: background-color 0.15s; }
-          // .day-num:hover { background-color: rgba(139, 69, 19, 0.1); border-radius: 9999px; }
-          // .day-num.selected { background-color: #F0C39F; color: #8B4513; font-weight: bold; border-radius: 9999px; }
-
-          dayEl.className = "p-1 font-bold text-gray-800 cursor-pointer transition-colors duration-150";
-          
-          // Tambahkan kelas hover:bg-[#8b4513]/10 (rgba(139, 69, 19, 0.1))
-          // dan hover:rounded-full
-          // Catatan: Kelas hover:rounded-full membutuhkan konfigurasi JIT
-          // jika kamu menggunakan Tailwind versi lama atau jika kamu belum 
-          // mengaktifkan utility `rounded-full` dalam configmu.
-          // Saya tambahkan kelas hover yang paling mendekati secara *native*
-          
-          // Karena kita tidak bisa menambahkan psuedo-class 'hover' melalui JS,
-          // untuk menyederhanakan, kita akan menggunakan kelas yang ada dan 
-          // hanya mengandalkan kelas 'selected'.
-          
-          // Untuk membuat hover di day-num, kita bisa tambahkan:
-          // hover:bg-brown-100 hover:rounded-full
-          // Karena brown-100 tidak ada di kode aslimu, saya biarkan di `dayEl.className` di atas,
-          // tapi untuk `selected` di bawah, saya ubah.
-
-          dayEl.textContent = day;
-          dayEl.dataset.date = `${year}-${month + 1}-${day}`;
-
-          // Tandai hari ini
-          if (
-            day === today.getDate() &&
-            month === today.getMonth() &&
-            year === today.getFullYear()
-          ) {
-            // MENGGANTI CSS NATIVE .day-num.selected KE KELAS TAILWIND:
-            dayEl.classList.add("bg-[#F0C39F]", "text-[#8B4513]", "font-bold", "rounded-full", "selected");
-          }
-
-          // Tambahkan event listener untuk interaksi
-          dayEl.addEventListener("click", function () {
-            document
-              .querySelectorAll("#calendar-grid-container > span")
-              .forEach((d) => d.classList.remove("bg-[#F0C39F]", "text-[#8B4513]", "font-bold", "rounded-full", "selected"));
-            
-            // Menerapkan kelas SELECTED dengan Tailwind
-            this.classList.add("bg-[#F0C39F]", "text-[#8B4513]", "font-bold", "rounded-full", "selected");
-            const clickedDate = this.dataset.date;
-            updateChartByDate(clickedDate);
-          });
-
-          calendarGridContainer.appendChild(dayEl);
-        }
-      }
 
       /**
-       * Fungsi untuk mensimulasikan pembaruan grafik berdasarkan tanggal
+       * Fungsi untuk memperbarui diagram berdasarkan bulan dan tahun
+       * dengan logika real-time.
        */
-      function updateChartByDate(dateString) {
-        console.log(`Memuat data untuk tanggal: ${dateString}`);
+      function updateChartForMonth(year, month) {
+        // 1. Dapatkan info hari ini (sudah di-nol-kan waktunya)
+        const todayDate = today.getDate();
+        const todayMonth = today.getMonth();
+        const todayYear = today.getFullYear();
+        
+        // 2. Dapatkan jumlah hari di bulan yang dipilih
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-        const seed = new Date(dateString).getDate();
-        // Data penjualan disimulasikan agar bervariasi
-        const newChartData = Array(7)
-          .fill(0)
-          .map(
-            (_, i) => Math.floor(Math.random() * 20) + 30 + seed * 0.5 + i * 2
-          );
+        // 3. Siapkan array data, label, dan warna
+        const newLabels = [];
+        const newData = [];
+        const newColors = [];
 
-        // Perbarui data dan label info
-        penjualanChart.data.datasets[0].data = newChartData;
+        // 4. --- LOGIKA REAL-TIME BARU ---
+        for (let day = 1; day <= daysInMonth; day++) {
+          newLabels.push(day);
+          
+          const date = new Date(year, month, day);
+          date.setHours(0, 0, 0, 0); // Nol-kan waktu untuk perbandingan
+          
+          let sales = 0;
+          let barColor = baseColor;
+          
+          // Bandingkan 'date' dengan 'today'
+          if (date < today) {
+            // --- KASUS 1: Tanggal di MASA LALU ---
+            // Buat data penjualan simulasi
+            const dayOfWeek = date.getDay();
+            sales = Math.floor(Math.random() * 30) + 20; // Penjualan dasar $20-50
+            if (dayOfWeek === 0 || dayOfWeek === 6) {
+              sales += Math.floor(Math.random() * 25); // Bonus akhir pekan
+            }
+            barColor = baseColor;
+
+          } else if (date.getTime() === today.getTime()) {
+            // --- KASUS 2: Tanggal adalah HARI INI ---
+            // Buat data penjualan simulasi
+            const dayOfWeek = date.getDay();
+            sales = Math.floor(Math.random() * 30) + 20;
+            if (dayOfWeek === 0 || dayOfWeek === 6) {
+              sales += Math.floor(Math.random() * 25);
+            }
+            // Beri warna sorotan
+            barColor = highlightColor;
+
+          } else {
+            // --- KASUS 3: Tanggal di MASA DEPAN ---
+            sales = 0;
+            barColor = disabledColor; // Warna redup/kosong
+          }
+
+          newData.push(sales);
+          newColors.push(barColor);
+        }
+
+        // 5. Perbarui judul diagram
+        chartTitleEl.textContent = `Data Penjualan (${monthNames[month]} ${year})`;
+
+        // 6. Perbarui data di Chart.js
+        penjualanChart.data.labels = newLabels;
+        penjualanChart.data.datasets[0].data = newData;
+        penjualanChart.data.datasets[0].backgroundColor = newColors;
+        penjualanChart.data.datasets[0].barThickness = daysInMonth > 28 ? 10 : 12;
+
+        // 7. Gambar ulang diagram
         penjualanChart.update();
-        chartInfoEl.textContent = `Data Penjualan Mingguan sekitar ${dateString}`;
+
+        // 8. --- LOGIKA NAVIGASI BARU ---
+        
+        // Atur status tombol 'mundur' (prev)
+        if (year === limitYear && month === limitMonth) {
+          prevMonthBtn.disabled = true;
+          prevMonthBtn.classList.add("opacity-50", "cursor-not-allowed");
+        } else {
+          prevMonthBtn.disabled = false;
+          prevMonthBtn.classList.remove("opacity-50", "cursor-not-allowed");
+        }
+        
+        // Atur status tombol 'maju' (next)
+        // Selalu aktif, logika lama dihapus
+        nextMonthBtn.disabled = false;
+        nextMonthBtn.classList.remove("opacity-50", "cursor-not-allowed");
       }
 
-      // ... (Fungsi fetchRealtimeData dan Eksekusi Awal tidak diubah) ...
-      
       // ========================================================
-      // FUNGSI REAL-TIME STATISTIK BAWAH
+      // FUNGSI REAL-TIME STATISTIK BAWAH (Tidak Berubah)
       // ========================================================
       const visitorsCountEl = document.getElementById("visitors-count");
       const productsCountEl = document.getElementById("products-count");
@@ -362,15 +342,13 @@
       const soldCountEl = document.getElementById("sold-count");
 
       function fetchRealtimeData() {
-        // --- SIMULASI DATA BARU ---
+        // ... (Simulasi data tetap sama)
         const newData = {
           visitors: Math.floor(Math.random() * 500) + 500,
           products: 15,
           likes: Math.floor(Math.random() * 300) + 700,
           sold: Math.floor(Math.random() * 500) + 1000,
         };
-
-        // --- MEMPERBARUI TAMPILAN (DOM) ---
         visitorsCountEl.textContent = newData.visitors.toLocaleString();
         productsCountEl.textContent = newData.products.toLocaleString();
         likesCountEl.textContent = newData.likes.toLocaleString();
@@ -378,23 +356,44 @@
       }
 
       // ========================================================
-      // EKSEKUSI AWAL
+      // EKSEKUSI AWAL (Event Listener Dimodifikasi)
       // ========================================================
 
-      // 1. Inisialisasi Kalender
-      generateCalendar(currentYear, currentMonth);
+      // 1. Tambahkan event listener untuk tombol navigasi
+      prevMonthBtn.addEventListener("click", () => {
+        // Cek PENGAMAN (Guard Clause)
+        if (currentYear === limitYear && currentMonth === limitMonth) {
+          return;
+        }
 
-      // 2. Inisialisasi Grafik (dengan data hari ini)
-      updateChartByDate(
-        `${currentYear}-${currentMonth + 1}-${today.getDate()}`
-      );
+        currentMonth--;
+        if (currentMonth < 0) {
+          currentMonth = 11;
+          currentYear--;
+        }
+        updateChartForMonth(currentYear, currentMonth);
+      });
 
-      // 3. Atur pembaruan real-time untuk statistik (setiap 10 detik)
+      // --- PERUBAHAN: Logika 'next' disederhanakan ---
+      nextMonthBtn.addEventListener("click", () => {
+        // Logika yang membatasi ke 'today' dihapus
+        currentMonth++;
+        if (currentMonth > 11) {
+          currentMonth = 0;
+          currentYear++;
+        }
+        updateChartForMonth(currentYear, currentMonth);
+      });
+
+      // 2. Inisialisasi Grafik
+      updateChartForMonth(currentYear, currentMonth);
+
+      // 3. Atur pembaruan real-time untuk statistik
       fetchRealtimeData();
       const updateInterval = 10000;
       setInterval(fetchRealtimeData, updateInterval);
 
-      // Optional: Atur ulang ukuran grafik saat jendela diubah ukurannya
+      // 4. Optional: Resize handler
       window.addEventListener("resize", () => penjualanChart.resize());
     </script>
   </body>
