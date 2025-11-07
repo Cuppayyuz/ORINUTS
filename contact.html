@@ -32,6 +32,36 @@
     input[type="number"] {
       -moz-appearance: textfield;
     }
+
+    /* === PERUBAHAN CSS DIMULAI DI SINI === */
+
+    /* Kelas dasar untuk ikon yang menggunakan mask */
+    .icon-mask {
+      -webkit-mask-size: contain;
+      mask-size: contain;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+      mask-position: center;
+    }
+
+    /* Kelas spesifik untuk ikon email */
+    .icon-mail {
+      background-color: #FA7A6F;
+      /* Warna merah/pink sesuai border */
+      -webkit-mask-image: url('content/icon/mail.svg');
+      mask-image: url('content/icon/mail.svg');
+    }
+
+    /* Kelas spesifik untuk ikon store */
+    .icon-store {
+      background-color: #F877C1;
+      /* Warna pink sesuai border */
+      -webkit-mask-image: url('content/icon/store.svg');
+      mask-image: url('content/icon/store.svg');
+    }
+
+    /* === PERUBAHAN CSS SELESAI === */
   </style>
 </head>
 
@@ -99,8 +129,8 @@
   </div>
 
   <section class="relative flex items-center w-full min-h-screen overflow-hidden">
-    <img src="content/tampilan-contact.jpg" alt="Latar belakang produk Orinuts"
-      class="absolute inset-0 w-full h-full object-cover z-0" />
+    <img src="content/fotomockup/ENERGY BOOSTER MIX 7A.jpg" alt="Latar belakang produk Orinuts"
+      class="absolute inset-0 w-full h-full pt-19 object-cover z-0" />
 
     <div class="absolute inset-0 bg-gradient-to-r from-[#C6B5A4] to-transparent z-10"></div>
 
@@ -133,27 +163,26 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
 
             <div
-              class="bg-white rounded-3xl shadow-lg p-6 flex flex-col items-center justify-center text-center border-2 border-pink-300 min-h-[180px]">
-              <img src="content/icon/email.svg" alt="Email" class="w-10 h-10" />
+              class="bg-white rounded-3xl shadow-lg p-6 flex flex-col items-center justify-center text-center border-2 border-[#FA7A6F] min-h-[180px]">
+              <div class="w-10 h-10 icon-mask icon-mail"></div>
               <p class="mt-3 font-semibold text-pink-500">Email</p>
               <p class="mt-1 font-semibold text-gray-700 text-sm">orinuts.official@gmail.com</p>
             </div>
-
             <div
-              class="bg-white rounded-3xl shadow-lg p-6 flex flex-col items-center justify-center text-center border-2 border-green-300 min-h-[180px]">
-              <img src="content/icon/whatsapp.svg" alt="WhatsApp" class="w-10 h-10" />
+              class="bg-white rounded-3xl shadow-lg p-6 flex flex-col items-center justify-center text-center border-2 border-[#AAF335] min-h-[180px]">
+              <img src="content/icon/wa.png" alt="WhatsApp" class="w-10 h-10 " />
               <p class="mt-3 font-semibold text-green-500">WhatsApp</p>
               <p class="mt-1 font-semibold text-gray-700 text-sm">+62 816-521-369</p>
             </div>
           </div>
+
           <div
-            class="bg-white rounded-3xl shadow-lg p-6 flex flex-col items-center justify-center text-center border-2 border-pink-300">
+            class="bg-white rounded-3xl shadow-lg p-6 flex flex-col items-center justify-center text-center border-2 border-[#F877C1]">
             <img src="content/icon/store.svg" alt="Store" class="w-10 h-10" />
             <p class="mt-3 font-semibold text-pink-500">store</p>
             <p class="mt-1 font-semibold text-gray-700 text-sm">orinuts official @shopee id</p>
             <p class="mt-1 font-semibold text-gray-700 text-sm">orinuts official @tokopedia id</p>
           </div>
-
           <div class="rounded-3xl shadow-lg w-full overflow-hidden">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d989.4189616679389!2d112.69222086956995!3d-7.277675899545579!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fc18402c4a49%3A0xe27100c485d0e776!2sPerumahan%20Bavarian%20Village!5e0!3m2!1sid!2sid!4v1761877014298!5m2!1sid!2sid"
@@ -201,7 +230,7 @@
   </section>
   <img src="content/sret/sret-orange.png" alt="sret orange " class="w-full -bottom-1 relative" />
   <footer>
-    <div class="w-full p-10 bg-[#EC814D] text-white">
+    <div class="w-full p-10 bg-[#ea7003] text-white">
       <img src="/content/logo.png" alt="Orinuts Logo" class="w-32 mb-6" />
 
       <div class="flex justify-between items-start pt-6 text-sm">

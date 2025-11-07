@@ -14,10 +14,8 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
-      /* CSS yang DIBIAKAN karena Sulit diubah ke Utilitas Tunggal Tailwind */
+      /* ... (style tidak berubah) ... */
       body {
-        /* Properti background-image, background-position, dan background-size dibiarkan 
-         karena membutuhkan konfigurasi khusus atau properti native */
         background-repeat: no-repeat;
         background-position: left bottom;
         background-size: 15%;
@@ -134,15 +132,7 @@
             </div>
           </div>
 
-          <div class="grid grid-cols-4 gap-4 flex-shrink-0">
-            <div
-              class="stat-card bg-[#F0C39F] p-5 rounded-xl text-center text-[#8B4513] shadow-lg"
-            >
-              <div class="text-3xl font-bold mb-0.5" id="visitors-count">
-                756
-              </div>
-              <div class="text-sm">Orang mengunjungi</div>
-            </div>
+          <div class="grid grid-cols-2 gap-4 flex-shrink-0">
             <div
               class="stat-card bg-[#F0C39F] p-5 rounded-xl text-center text-[#8B4513] shadow-lg"
             >
@@ -151,12 +141,7 @@
               </div>
               <div class="text-sm">Macam Produk</div>
             </div>
-            <div
-              class="stat-card bg-[#F0C39F] p-5 rounded-xl text-center text-[#8B4513] shadow-lg"
-            >
-              <div class="text-3xl font-bold mb-0.5" id="likes-count">780</div>
-              <div class="text-sm">Orang Menyukai</div>
-            </div>
+
             <div
               class="stat-card bg-[#F0C39F] p-5 rounded-xl text-center text-[#8B4513] shadow-lg"
             >
@@ -183,11 +168,9 @@
         "JULI", "AGUSTUS", "SEPTEMBER", "OKTOBER", "NOVEMBER", "DESEMBER",
       ];
       
-      // --- PERUBAHAN: Tentukan Batas Waktu Mundur ---
       const limitYear = 2025;
       const limitMonth = 10; // 10 adalah November
 
-      // --- PERUBAHAN: Tentukan Warna Bar ---
       const baseColor = "#A0522D";
       const highlightColor = "#D2A278"; // Warna sorotan untuk 'hari ini'
       const disabledColor = "#E0BBA1"; // Warna redup untuk 'masa depan'
@@ -216,6 +199,7 @@
           ],
         },
         options: {
+         // ... (Options Chart tidak berubah) ...
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
@@ -241,84 +225,63 @@
       });
 
       // ========================================================
-      // FUNGSI UTAMA: DIAGRAM BULANAN (Telah Dimodifikasi)
+      // FUNGSI UTAMA: DIAGRAM BULANAN (Tidak Berubah)
       // ========================================================
-
-      /**
-       * Fungsi untuk memperbarui diagram berdasarkan bulan dan tahun
-       * dengan logika real-time.
-       */
       function updateChartForMonth(year, month) {
-        // 1. Dapatkan info hari ini (sudah di-nol-kan waktunya)
+        // ... (Fungsi Chart tidak berubah) ...
         const todayDate = today.getDate();
         const todayMonth = today.getMonth();
         const todayYear = today.getFullYear();
         
-        // 2. Dapatkan jumlah hari di bulan yang dipilih
         const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-        // 3. Siapkan array data, label, dan warna
         const newLabels = [];
         const newData = [];
         const newColors = [];
 
-        // 4. --- LOGIKA REAL-TIME BARU ---
         for (let day = 1; day <= daysInMonth; day++) {
           newLabels.push(day);
           
           const date = new Date(year, month, day);
-          date.setHours(0, 0, 0, 0); // Nol-kan waktu untuk perbandingan
+          date.setHours(0, 0, 0, 0); 
           
           let sales = 0;
           let barColor = baseColor;
           
-          // Bandingkan 'date' dengan 'today'
           if (date < today) {
-            // --- KASUS 1: Tanggal di MASA LALU ---
-            // Buat data penjualan simulasi
             const dayOfWeek = date.getDay();
-            sales = Math.floor(Math.random() * 30) + 20; // Penjualan dasar $20-50
+            sales = Math.floor(Math.random() * 30) + 20; 
             if (dayOfWeek === 0 || dayOfWeek === 6) {
-              sales += Math.floor(Math.random() * 25); // Bonus akhir pekan
+              sales += Math.floor(Math.random() * 25); 
             }
             barColor = baseColor;
 
           } else if (date.getTime() === today.getTime()) {
-            // --- KASUS 2: Tanggal adalah HARI INI ---
-            // Buat data penjualan simulasi
             const dayOfWeek = date.getDay();
             sales = Math.floor(Math.random() * 30) + 20;
             if (dayOfWeek === 0 || dayOfWeek === 6) {
               sales += Math.floor(Math.random() * 25);
             }
-            // Beri warna sorotan
             barColor = highlightColor;
 
           } else {
-            // --- KASUS 3: Tanggal di MASA DEPAN ---
             sales = 0;
-            barColor = disabledColor; // Warna redup/kosong
+            barColor = disabledColor;
           }
 
           newData.push(sales);
           newColors.push(barColor);
         }
 
-        // 5. Perbarui judul diagram
         chartTitleEl.textContent = `Data Penjualan (${monthNames[month]} ${year})`;
 
-        // 6. Perbarui data di Chart.js
         penjualanChart.data.labels = newLabels;
         penjualanChart.data.datasets[0].data = newData;
         penjualanChart.data.datasets[0].backgroundColor = newColors;
         penjualanChart.data.datasets[0].barThickness = daysInMonth > 28 ? 10 : 12;
 
-        // 7. Gambar ulang diagram
         penjualanChart.update();
 
-        // 8. --- LOGIKA NAVIGASI BARU ---
-        
-        // Atur status tombol 'mundur' (prev)
         if (year === limitYear && month === limitMonth) {
           prevMonthBtn.disabled = true;
           prevMonthBtn.classList.add("opacity-50", "cursor-not-allowed");
@@ -327,41 +290,39 @@
           prevMonthBtn.classList.remove("opacity-50", "cursor-not-allowed");
         }
         
-        // Atur status tombol 'maju' (next)
-        // Selalu aktif, logika lama dihapus
         nextMonthBtn.disabled = false;
         nextMonthBtn.classList.remove("opacity-50", "cursor-not-allowed");
       }
 
       // ========================================================
-      // FUNGSI REAL-TIME STATISTIK BAWAH (Tidak Berubah)
+      // FUNGSI REAL-TIME STATISTIK BAWAH (DIUBAH)
       // ========================================================
-      const visitorsCountEl = document.getElementById("visitors-count");
+      
+      // --- DIUBAH --- Menghapus visitorsCountEl
       const productsCountEl = document.getElementById("products-count");
-      const likesCountEl = document.getElementById("likes-count");
+      // --- DIUBAH --- Menghapus likesCountEl
       const soldCountEl = document.getElementById("sold-count");
 
       function fetchRealtimeData() {
-        // ... (Simulasi data tetap sama)
+        // ... (Simulasi data)
         const newData = {
-          visitors: Math.floor(Math.random() * 500) + 500,
-          products: 15,
-          likes: Math.floor(Math.random() * 300) + 700,
+          // --- DIUBAH --- Menghapus 'visitors'
+          products: 15, // Data ini statis sesuai kode asli Anda
+          // --- DIUBAH --- Menghapus 'likes'
           sold: Math.floor(Math.random() * 500) + 1000,
         };
-        visitorsCountEl.textContent = newData.visitors.toLocaleString();
+        // --- DIUBAH --- Menghapus pembaruan visitorsCountEl
         productsCountEl.textContent = newData.products.toLocaleString();
-        likesCountEl.textContent = newData.likes.toLocaleString();
+        // --- DIUBAH --- Menghapus pembaruan likesCountEl
         soldCountEl.textContent = newData.sold.toLocaleString();
       }
 
       // ========================================================
-      // EKSEKUSI AWAL (Event Listener Dimodifikasi)
+      // EKSEKUSI AWAL (Tidak Berubah)
       // ========================================================
 
       // 1. Tambahkan event listener untuk tombol navigasi
       prevMonthBtn.addEventListener("click", () => {
-        // Cek PENGAMAN (Guard Clause)
         if (currentYear === limitYear && currentMonth === limitMonth) {
           return;
         }
@@ -374,9 +335,7 @@
         updateChartForMonth(currentYear, currentMonth);
       });
 
-      // --- PERUBAHAN: Logika 'next' disederhanakan ---
       nextMonthBtn.addEventListener("click", () => {
-        // Logika yang membatasi ke 'today' dihapus
         currentMonth++;
         if (currentMonth > 11) {
           currentMonth = 0;
