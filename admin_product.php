@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (!$_SESSION['admin']) {
+    header('Location: index.php');
+    exit();
+}
+
+?>
 <!DOCTYPE html>
 <html lang="id">
 
@@ -37,7 +45,7 @@
     </div>
     <nav>
       <ul class="space-y-1 text-sm">
-        <a href="dashboard-admin.html">
+        <a href="admin_dashboard.php">
           <li
             class="nav-item p-2.5 flex items-center gap-3 cursor-pointer hover:bg-[#E0BBA1]/20 rounded-r-3xl transition">
             <i class="fas fa-home w-4"></i> Beranda
@@ -48,20 +56,20 @@
           class="nav-item font-bold p-2.5 flex items-center gap-3 cursor-pointer text-[#8B4513] bg-[#D2A278] rounded-r-3xl">
           <i class="fas fa-box-open w-4"></i> Produk
         </li>
-        <a href="massage-admin.html">
+        <a href="admin_message.php">
           <li class="nav-item p-2.5 flex items-center gap-3 cursor-pointer hover:bg-[#E0BBA1]/20 rounded-r-3xl transition">
             <i class="fas fa-comment w-4"></i> Message
             <span class="ml-auto bg-red-600 text-white text-xs font-semibold px-2 py-0.5 rounded-full">2</span>
           </li>
         </a>
         </li>
-        <a href="order-admin.html">
+        <a href="admin_order.php">
           <li
             class="nav-item p-2.5 flex items-center gap-3 cursor-pointer hover:bg-[#E0BBA1]/20 rounded-r-3xl transition">
             <i class="fas fa-shopping-cart w-4"></i> Order
           </li>
         </a>
-        <a href="profile-admin.html">
+        <a href="admin_profile.php">
           <li
             class="nav-item p-2.5 flex items-center gap-3 cursor-pointer hover:bg-[#E0BBA1]/20 rounded-r-3xl transition">
             <i class="fas fa-user-circle w-4"></i> Profile

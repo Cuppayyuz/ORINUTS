@@ -1,25 +1,29 @@
 <?php
 session_start();
-
-if (!empty($_POST)) {
-  $pdo = require 'koneksi.php';
-  $sql = "INSERT INTO users (username, fullname, email, password, provinsi, kabupaten, alamat_lengkap, no_telp) VALUES (:username, :fullname, :email, :password, :provinsi, :kabupaten, :alamat_lengkap, :no_telp)";
-  $query = $pdo->prepare($sql);
-  $query->execute([
-    "username" => $_POST['username'],
-    "fullname" => $_POST['fullname'],
-    "email" => $_POST['email'],
-    "password" => sha1($_POST['password']),
-    "provinsi" => $_POST['provinsi'],
-    "kabupaten" => $_POST['kabupaten'],
-    "alamat_lengkap" => $_POST['alamat'],
-    "no_telp" => $_POST['no_telp']
-  ]);
-  echo "<script>alert('Registrasi berhasil! Silakan login dengan akun Anda.');</script>";
-  echo "<script>window.location.href = 'login.php';</script>";
+if(isset($_SESSION['user'])) {
+    header("Location: index.php");
+    exit();
 }
 
+// Insert data
+if(!empty($_POST)) {
 
+    $pdo = require "koneksi.php";
+    $sql = "INSERT INTO users (username, fullname, email, password, provinsi, kabupaten, alamat_lengkap, no_telp, profile) VALUES (:username, :fullname, :email, :password, :provinsi, :kabupaten, :alamat_lengkap, :no_telp, :profile)";
+    $query = $pdo->prepare($sql);
+    $query->execute([
+        "username" => $_POST['username'],
+        "fullname" => $_POST['fullname'],
+        "email" => $_POST['email'],
+        "password" => sha1($_POST['password']),
+        "provinsi" => $_POST['provinsi'],
+        "kabupaten" => $_POST['kabupaten'],
+        "alamat_lengkap" => $_POST['alamat'],
+        "no_telp" => $_POST['no_telp'],
+        "profile" => file_get_contents('content/profil.webp'),
+    ]);
+    echo "<script>alert('Pendaftaran berhasil! Silakan login.'); window.location.href='login.php';</script>";
+}
 ?>
 <!DOCTYPE html>
 <html lang="id">

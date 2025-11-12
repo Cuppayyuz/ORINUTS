@@ -1,31 +1,31 @@
 <?php
 session_start();
-if(isset($_SESSION['user'])) {
-    header("Location: index.html");
+if(isset($_SESSION['admin'])) {
+    header("Location: admin_dashboard");
     exit();
 }
 
 $hasil = true;
 if(!empty($_POST)) {
     $pdo = require 'koneksi.php';
-    $sql = "SELECT * FROM users WHERE email=:email";
+    $sql = "SELECT * FROM admins WHERE email=:email";
     $query = $pdo->prepare($sql);
     $query->execute(['email' => $_POST['email']]);
-    $user = $query->fetch();
-    if(!$user) {
+    $admin = $query->fetch();
+    if(!$admin) {
       $hasil = false;
-    } elseif (sha1($_POST['password']) !== $user['password']) {
+    } elseif (sha1($_POST['password']) !== $admin['password']) {
       $hasil = false;
     } else {
       $hasil = true;
-      $_SESSION['user'] = array(
-        'id' => $user['id'],
-        'username' => $user['username'],
-        'email' => $user['email']
+      $_SESSION['admin'] = array(
+        'id' => $admin['id'],
+        'username' => $admin['username'],
+        'email' => $admin['email']
       );
+      header("location: admin_dashboard.php");
+      exit();
     }
-    header("location: index.php");
-    exit();
   }
 ?>
 <!DOCTYPE html>
@@ -118,7 +118,7 @@ if(!empty($_POST)) {
         <h1
           class="text-3xl sm:text-4xl text-[#a76657] font-semibold mb-8 tracking-widest uppercase font-reglog"
         >
-          LOGIN
+          LOGIN ADMIN
         </h1>
 
         <form id="loginForm" class="register-form w-full" method="post" action="">

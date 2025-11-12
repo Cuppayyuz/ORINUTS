@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!$_SESSION['admin']) {
+    header('Location: index.php');
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="id">
   <head>
@@ -38,14 +45,14 @@
             >
               <i class="fas fa-home w-4"></i> Beranda
             </li>
-            <a href="product-admin.html">
+            <a href="admin_product.php">
               <li
                 class="nav-item p-2.5 flex items-center gap-3 cursor-pointer hover:bg-[#E0BBA1]/20 rounded-r-3xl transition"
               >
                 <i class="fas fa-box-open w-4"></i> Produk
               </li>
             </a>
-            <a href="massage-admin.html">
+            <a href="admin_message.php">
               <li
                 class="nav-item p-2.5 flex items-center gap-3 cursor-pointer hover:bg-[#E0BBA1]/20 rounded-r-3xl transition"
               >
@@ -56,14 +63,14 @@
                 >
               </li>
             </a>
-            <a href="order-admin.html">
+            <a href="admin_order.php">
               <li
                 class="nav-item p-2.5 flex items-center gap-3 cursor-pointer hover:bg-[#E0BBA1]/20 rounded-r-3xl transition"
               >
                 <i class="fas fa-shopping-cart w-4"></i> Order
               </li>
             </a>
-            <a href="profile-admin.html">
+            <a href="admin_profile.php">
               <li
                 class="nav-item p-2.5 flex items-center gap-3 cursor-pointer hover:bg-[#E0BBA1]/20 rounded-r-3xl transition"
               >
@@ -90,7 +97,7 @@
           <div
             class="bg-[#F0C39F] p-5 rounded-xl text-[#8B4513] mb-4 shadow-lg flex-shrink-0"
           >
-            <h1 class="text-3xl font-bold mb-0.5">Halo, Karen</h1>
+            <h1 class="text-3xl font-bold mb-0.5">Halo, <?php echo htmlspecialchars($_SESSION['admin']['username']); ?></h1>
             <p class="text-base text-gray-700">
               Selamat datang lagi di sistem kendali, Hari ini ada peningkatan
               lho
