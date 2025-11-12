@@ -1,8 +1,8 @@
 <?php
 session_start();
 if (!$_SESSION['admin']) {
-    header('Location: index.php');
-    exit();
+  header('Location: index.php');
+  exit();
 }
 
 ?>
@@ -85,8 +85,13 @@ if (!$_SESSION['admin']) {
         <span class="text-white text-xl ml-4">👤</span>
       </div>
     </header>
-
-    <div id="page-daftar" class="page-content bg-[#F7F7F7] p-6 rounded-xl shadow-lg">
+    <div class="flex justify-end" id="addbtn">
+        <button onclick="showPage('form')"
+          class="bg-[#8D5A40] text-white px-6 py-3 rounded-full hover:bg-[#8D5A40]/90 transition duration-150 shadow-lg flex items-center">
+          <span class="text-xl mr-2">+</span> Tambah Produk
+        </button>
+      </div>
+    <div id="page-daftar" class="page-content bg-[#F7F7F7] p-6 rounded-xl shadow-lg mt-5">
       <div
         class="grid grid-cols-7 gap-4 font-bold uppercase text-xs text-[#8D5A40] border-b-2 border-[#8D5A40] pb-3 mb-4">
         <div class="col-span-1">Picture</div>
@@ -134,13 +139,6 @@ if (!$_SESSION['admin']) {
             </button>
           </div>
         </div>
-      </div>
-
-      <div class="fixed bottom-8 right-8">
-        <button onclick="showPage('form')"
-          class="bg-[#8D5A40] text-white px-6 py-3 rounded-full hover:bg-[#8D5A40]/90 transition duration-150 shadow-lg flex items-center">
-          <span class="text-xl mr-2">+</span> Tambah Produk
-        </button>
       </div>
     </div>
 
@@ -303,15 +301,17 @@ if (!$_SESSION['admin']) {
       document.querySelectorAll(".page-content").forEach((div) => {
         div.classList.add("hidden");
       });
-
+      document.getElementById("addbtn").classList.remove("hidden");
+      
       // Tampilkan halaman yang diminta
       const pageElement = document.getElementById("page-" + pageId);
       if (pageElement) {
         pageElement.classList.remove("hidden");
       }
-
+      
       // Logika untuk Form
       if (pageId === "form") {
+        document.getElementById("addbtn").classList.add("hidden");
         const title = document.getElementById("form-title");
         const form = document.getElementById("formProduk");
         form.reset();
@@ -350,8 +350,8 @@ if (!$_SESSION['admin']) {
     // Fungsi submit form (Tetap)
     document
       .getElementById("formProduk")
-      .addEventListener("submit", function (e) {
-        e.preventDefault();
+      .addEventListener("submit", function(e) {
+
         console.log(
           "Form submitted! Data siap dikirim ke Backend.",
           selectedFiles // Anda bisa lihat file yang tersimpan di console
