@@ -5,7 +5,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Product Orinuts</title>
-    <link href="src/outputail.css" rel="stylesheet">
+    <link href="src/outputail.css" rel="stylesheet" />
+
+
+
     <script>
         tailwind.config = {
             theme: {
@@ -16,58 +19,12 @@
                         lg: "1024px",
                         xl: "1440px",
                     },
-                    // Menambahkan properti yang kamu gunakan di kode
-                    spacing: {
-                        '20': '5rem',
-                        '22': '5.5rem',
-                        '23': '5.75rem',
-                        '27': '6.75rem',
-                        '35': '8.75rem',
-                        '39': '9.75rem',
-                        '50': '12.5rem',
-                        '54': '13.5rem',
-                        '56': '14rem',
-                        '60': '15rem',
-                        '75': '18.75rem',
-                        '80': '20rem',
-                        '81': '20.25rem',
-                        '85': '21.25rem',
-                        '99': '24.75rem',
-                        '100': '25rem',
-                        '110': '27.5rem',
-                        '121': '30.25rem',
-                        '123': '30.75rem',
-                        '125': '31.25rem',
-                        '140': '35rem',
-                        '165': '41.25rem',
-                        '169': '42.25rem',
-                        '200': '50rem',
-                        '220': '55rem',
-                        '225': '56.25rem',
-                        '230': '57.5rem',
-                        '250': '62.5rem',
-                        '433': '108.25rem',
-                        '500': '125rem',
-                        '600': '150rem',
-                        '840': '210rem',
-                        '930': '232.5rem',
-                        '1180': '295rem',
-                        '1250': '312.5rem',
-                        '1550': '387.5rem',
-                        '1630': '407.5rem',
-                    },
-                    rotate: {
-                        '15': '15deg',
-                        '-15': '-15deg',
-                        '180': '180deg',
-                        '275': '275deg',
-                    }
+
                 },
             },
         };
     </script>
     <style>
-        /* Style-mu sudah bagus, tidak ada perubahan */
         .produk-meja {
             filter: drop-shadow(-2px 10px 3px rgba(0, 0, 0, 0.3));
         }
@@ -83,7 +40,8 @@
         .trapl {
             clip-path: polygon(0% 0%, 100% 25%, 100% 100%, 0% 100%);
         }
-        .traprfull{
+
+        .traprfull {
             clip-path: polygon(0% 25%, 100% 0%, 100% 100%, 0% 100%);
         }
 
@@ -118,18 +76,17 @@
 </head>
 
 <body class="bg-[#F4EFD8] w-full">
-    <header id="navbar"
-        class="fixed left-0 right-0 top-0 z-50 py-2 transition-all duration-300 bg-[#aaf334]/80 backdrop-blur-sm">
+    <header id="navbar" class="fixed left-0 right-0 top-0 z-50 py-2 transition-all duration-300 backdrop-blur-sm">
         <div class="container mx-auto px-6 md:px-16 flex justify-between md:items-end items-center">
             <div>
                 <img src="content/logo.png" alt="logo" class="h-14" />
             </div>
 
             <nav class="hidden lg:flex py-1 px-2 rounded-full bg-white/30 backdrop-blur-md">
-                <a href="index.html" class=" rounded-full py-2 px-8 font-semibold">HOME</a>
-                <a href="about.html" class=" rounded-full py-2 px-8 font-semibold hover:text-green-700">ABOUT US</a>
-                <a href="p_orinuts.html"
-                    class=" bg-white rounded-full py-2 px-8 font-semibold hover:text-green-700">PRODUCT</a>
+                <a href="index.html" class="rounded-full py-2 px-8 font-semibold">HOME</a>
+                <a href="about.html" class="rounded-full py-2 px-8 font-semibold hover:text-green-700">ABOUT US</a>
+                <a href="product.html"
+                    class="bg-white rounded-full py-2 px-8 font-semibold hover:text-green-700">PRODUCT</a>
                 <a href="contact.html" class="rounded-full py-2 px-8 font-semibold hover:text-green-700">CONTACT</a>
             </nav>
 
@@ -161,7 +118,8 @@
                 </button>
             </div>
 
-            <a href="#" class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30">HOME</a>
+            <a href="#"
+                class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30">HOME</a>
             <a href="#" class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30">ABOUT
                 US</a>
             <a href="#"
@@ -181,79 +139,93 @@
             </div>
         </div>
     </div>
-    
-    <div class="flex justify-center items-center relative mt-35   ">
+
+    <div class="flex justify-center items-center relative mt-35">
         <div
             class="txt flex flex-col justify-center items-center font-merienda font-extrabold text-7xl text-[#491A0B] absolute top-10 right-110 tracking-[12px]">
             <span>OUR</span>
             <span>PRODUCT</span>
         </div>
         <img src="content/kacang/biji_labu.png" alt="bijilabu"
-            class="floating-nut absolute h-auto w-50 rotate-275 -top-20 left-123" />
+            class="floating-nut absolute h-auto w-20 rotate-180 -top-20 left-123" />
         <img src="content/kacang/kuaci.png" alt="kuaci"
-            class="floating-nut absolute h-auto w-27 top-23 left-20" />
+            class="floating-nut absolute h-auto w-30 -rotate-33 top-20 left-20" />
         <img src="content/kacang/almond1-removebg-preview.png" alt="almond"
-            class="floating-nut absolute h-auto w-39 -top-5 right-23 -rotate-15 blur-[2px]" />
-        <img src="content/kacang/kismis.png" alt="blacknut"
-            class="floating-nut absolute h-auto w-50 top-85 left-5" />
+            class="floating-nut absolute h-auto w-40 -top-5 right-23 -rotate-15 blur-[2px]" />
+        <img src="content/kacang/kismis.png" alt="kismis"
+            class="floating-nut absolute h-auto w-20 top-85 left-25 rotate-45" />
         <img src="content/kacang/mente.png" alt="mente"
-            class="floating-nut absolute h-auto top-81 right-5 rotate-180 blur-[1px]" />
+            class="floating-nut absolute h-auto w-80 top-60 right-5 rotate-180 blur-[1px]" />
         <img src="content/trapesium-removebg-preview.png" alt="trapsium"
             class="absolute h-auto w-full top-110 blur-[2px] z-10" />
-        <img src="content/fotomodelproduct/2951ce65-1619-4760-9f4c-750de500c541_removalai_preview.png   " alt="woman" class="absolute h-auto top-6 left-44 z-10" />
-        <img src="content/product/ori-merahmuda-removebg-preview.png" alt="produc1"
-            class="produk-meja absolute h-auto w-22 top-99 z-10" />
-        <img src="content/product/ori-4mighty-removebg-preview.png" alt="produc2"
-            class="produk-meja absolute h-auto w-56 top-75 right-140 z-10" />
-        <img src="content/product/ori-ungu-removebg-preview.png" alt="produc3"
-            class="produk-meja absolute h-auto w-54 top-87 right-121 z-10" />
+        <img src="content/fotomodelproduct/2951ce65-1619-4760-9f4c-750de500c541_removalai_preview.png    " alt="woman"
+            class="absolute h-auto -top-7 left-55 z-10" />
+        <img src="content/product/Orinuts_4_Mighty_Nuts_200g-removebg-preview.png" alt="produc1"
+            class="produk-meja absolute h-auto w-50 top-85 z-20" />
+        <img src="content/product/Orimond_Honey_Butter_Almond_75g-removebg-preview.png" alt="produc2"
+            class="produk-meja absolute h-auto w-35 top-110 right-160 z-20" />
+        <img src="content/product/Orimond_seaweed.png" alt="produc3"
+            class="produk-meja absolute h-auto w-40 top-95 right-148 z-10" />
         <div class="w-full bg-gray-500 h-9 absolute top-169 z-40 blur-3xl"></div>
     </div>
+        <!-- product -->
+    <div id="product-content-container" class="mt-[45rem]">
+        <!-- blur -->
+            <div class="absolute w-100 h-100 -left-10  bg-[#82BBC9] rounded-full blur-[100px] z-0">
+            </div>
+            <div class="absolute w-100 h-100 right-30 top-290 bg-[#82BBC9]  rounded-full blur-[100px] -z-10">
+            </div>  
+            <div class="absolute w-100 h-100 left-10 top-665 bg-[#F876C1] rounded-full blur-[100px] z-0"></div>
+            <div class="absolute w-100 h-100 right-30 top-580  bg-[#F876C1] rounded-full blur-[100px] -z-10"></div>
+            <div class="absolute w-100 h-100 left-50 -bottom-890 bg-[#ECE856] rounded-full blur-[100px] z-0"></div>
+            <div class="absolute w-100 h-100 right-30 -bottom-810 bg-[#0300A6] opacity-90 rounded-full blur-[100px] -z-10"></div>
+            <div class="absolute w-100 h-100 -left-25 -bottom-1200 bg-[#78B0F1] rounded-full blur-[100px] z-0"></div>
+            <div class="absolute w-100 h-100 right-65 -bottom-1140 bg-[#78B0F1] rounded-full blur-[100px] -z-10"></div>
+            <div class="absolute w-100 h-100 left-25 -bottom-1490 bg-[#FA7268] rounded-full blur-[100px] z-0"></div>
+            <div class="absolute w-100 h-100 right-30 -bottom-1550 bg-[#FA7268] rounded-full blur-[100px] -z-10"></div>
+        <!-- diskon -->
+        <img src="content/diskon.png" alt="diskon" class="absolute top-212 w-80 -rotate-15 h-auto z-20 left-37" />
+        <img src="content/diskon.png" alt="diskon" class="absolute top-403 w-80 rotate-15 h-auto z-20 right-25" />
 
-    <section class="w-full mt-[45rem]">
-        <div id="product-tabs"
-            class="container px-24 lg:flex justify-center items-center space-x-1.5 py-1 rounded-b-full pt-10 font-semibold">
-            <button data-tab="orinuts"
-                class="tab-button bg-white rounded-b-2xl py-2 px-10 text-2xl focus:outline-none">
-                Orinuts
-            </button>
-            <button data-tab="orithin"
-                class="tab-button rounded-b-2xl py-2 px-10 text-2xl focus:outline-none">
-                Orithin
-            </button>
-            <button data-tab="orimond"
-                class="tab-button rounded-b-2xl py-2 px-10 text-2xl focus:outline-none">
-                Orimond
-            </button>
-            <button data-tab="rumahmente"
-                class="tab-button rounded-b-2xl py-2 px-10 text-2xl focus:outline-none">
-                Rumah Mente
-            </button>
+        <!-- p1 -->
+        <div class="flex flex-col md:flex-row items-center justify-center  px-30 h-165 py-55 space-x-10 pt-70">
+            <img src="content/product/Orinuts_Roasted_Cashew_Original_200g-removebg-preview.png" alt="Roasted Cashew"
+                class="imgl h-135" />
+            <div>
+                <h2 class="text-4xl font-extrabold mb-6 font-inter uppercase tracking-[7px]">
+                    Roasted Cashew
+                </h2>
+                <p class="font-medium font-poppins tracking-[1px] text-[18px] uppercase mt-2">
+                    Kacang mete, Almond, Sunflower, pumpkin,<br />
+                    cranberry, gojiberry, golden raisin.
+                </p>
+                <ul class="list-disc list-inside font-bold font-poppins py-5 tracking-[1px]">
+                    <li>Premium Quality.</li>
+                    <li>Tahan 1 tahun dalam kemasan (sebelum kemasan dibuka).</li>
+                    <li>Rasa FRESH & ENAK.</li>
+                    <li>Sudah matang & siap dimakan.</li>
+                    <li>Kacang & biji-bijian dipanggang.</li>
+                </ul>
+                <hr class="py-3" />
+                <div class="flex justify-between items-center p-5">
+                    <h3 class="text-2xl font-semibold text-black font-poppins">
+                        Rp. 70,000-135,000
+                    </h3>
+                    <a href="#"
+                        class="flex items-center space-x-3 bg-[#4A2311] text-white font-bold py-3 px-6 rounded-full font-inter">
+                        <span>order now</span>
+                        <img src="content/icon/shopping-cart.svg" alt="shopping cart"
+                            class="w-6 h-6 brightness-0 invert" />
+                    </a>
+                </div>
+            </div>
         </div>
-    </section>
-
-    <div id="product-content-container">
-
-        <div id="orinuts-content" class="tab-content relative overflow-hidden">
-            <div class="absolute w-100 h-100 -left-10 bg-[#FF9740] opacity-70  rounded-full blur-[100px] z-0"></div>
-            <div class="absolute w-100 h-100 right-30 -bottom-230 bg-[#FF9740] opacity-70 rounded-full blur-[100px] -z-10">
-            </div>
-            <div class="absolute w-100 h-100 -left-10 -bottom-600 bg-[#E0B778] rounded-full blur-[100px] z-0"></div>
-            <div class="absolute w-100 h-100 right-30 -bottom-500 bg-[#E0B778] rounded-full blur-[100px] -z-10"></div>
-            <div class="absolute w-100 h-100 left-35 -bottom-840 bg-[#82BBC9] rounded-full blur-[100px] z-0"></div>
-            <div class="absolute w-100 h-100 right-30 -bottom-930 bg-[#82BBC9] rounded-full blur-[100px] -z-10"></div>
-            <div class="absolute w-100 h-100 -left-10 -bottom-1250 bg-[#F876C1] rounded-full blur-[100px] z-0"></div>
-            <div class="absolute w-100 h-100 right-45 -bottom-1180 bg-[#F876C1] rounded-full blur-[100px] -z-10"></div>
-            <div class="absolute w-100 h-100 left-25 -bottom-1550  bg-[#FA7268] rounded-full blur-[100px] z-0"></div>
-            <div class="absolute w-100 h-100 right-30 -bottom-1630 bg-[#FA7268] rounded-full blur-[100px] -z-10"></div>
-            <img src="content/diskon.png" alt="diskon" class="absolute top-220 w-80 -rotate-15 h-auto z-20 left-35" />
-            <img src="content/diskon.png" alt="diskon" class="absolute top-433 w-80 rotate-15 h-auto z-20 right-12" />
-            <div class="flex flex-col md:flex-row items-center justify-center space-x-40 px-40 h-165 py-55">
-                <img src="content/product/ori-merah-removebg-preview.png" alt="Sweet Mix"
-                    class="imgl w-125 h-auto drop-shadow-lg" />
+<!-- p2 -->
+        <div class="trapr w-[100%] h-225 z-0 bg-[#EDCF3E]">
+            <div class="flex flex-col md:flex-row items-center justify-center pl-75 space-x-10 px-30 py-50">
                 <div>
                     <h2 class="text-4xl font-extrabold mb-6 font-inter uppercase tracking-[7px]">
-                        Energy Booster Mix
+                        Duo Mix
                     </h2>
                     <p class="font-medium font-poppins tracking-[1px] text-[18px] uppercase mt-2">
                         Kacang mete, Almond, Sunflower, pumpkin,<br />
@@ -266,141 +238,7 @@
                         <li>Sudah matang & siap dimakan.</li>
                         <li>Kacang & biji-bijian dipanggang.</li>
                     </ul>
-                    <hr class="py-3" />
-                    <div class="flex justify-between items-center p-5">
-                        <h3 class="text-2xl font-semibold text-black font-poppins">
-                            Rp. 70,000-135,000
-                        </h3>
-                        <a href="#"
-                            class="flex items-center space-x-3 bg-[#4A2311] text-white font-bold py-3 px-6 rounded-full font-inter">
-                            <span>order now</span>
-                            <img src="content/icon/shopping-cart.svg" alt="shopping cart"
-                                class="w-6 h-6 brightness-0 invert" />
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="trapr w-[100%] h-225 z-0 bg-[#EDCF3E]">
-                <div class="flex flex-col md:flex-row items-center justify-center pl-75 space-x-10 px-20 py-50">
-                    <div>
-                        <h2 class="text-4xl font-extrabold mb-6 font-inter uppercase tracking-[7px]">
-                            Energy Booster Mix
-                        </h2>
-                        <p class="font-medium font-poppins tracking-[1px] text-[18px] uppercase mt-2">
-                            Kacang mete, Almond, Sunflower, pumpkin,<br />
-                            cranberry, gojiberry, golden raisin.
-                        </p>
-                        <ul class="list-disc list-inside font-bold font-poppins py-5 tracking-[1px]">
-                            <li>Premium Quality.</li>
-                            <li>Tahan 1 tahun dalam kemasan (sebelum kemasan dibuka).</li>
-                            <li>Rasa FRESH & ENAK.</li>
-                            <li>Sudah matang & siap dimakan.</li>
-                            <li>Kacang & biji-bijian dipanggang.</li>
-                        </ul>
-                        <hr />
-                        <div class="flex justify-between items-center p-5">
-                            <h3 class="text-2xl font-semibold text-black font-poppins">
-                                Rp. 70,000-135,000
-                            </h3>
-
-                            <a href="#"
-                                class="flex items-center space-x-3 bg-[#4A2311] text-white font-bold py-3 px-6 rounded-full font-inter">
-                                <span>order now</span>
-                                <img src="content/icon/shopping-cart.svg" alt="shopping cart"
-                                    class="w-6 h-6 brightness-0 invert" />
-                            </a>
-                        </div>
-                    </div>
-                    <img src="content/product/ori-doumix-removebg-preview.png" alt="Sweet Mix"
-                        class="imgr w-125 h-auto drop-shadow-lg" />
-                </div>
-            </div>
-
-            <div class="flex flex-col md:flex-row items-center justify-center space-x-10  pr-60 h-100  ">
-                <img src="content/product/ori-merah-removebg-preview.png" alt="Sweet Mix"
-                    class="imgl w-125 h-auto drop-shadow-lg" />
-                <div> <h2 class="text-4xl font-extrabold mb-6 font-inter uppercase tracking-[7px]">
-                        Energy Booster Mix
-                    </h2>
-                    <p class="font-medium font-poppins tracking-[1px] text-[18px] uppercase mt-2">
-                        Kacang mete, Almond, Sunflower, pumpkin,<br />
-                        cranberry, gojiberry, golden raisin.
-                    </p>
-                    <ul class="list-disc list-inside font-bold font-poppins py-5 tracking-[1px]">
-                        <li>Premium Quality.</li>
-                        <li>Tahan 1 tahun dalam kemasan (sebelum kemasan dibuka).</li>
-                        <li>Rasa FRESH & ENAK.</li>
-                        <li>Sudah matang & siap dimakan.</li>
-                        <li>Kacang & biji-bijian dipanggang.</li>
-                    </ul>
-                    <hr class="py-3" />
-                    <div class="flex justify-between items-center p-5">
-                        <h3 class="text-2xl font-semibold text-black font-poppins">
-                            Rp. 70,000-135,000
-                        </h3>
-                        <a href="#"
-                            class="flex items-center space-x-3 bg-[#4A2311] text-white font-bold py-3 px-6 rounded-full font-inter">
-                            <span>order now</span>
-                            <img src="content/icon/shopping-cart.svg" alt="shopping cart"
-                                class="w-6 h-6 brightness-0 invert" />
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="trapr w-[100%] h-225 z-0 bg-[#A0486E]">
-                <div class="flex flex-col md:flex-row items-center justify-center pl-75 space-x-10 px-20 py-50">
-                    <div>
-                        <h2 class="text-4xl font-extrabold mb-6 font-inter uppercase tracking-[7px]">
-                            Energy Booster Mix
-                        </h2>
-                        <p class="font-medium font-poppins tracking-[1px] text-[18px] uppercase mt-2">
-                            Kacang mete, Almond, Sunflower, pumpkin,<br />
-                            cranberry, gojiberry, golden raisin.
-                        </p>
-                        <ul class="list-disc list-inside font-bold font-poppins py-5 tracking-[1px]">
-                            <li>Premium Quality.</li>
-                            <li>Tahan 1 tahun dalam kemasan (sebelum kemasan dibuka).</li>
-                            <li>Rasa FRESH & ENAK.</li>
-                            <li>Sudah matang & siap dimakan.</li>
-                            <li>Kacang & biji-bijian dipanggang.</li>
-                        </ul>
-                        <hr />
-                        <div class="flex justify-between items-center p-5">
-                            <h3 class="text-2xl font-semibold text-black font-poppins">
-                                Rp. 70,000-135,000
-                            </h3>
-
-                            <a href="#"
-                                class="flex items-center space-x-3 bg-[#4A2311] text-white font-bold py-3 px-6 rounded-full font-inter">
-                                <span>order now</span>
-                                <img src="content/icon/shopping-cart.svg" alt="shopping cart"
-                                    class="w-6 h-6 brightness-0 invert" />
-                            </a>
-                        </div>
-                    </div>
-                    <img src="content/product/ori-doumix-removebg-preview.png" alt="Sweet Mix"
-                        class="imgr w-125 h-auto drop-shadow-lg" />
-                </div>
-            </div>
-
-            <div class="flex flex-col md:flex-row items-center justify-center space-x-10  pr-60 h-100  ">
-                <img src="content/product/ori-merah-removebg-preview.png" alt="Sweet Mix"
-                    class="imgl w-125 h-auto drop-shadow-lg" />
-                <div> <h2 class="text-4xl font-extrabold mb-6 font-inter uppercase tracking-[7px]">
-                        Energy Booster Mix
-                    </h2>
-                    <p class="font-medium font-poppins tracking-[1px] text-[18px] uppercase mt-2">
-                        Kacang mete, Almond, Sunflower, pumpkin,<br />
-                        cranberry, gojiberry, golden raisin.
-                    </p>
-                    <ul class="list-disc list-inside font-bold font-poppins py-5 tracking-[1px]">
-                        <li>Premium Quality.</li>
-                        <li>Tahan 1 tahun dalam kemasan (sebelum kemasan dibuka).</li>
-                        <li>Rasa FRESH & ENAK.</li>
-                        <li>Sudah matang & siap dimakan.</li>
-                        <li>Kacang & biji-bijian dipanggang.</li>
-                    </ul>
-                    <hr class="py-3" />
+                    <hr />
                     <div class="flex justify-between items-center p-5">
                         <h3 class="text-2xl font-semibold text-black font-poppins">
                             Rp. 70,000-135,000
@@ -414,63 +252,64 @@
                         </a>
                     </div>
                 </div>
+                <img src="content/product/Orinuts_Roasted_Duo_Mix_200g-removebg-preview.png" alt="Sweet Mix"
+                    class="imgr h-130" />
             </div>
-            <div class="trapr w-[100%] h-225 z-0 bg-[#BBDB53]">
-                <div class="flex flex-col md:flex-row items-center justify-center pl-75 space-x-10 px-20 py-50">
-                    <div>
-                        <h2 class="text-4xl font-extrabold mb-6 font-inter uppercase tracking-[7px]">
-                            Energy Booster Mix
-                        </h2>
-                        <p class="font-medium font-poppins tracking-[1px] text-[18px] uppercase mt-2">
-                            Kacang mete, Almond, Sunflower, pumpkin,<br />
-                            cranberry, gojiberry, golden raisin.
-                        </p>
-                        <ul class="list-disc list-inside font-bold font-poppins py-5 tracking-[1px]">
-                            <li>Premium Quality.</li>
-                            <li>Tahan 1 tahun dalam kemasan (sebelum kemasan dibuka).</li>
-                            <li>Rasa FRESH & ENAK.</li>
-                            <li>Sudah matang & siap dimakan.</li>
-                            <li>Kacang & biji-bijian dipanggang.</li>
-                        </ul>
-                        <hr />
-                        <div class="flex justify-between items-center p-5">
-                            <h3 class="text-2xl font-semibold text-black font-poppins">
-                                Rp. 70,000-135,000
-                            </h3>
-
-                            <a href="#"
-                                class="flex items-center space-x-3 bg-[#4A2311] text-white font-bold py-3 px-6 rounded-full font-inter">
-                                <span>order now</span>
-                                <img src="content/icon/shopping-cart.svg" alt="shopping cart"
-                                    class="w-6 h-6 brightness-0 invert" />
-                            </a>
-                        </div>
-                    </div>
-                    <img src="content/product/ori-doumix-removebg-preview.png" alt="Sweet Mix"
-                        class="imgr w-125 h-auto drop-shadow-lg" />
+        </div>
+<!-- p3 -->
+        <div class="flex flex-col md:flex-row items-center justify-center space-x-10 pr-60 h-125    ">
+            <img src="content/product/Orinuts_Heart_Healthy_Mix_200.png" alt="Hearth Healthy Mix"
+                class="imgl h-125 " />
+            <div>
+                <h2 class="text-4xl font-extrabold mb-6 font-inter uppercase tracking-[7px]">
+                    Hearth Healthy Mix
+                </h2>
+                <p class="font-medium font-poppins tracking-[1px] text-[18px] uppercase mt-2">
+                    Kacang mete, Almond, Sunflower, pumpkin,<br />
+                    cranberry, gojiberry, golden raisin.
+                </p>
+                <ul class="list-disc list-inside font-bold font-poppins py-5 tracking-[1px]">
+                    <li>Premium Quality.</li>
+                    <li>Tahan 1 tahun dalam kemasan (sebelum kemasan dibuka).</li>
+                    <li>Rasa FRESH & ENAK.</li>
+                    <li>Sudah matang & siap dimakan.</li>
+                    <li>Kacang & biji-bijian dipanggang.</li>
+                </ul>
+                <hr class="py-3" />
+                <div class="flex justify-between items-center p-5">
+                    <h3 class="text-2xl font-semibold text-black font-poppins">
+                        Rp. 70,000-135,000
+                    </h3>
+                    <a href="#"
+                        class="flex items-center space-x-3 bg-[#4A2311] text-white font-bold py-3 px-6 rounded-full font-inter">
+                        <span>order now</span>
+                        <img src="content/icon/shopping-cart.svg" alt="shopping cart"
+                            class="w-6 h-6 brightness-0 invert" />
+                    </a>
                 </div>
             </div>
-
-            <div class="flex flex-col md:flex-row items-center justify-center space-x-10  pr-60 h-100  ">
-                <img src="content/product/ori-merah-removebg-preview.png" alt="Sweet Mix"
-                    class="imgl w-125 h-auto drop-shadow-lg" />
-                <div> <h2 class="text-4xl font-extrabold mb-6 font-inter uppercase tracking-[7px]">
-                        Energy Booster Mix
+        </div>
+        <!-- p4 -->
+        <div class="trapr w-[100%] h-225 z-0 bg-gradient-to-b to-[#D8140F] from-[#ED7B01]">
+            <div class="flex flex-col md:flex-row items-center justify-center pl-75 space-x-10 px-20 py-50">
+                <div>
+                    <h2 class="text-4xl font-extrabold mb-6 font-inter uppercase tracking-[7px] text-white">
+                        Orithin Chocolate
                     </h2>
-                    <p class="font-medium font-poppins tracking-[1px] text-[18px] uppercase mt-2">
+                    <p class="font-medium font-poppins tracking-[1px] text-[18px] uppercase mt-2 text-white">
                         Kacang mete, Almond, Sunflower, pumpkin,<br />
                         cranberry, gojiberry, golden raisin.
                     </p>
-                    <ul class="list-disc list-inside font-bold font-poppins py-5 tracking-[1px]">
+                    <ul class="list-disc list-inside font-bold font-poppins py-5 tracking-[1px] text-white">
                         <li>Premium Quality.</li>
                         <li>Tahan 1 tahun dalam kemasan (sebelum kemasan dibuka).</li>
                         <li>Rasa FRESH & ENAK.</li>
                         <li>Sudah matang & siap dimakan.</li>
                         <li>Kacang & biji-bijian dipanggang.</li>
                     </ul>
-                    <hr class="py-3" />
-                    <div class="flex justify-between items-center p-5">
-                        <h3 class="text-2xl font-semibold text-black font-poppins">
+                    <hr class="text-white"/>
+                    <div class="flex justify-between items-center p-5 ">
+                        <h3 class="text-2xl font-semibold font-poppins text-white">
                             Rp. 70,000-135,000
                         </h3>
 
@@ -482,84 +321,50 @@
                         </a>
                     </div>
                 </div>
+                <img src="content/product/Orithin_Chocolate-removebg-preview.png" alt="Orithin Chocolate"
+                    class="imgr w-125 h-auto" />
             </div>
-            <div class="trapr w-[100%] h-225 z-0 bg-[#5B91D8]">
-                <div class="flex flex-col md:flex-row items-center justify-center pl-75 space-x-10 px-20 py-50">
-                    <div>
-                        <h2 class="text-4xl font-extrabold mb-6 font-inter uppercase tracking-[7px]">
-                            Energy Booster Mix
-                        </h2>
-                        <p class="font-medium font-poppins tracking-[1px] text-[18px] uppercase mt-2">
-                            Kacang mete, Almond, Sunflower, pumpkin,<br />
-                            cranberry, gojiberry, golden raisin.
-                        </p>
-                        <ul class="list-disc list-inside font-bold font-poppins py-5 tracking-[1px]">
-                            <li>Premium Quality.</li>
-                            <li>Tahan 1 tahun dalam kemasan (sebelum kemasan dibuka).</li>
-                            <li>Rasa FRESH & ENAK.</li>
-                            <li>Sudah matang & siap dimakan.</li>
-                            <li>Kacang & biji-bijian dipanggang.</li>
-                        </ul>
-                        <hr />
-                        <div class="flex justify-between items-center p-5">
-                            <h3 class="text-2xl font-semibold text-black font-poppins">
-                                Rp. 70,000-135,000
-                            </h3>
+        </div>
+<!-- p5 -->
+        <div class="flex flex-col md:flex-row items-center justify-center space-x-10 pr-60 h-100">
+            <img src="content/product/Orithin_Original-removebg-preview.png" alt="Orithin Original"
+                class="imgl w-125 h-auto drop-shadow-lg" />
+            <div>
+                <h2 class="text-4xl font-extrabold mb-6 font-inter uppercase tracking-[7px]">
+                    Orithin Original
+                </h2>
+                <p class="font-medium font-poppins tracking-[1px] text-[18px] uppercase mt-2">
+                    Kacang mete, Almond, Sunflower, pumpkin,<br />
+                    cranberry, gojiberry, golden raisin.
+                </p>
+                <ul class="list-disc list-inside font-bold font-poppins py-5 tracking-[1px]">
+                    <li>Premium Quality.</li>
+                    <li>Tahan 1 tahun dalam kemasan (sebelum kemasan dibuka).</li>
+                    <li>Rasa FRESH & ENAK.</li>
+                    <li>Sudah matang & siap dimakan.</li>
+                    <li>Kacang & biji-bijian dipanggang.</li>
+                </ul>
+                <hr class="py-3" />
+                <div class="flex justify-between items-center p-5">
+                    <h3 class="text-2xl font-semibold text-black font-poppins">
+                        Rp. 70,000-135,000
+                    </h3>
 
-                            <a href="#"
-                                class="flex items-center space-x-3 bg-[#4A2311] text-white font-bold py-3 px-6 rounded-full font-inter">
-                                <span>order now</span>
-                                <img src="content/icon/shopping-cart.svg" alt="shopping cart"
-                                    class="w-6 h-6 brightness-0 invert" />
-                            </a>
-                        </div>
-                    </div>
-                    <img src="content/product/ori-doumix-removebg-preview.png" alt="Sweet Mix"
-                        class="imgr w-125 h-auto drop-shadow-lg" />
+                    <a href="#"
+                        class="flex items-center space-x-3 bg-[#4A2311] text-white font-bold py-3 px-6 rounded-full font-inter">
+                        <span>order now</span>
+                        <img src="content/icon/shopping-cart.svg" alt="shopping cart"
+                            class="w-6 h-6 brightness-0 invert" />
+                    </a>
                 </div>
             </div>
-
-            <div class="flex flex-col md:flex-row items-center justify-center space-x-10  pr-60 h-200  ">
-                <img src="content/product/ori-merah-removebg-preview.png" alt="Sweet Mix"
-                    class="imgl w-125 h-auto drop-shadow-lg" />
-                <div> <h2 class="text-4xl font-extrabold mb-6 font-inter uppercase tracking-[7px]">
-                        Energy Booster Mix
-                    </h2>
-                    <p class="font-medium font-poppins tracking-[1px] text-[18px] uppercase mt-2">
-                        Kacang mete, Almond, Sunflower, pumpkin,<br />
-                        cranberry, gojiberry, golden raisin.
-                    </p>
-                    <ul class="list-disc list-inside font-bold font-poppins py-5 tracking-[1px]">
-                        <li>Premium Quality.</li>
-                        <li>Tahan 1 tahun dalam kemasan (sebelum kemasan dibuka).</li>
-                        <li>Rasa FRESH & ENAK.</li>
-                        <li>Sudah matang & siap dimakan.</li>
-                        <li>Kacang & biji-bijian dipanggang.</li>
-                    </ul>
-                    <hr class="py-3" />
-                    <div class="flex justify-between items-center p-5">
-                        <h3 class="text-2xl font-semibold text-black font-poppins">
-                            Rp. 70,000-135,000
-                        </h3>
-
-                        <a href="#"
-                            class="flex items-center space-x-3 bg-[#4A2311] text-white font-bold py-3 px-6 rounded-full font-inter">
-                            <span>order now</span>
-                            <img src="content/icon/shopping-cart.svg" alt="shopping cart"
-                                class="w-6 h-6 brightness-0 invert" />
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div> 
-        
-        <div id="orithin-content" class="tab-content hidden relative overflow-hidden">
-            <div class="absolute w-100 h-100 left-15 -bottom-220 bg-[#ECE856] rounded-full blur-[100px] -z-10"></div>
-            <div class="absolute w-100 h-100 right-30 -bottom-150 bg-[#0300A6] rounded-full blur-[120px] -z-10"></div>
-            <div class="flex flex-col md:flex-row items-center justify-center space-x-40 px-40 h-165 py-55">
+        </div>
+        <!-- p6 -->
+        <div class="trapr w-[100%] h-225 z-0 bg-gradient-to-bl from-white to-[#F3B9CA]">
+            <div class="flex flex-col md:flex-row items-center justify-center pl-75 space-x-10 px-20 py-50">
                 <div>
                     <h2 class="text-4xl font-extrabold mb-6 font-inter uppercase tracking-[7px]">
-                        Orithin Product 1
+                        Orimond Himalayan Salt
                     </h2>
                     <p class="font-medium font-poppins tracking-[1px] text-[18px] uppercase mt-2">
                         Kacang mete, Almond, Sunflower, pumpkin,<br />
@@ -572,7 +377,7 @@
                         <li>Sudah matang & siap dimakan.</li>
                         <li>Kacang & biji-bijian dipanggang.</li>
                     </ul>
-                    <hr class="py-3" />
+                    <hr />
                     <div class="flex justify-between items-center p-5">
                         <h3 class="text-2xl font-semibold text-black font-poppins">
                             Rp. 70,000-135,000
@@ -586,131 +391,50 @@
                         </a>
                     </div>
                 </div>
-                <img src="content/product/OrithinCrackerOrig-removebg-preview.png" alt="Sweet Mix"
+                <img src="content/product/Orimond_Himalayan_Salt_Almond_75g-removebg-preview.png" alt="Orimond Himalayan Salt"
                     class="imgr w-125 h-auto drop-shadow-lg" />
             </div>
-            <div class="trapl w-[100%] h-225 z-0 bg-gradient-to-b from-[#ED7B01] to-[#D8140F]">
-                <div class="flex flex-col md:flex-row items-center justify-center space-x-40 px-40 py-55 ">
-                    <img src="content/product/OrithinCrackerChoco-removebg-preview.png" alt="Sweet Mix"
-                        class="imgr w-125 h-auto drop-shadow-lg" />
-                    <div>
-                        <h2 class="text-4xl font-extrabold mb-6 font-inter uppercase tracking-[7px]">
-                            Orithin Product 2
-                        </h2>
-                        <p class="font-medium font-poppins tracking-[1px] text-[18px] uppercase mt-2">
-                            Kacang mete, Almond, Sunflower, pumpkin,<br />
-                            cranberry, gojiberry, golden raisin.
-                        </p>
-                        <ul class="list-disc list-inside font-bold font-poppins py-5 tracking-[1px]">
-                            <li>Premium Quality.</li>
-                            <li>Tahan 1 tahun dalam kemasan (sebelum kemasan dibuka).</li>
-                            <li>Rasa FRESH & ENAK.</li>
-                            <li>Sudah matang & siap dimakan.</li>
-                            <li>Kacang & biji-bijian dipanggang.</li>
-                        </ul>
-                        <hr />
-                        <div class="flex justify-between items-center p-5">
-                            <h3 class="text-2xl font-semibold text-black font-poppins">
-                                Rp. 70,000-135,000
-                            </h3>
+        </div>
+        <!-- p7 -->
+        <div class="flex flex-col md:flex-row items-center justify-center space-x-10 pr-60 h-100">
+            <img src="content/product/Orimond_bubble_gum.png" alt="Orimond Bubble Gum"
+                class="imgl w-125 h-auto " />
+            <div>
+                <h2 class="text-4xl font-extrabold mb-6 font-inter uppercase tracking-[7px]">
+                    Orimond Bubble Gum
+                </h2>
+                <p class="font-medium font-poppins tracking-[1px] text-[18px] uppercase mt-2">
+                    Kacang mete, Almond, Sunflower, pumpkin,<br />
+                    cranberry, gojiberry, golden raisin.
+                </p>
+                <ul class="list-disc list-inside font-bold font-poppins py-5 tracking-[1px]">
+                    <li>Premium Quality.</li>
+                    <li>Tahan 1 tahun dalam kemasan (sebelum kemasan dibuka).</li>
+                    <li>Rasa FRESH & ENAK.</li>
+                    <li>Sudah matang & siap dimakan.</li>
+                    <li>Kacang & biji-bijian dipanggang.</li>
+                </ul>
+                <hr class="py-3" />
+                <div class="flex justify-between items-center p-5">
+                    <h3 class="text-2xl font-semibold text-black font-poppins">
+                        Rp. 70,000-135,000
+                    </h3>
 
-                            <a href="#"
-                                class="flex items-center space-x-3 bg-[#4A2311] text-white font-bold py-3 px-6 rounded-full font-inter">
-                                <span>order now</span>
-                                <img src="content/icon/shopping-cart.svg" alt="shopping cart"
-                                    class="w-6 h-6 brightness-0 invert" />
-                            </a>
-                        </div>
-                    </div>
+                    <a href="#"
+                        class="flex items-center space-x-3 bg-[#4A2311] text-white font-bold py-3 px-6 rounded-full font-inter">
+                        <span>order now</span>
+                        <img src="content/icon/shopping-cart.svg" alt="shopping cart"
+                            class="w-6 h-6 brightness-0 invert" />
+                    </a>
                 </div>
             </div>
-        </div> 
-        
-        <div id="orimond-content" class="tab-content hidden relative overflow-hidden">
-            <div class="absolute w-100 h-100 -left-10 bg-[#FBCE4B] rounded-full blur-[120px] -z-10"></div>
-            <div class="absolute w-100 h-100 right-0 -bottom-250 bg-[#FBCE4B] rounded-full blur-[120px] -z-10"></div>
-            
-            <img src="content/diskon.png" alt="diskon" class="absolute top-220 w-80 -rotate-15 h-auto z-20 left-35" />
-            <img src="content/diskon.png" alt="diskon" class="absolute top-433 w-80 rotate-15 h-auto z-20 right-12" />
-            <div class="flex flex-col md:flex-row items-center justify-center space-x-40 px-40 h-165 py-60">
-                <img src="content/product/ori-merah-removebg-preview.png" alt="Sweet Mix"
-                    class="imgl w-125 h-auto drop-shadow-lg" />
+        </div>
+        <!-- p8 -->
+        <div class="trapr w-[100%] h-225 z-0 bg-[#BBDB53]">
+            <div class="flex flex-col md:flex-row items-center justify-center pl-75 space-x-10 px-20 py-50">
                 <div>
                     <h2 class="text-4xl font-extrabold mb-6 font-inter uppercase tracking-[7px]">
-                        Orimond Product 1
-                    </h2>
-                    <p class="font-medium font-poppins tracking-[1px] text-[18px] uppercase mt-2">
-                        Kacang mete, Almond, Sunflower, pumpkin,<br />
-                        cranberry, gojiberry, golden raisin.
-                    </p>
-                    <ul class="list-disc list-inside font-bold font-poppins py-5 tracking-[1px]">
-                        <li>Premium Quality.</li>
-                        <li>Tahan 1 tahun dalam kemasan (sebelum kemasan dibuka).</li>
-                        <li>Rasa FRESH & ENAK.</li>
-                        <li>Sudah matang & siap dimakan.</li>
-                        <li>Kacang & biji-bijan dipanggang.</li>
-                    </ul>
-                    <hr class="py-3" />
-                    <div class="flex justify-between items-center p-5">
-                        <h3 class="text-2xl font-semibold text-black font-poppins">
-                            Rp. 70,000-135,000
-                        </h3>
-
-                        <a href="#"
-                            class="flex items-center space-x-3 bg-[#4A2311] text-white font-bold py-3 px-6 rounded-full font-inter">
-                            <span>order now</span>
-                            <img src="content/icon/shopping-cart.svg" alt="shopping cart"
-                                class="w-6 h-6 brightness-0 invert" />
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="traprfull w-[100%] h-225 z-0  bg-amber-900">
-                <div class="flex flex-col md:flex-row items-center justify-center pl-75 space-x-10 px-20 py-50">
-                    <div>
-                        <h2 class="text-4xl font-extrabold mb-6 font-inter uppercase tracking-[7px]">
-                            Orimond Product 2
-                        </h2>
-                        <p class="font-medium font-poppins tracking-[1px] text-[18px] uppercase mt-2">
-                            Kacang mete, Almond, Sunflower, pumpkin,<br />
-                            cranberry, gojiberry, golden raisin.
-                        </p>
-                        <ul class="list-disc list-inside font-bold font-poppins py-5 tracking-[1px]">
-                            <li>Premium Quality.</li>
-                            <li>Tahan 1 tahun dalam kemasan (sebelum kemasan dibuka).</li>
-                            <li>Rasa FRESH & ENAK.</li>
-                            <li>Sudah matang & siap dimakan.</li>
-                            <li>Kacang & biji-bijian dipanggang.</li>
-                        </ul>
-                        <hr />
-                        <div class="flex justify-between items-center p-5">
-                            <h3 class="text-2xl font-semibold text-black font-poppins">
-                                Rp. 70,000-135,000
-                            </h3>
-
-                            <a href="#"
-                                class="flex items-center space-x-3 bg-[#4A2311] text-white font-bold py-3 px-6 rounded-full font-inter">
-                                <span>order now</span>
-                                <img src="content/icon/shopping-cart.svg" alt="shopping cart"
-                                    class="w-6 h-6 brightness-0 invert" />
-                            </a>
-                        </div>
-                    </div>
-                    <img src="content/product/ori-doumix-removebg-preview.png" alt="Sweet Mix"
-                        class="imgr w-125 h-auto drop-shadow-lg" />
-                </div>
-            </div>
-        </div> 
-        
-        <div id="rumahmente-content" class="tab-content hidden relative overflow-hidden">
-            <div class="absolute w-100 h-100 left-20 -bottom-230 bg-[#CC2E22] rounded-full blur-[120px] -z-10"></div>
-            <div class="absolute w-100 h-100 right-30 -bottom-160 bg-[#CC2E22] rounded-full blur-[120px] -z-10"></div>
-            <img src="content/diskon.png" alt="diskon" class="absolute top-220 w-80 -rotate-15 h-auto z-20 left-35" />
-            <img src="content/diskon.png" alt="diskon" class="absolute top-433 w-80 rotate-15 h-auto z-20 right-12" />
-            <div class="flex flex-col md:flex-row items-center justify-center space-x-40 px-40 h-165 py-55">
-                <div>
-                    <h2 class="text-4xl font-extrabold mb-6 font-inter uppercase tracking-[7px]">
-                        Rumah Mente Product 1
+                        Rumah Mente Pumpkin Seed
                     </h2>
                     <p class="font-medium font-poppins tracking-[1px] text-[18px] uppercase mt-2">
                         Kacang mete, Almond, Sunflower, pumpkin,<br />
@@ -723,7 +447,7 @@
                         <li>Sudah matang & siap dimakan.</li>
                         <li>Kacang & biji-bijian dipanggang.</li>
                     </ul>
-                    <hr class="py-3" />
+                    <hr />
                     <div class="flex justify-between items-center p-5">
                         <h3 class="text-2xl font-semibold text-black font-poppins">
                             Rp. 70,000-135,000
@@ -737,47 +461,47 @@
                         </a>
                     </div>
                 </div>
-                <img src="content/product/ori-merah-removebg-preview.png" alt="Sweet Mix"
-                    class="imgl w-125 h-auto drop-shadow-lg" />
+                <img src="content/product/RumahMente_Pumpkin_seed.png" alt="Rumah Mente Pumpkin Seed"
+                    class="imgr w-125 h-auto drop-shadow-lg" />
             </div>
-            <div class="trapl w-[100%] h-225 z-0 bg-gradient-to-br from-[#F9F75F] to-[#FFCE23] ">
-                <div class="flex flex-col md:flex-row items-center justify-center space-x-40  px-40 py-55">
-                    <img src="content/product/ori-doumix-removebg-preview.png" alt="Sweet Mix"
-                        class="imgr w-125 h-auto drop-shadow-lg" />
-                    <div>
-                        <h2 class="text-4xl font-extrabold mb-6 font-inter uppercase tracking-[7px]">
-                            Rumah Mente Product 2
-                        </h2>
-                        <p class="font-medium font-poppins tracking-[1px] text-[18px] uppercase mt-2">
-                            Kacang mete, Almond, Sunflower, pumpkin,<br />
-                            cranberry, gojiberry, golden raisin.
-                        </p>
-                        <ul class="list-disc list-inside font-bold font-poppins py-5 tracking-[1px]">
-                            <li>Premium Quality.</li>
-                            <li>Tahan 1 tahun dalam kemasan (sebelum kemasan dibuka).</li>
-                            <li>Rasa FRESH & ENAK.</li>
-                            <li>Sudah matang & siap dimakan.</li>
-                            <li>Kacang & biji-bijian dipanggang.</li>
-                        </ul>
-                        <hr />
-                        <div class="flex justify-between items-center p-5">
-                            <h3 class="text-2xl font-semibold text-black font-poppins">
-                                Rp. 70,000-135,000
-                            </h3>
+        </div>
+        <!-- p9 -->
+        <div class="flex flex-col md:flex-row items-center justify-center space-x-10 px-20 h-120 ">
+            <img src="content/product/RumahMente_Roasted_Cashew_Sweet___Spicy_75g-removebg-preview.png" alt="Rumah Mente Sweet & Spicy"
+                class="imgl w-125 h-auto drop-shadow-lg" />
+            <div>
+                <h2 class="text-4xl font-extrabold mb-6 font-inter uppercase tracking-[7px]">
+                    Rumah Mente Sweet & Spicy
+                </h2>
+                <p class="font-medium font-poppins tracking-[1px] text-[18px] uppercase mt-2">
+                    Kacang mete, Almond, Sunflower, pumpkin,<br />
+                    cranberry, gojiberry, golden raisin.
+                </p>
+                <ul class="list-disc list-inside font-bold font-poppins py-5 tracking-[1px]">
+                    <li>Premium Quality.</li>
+                    <li>Tahan 1 tahun dalam kemasan (sebelum kemasan dibuka).</li>
+                    <li>Rasa FRESH & ENAK.</li>
+                    <li>Sudah matang & siap dimakan.</li>
+                    <li>Kacang & biji-bijian dipanggang.</li>
+                </ul>
+                <hr class="py-3" />
+                <div class="flex justify-between items-center p-5">
+                    <h3 class="text-2xl font-semibold text-black font-poppins">
+                        Rp. 70,000-135,000
+                    </h3>
 
-                            <a href="#"
-                                class="flex items-center space-x-3 bg-[#4A2311] text-white font-bold py-3 px-6 rounded-full font-inter">
-                                <span>order now</span>
-                                <img src="content/icon/shopping-cart.svg" alt="shopping cart"
-                                    class="w-6 h-6 brightness-0 invert" />
-                            </a>
-                        </div>
-                    </div>
+                    <a href="#"
+                        class="flex items-center space-x-3 bg-[#4A2311] text-white font-bold py-3 px-6 rounded-full font-inter">
+                        <span>order now</span>
+                        <img src="content/icon/shopping-cart.svg" alt="shopping cart"
+                            class="w-6 h-6 brightness-0 invert" />
+                    </a>
                 </div>
             </div>
-        </div> 
-    </div> 
-    
+        </div>
+    </div>
+    </div>
+    <img src="content/sret/sret-pink.png" alt="sret-pink" class="w-full -bottom-1 relative pt-30 ">
     <footer>
         <div class="w-full p-10 bg-[#FA7369] text-white">
             <img src="/content/logo.png" alt="Orinuts Logo" class="w-32 mb-6" />
@@ -867,48 +591,8 @@
         hamburgerButton.addEventListener("click", openMenu);
         closeMenuButton.addEventListener("click", closeMenu);
 
-
-        // // Menunggu sampai semua konten HTML dimuat
-        document.addEventListener('DOMContentLoaded', () => {
-            
-            // 1. Ambil semua tombol tab dan semua konten tab
-            const tabButtons = document.querySelectorAll('.tab-button');
-            const tabContents = document.querySelectorAll('.tab-content');
-
-            // 2. Tambahkan event listener 'click' ke setiap tombol
-            tabButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    // Ambil nilai dari atribut 'data-tab' (misal: "orinuts")
-                    const targetTabId = button.getAttribute('data-tab');
-
-                    // 3. Sembunyikan semua konten terlebih dahulu
-                    tabContents.forEach(content => {
-                        content.classList.add('hidden');
-                    });
-
-                    // 4. Tampilkan konten yang sesuai dengan tombol yang diklik
-                    // Kita cari elemen dengan ID (misal: "orinuts-content")
-                    const targetContent = document.getElementById(targetTabId + '-content');
-                    if (targetContent) {
-                        targetContent.classList.remove('hidden');
-                    }
-
-                    // 5. Atur style tombol aktif (yang diklik)
-                    // Hapus kelas 'bg-white' (kelas aktif) dari SEMUA tombol
-                    tabButtons.forEach(btn => {
-                        btn.classList.remove('bg-white');
-                    });
-                    
-                    // Tambahkan kelas 'bg-white' HANYA ke tombol yang baru diklik
-                    button.classList.add('bg-white');
-                });
-            });
-
-            // Catatan: Tab default (Orinuts) sudah diatur di HTML 
-            // dengan HANYA 'orinuts-content' yang tidak memiliki kelas 'hidden'
-            // dan tombol 'orinuts' yang memiliki kelas 'bg-white'.
-        });
-
+        // 👇 [DIHAPUS] Script untuk sistem Tab Product Dihapus
+        // document.addEventListener('DOMContentLoaded', () => { ... });
     </script>
 </body>
 
