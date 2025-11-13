@@ -1,3 +1,6 @@
+<?php 
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -83,18 +86,33 @@
             </div>
 
             <nav class="hidden lg:flex py-1 px-2 rounded-full bg-white/30 backdrop-blur-md">
-                <a href="index.html" class="rounded-full py-2 px-8 font-semibold">HOME</a>
-                <a href="about.html" class="rounded-full py-2 px-8 font-semibold hover:text-green-700">ABOUT US</a>
-                <a href="product.html"
+                <a href="index.php" class="rounded-full py-2 px-8 font-semibold">HOME</a>
+                <a href="about.php" class="rounded-full py-2 px-8 font-semibold hover:text-green-700">ABOUT US</a>
+                <a href="product.php"
                     class="bg-white rounded-full py-2 px-8 font-semibold hover:text-green-700">PRODUCT</a>
-                <a href="contact.html" class="rounded-full py-2 px-8 font-semibold hover:text-green-700">CONTACT</a>
+                <a href="contact.php" class="rounded-full py-2 px-8 font-semibold hover:text-green-700">CONTACT</a>
             </nav>
 
             <div class="hidden lg:flex items-center space-x-4">
                 <a href="#">
                     <img src="content/icon/shopping-cart.svg" alt="cart" class="h-7 w-7" />
                 </a>
-                <a href="#" class="bg-white rounded-full py-2 px-8 font-semibold">Login</a>
+                <?php if (!isset($_SESSION['user'])) { ?>
+            <a href="login.php" class="bg-white rounded-full py-2 px-8 font-semibold">Login</a>
+          <?php } else { ?>
+              <a href="profile_user.php">
+                <?php
+                $pdo = require 'koneksi.php';
+                $query = $pdo->prepare("SELECT profile FROM users WHERE id=:id");
+                $query->execute([
+                  'id' => $_SESSION['user']['id']
+                ]);
+                $user = $query->fetch();
+                $base64 = base64_encode($user['profile']);
+                echo "<img src= 'data:image/*;base64, $base64' class=' w-12 rounded-full' alt='Profile Picture'>";
+                ?>
+              </a>
+          <?php } ?>
             </div>
 
             <div class="lg:hidden flex items-center">
@@ -118,13 +136,13 @@
                 </button>
             </div>
 
-            <a href="#"
+            <a href="index.php"
                 class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30">HOME</a>
-            <a href="#" class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30">ABOUT
+            <a href="about.php" class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30">ABOUT
                 US</a>
             <a href="#"
                 class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30">PRODUCT</a>
-            <a href="#" class="block py-3 text-white font-semibold hover:text-green-800">CONTACT</a>
+            <a href="contact.php" class="block py-3 text-white font-semibold hover:text-green-800">CONTACT</a>
             <hr class="my-6 border-white/30" />
             <div class="space-y-4">
                 <a href="#" class="flex items-center space-x-3 py-3 text-white font-semibold hover:text-green-800">

@@ -1,7 +1,7 @@
 <?php
 session_start();
 if(isset($_SESSION['user'])) {
-    header("Location: index.html");
+    header("Location: index.php");
     exit();
 }
 
@@ -14,7 +14,7 @@ if(!empty($_POST)) {
     $user = $query->fetch();
     if(!$user) {
       $hasil = false;
-    } elseif (sha1($_POST['password']) !== $user['password']) {
+    } elseif (sha1($_POST['password']) != $user['password']) {
       $hasil = false;
     } else {
       $hasil = true;

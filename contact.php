@@ -1,3 +1,31 @@
+<?php
+session_start();
+$error = '';
+if (!empty($_POST)) {
+  if (!isset($_SESSION['user'])) {
+    echo "<script>alert('Anda harus login sebelum mengirim pesan!')</script>";
+  } else {
+    if ($_POST['message'] === '') {
+      $error = 'Pesan tidak boleh kosong!';
+    } else {
+      $pdo = require 'koneksi.php';
+      $query = $pdo->prepare("INSERT INTO messages (message, time, id_user) VALUES (:message, now(), :id_user)");
+      $query->execute([
+        'message' => $_POST['message'],
+        'id_user' => $_SESSION['user']['id']
+      ]);
+      $msg = json_encode("Pesanmu: " . $_POST['message'] . " berhasil dikirim ke Admin");
+      echo "<script>
+          alert($msg);
+          window.location.href = window.location.href; // reload halaman
+      </script>";
+
+      exit; 
+
+    }
+  }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -73,9 +101,9 @@
       </div>
 
       <nav class="hidden lg:flex py-1 px-2 rounded-full bg-white/30 backdrop-blur-md">
-        <a href="index.html" class="rounded-full py-2 px-8 font-semibold">HOME</a>
-        <a href="about.html" class="rounded-full py-2 px-8 font-semibold hover:text-green-700">ABOUT US</a>
-        <a href="product.html" class="rounded-full py-2 px-8 font-semibold hover:text-green-700">PRODUCT</a>
+        <a href="index.php" class="rounded-full py-2 px-8 font-semibold">HOME</a>
+        <a href="about.php" class="rounded-full py-2 px-8 font-semibold hover:text-green-700">ABOUT US</a>
+        <a href="product.php" class="rounded-full py-2 px-8 font-semibold hover:text-green-700">PRODUCT</a>
         <p class="bg-white rounded-full py-2 px-8 font-semibold hover:text-green-700">
           CONTACT
         </p>
@@ -85,7 +113,22 @@
         <a href="#">
           <img src="content/icon/shopping-cart.svg" alt="cart" class="h-7 w-7" />
         </a>
-        <a href="#" class="bg-white rounded-full py-2 px-8 font-semibold">Login</a>
+        <?php if (!isset($_SESSION['user'])) { ?>
+          <a href="login.php" class="bg-white rounded-full py-2 px-8 font-semibold">Login</a>
+        <?php } else { ?>
+          <a href="profile_user.php">
+            <?php
+            $pdo = require 'koneksi.php';
+            $query = $pdo->prepare("SELECT profile FROM users WHERE id=:id");
+            $query->execute([
+              'id' => $_SESSION['user']['id']
+            ]);
+            $user = $query->fetch();
+            $base64 = base64_encode($user['profile']);
+            echo "<img src= 'data:image/*;base64, $base64' class=' w-12 rounded-full' alt='Profile Picture'>";
+            ?>
+          </a>
+        <?php } ?>
       </div>
 
       <div class="lg:hidden flex items-center">
@@ -109,9 +152,9 @@
         </button>
       </div>
 
-      <a href="#" class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30">HOME</a>
-      <a href="#" class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30">ABOUT US</a>
-      <a href="#" class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30">PRODUCT</a>
+      <a href="index.php" class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30">HOME</a>
+      <a href="about.php" class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30">ABOUT US</a>
+      <a href="product.php" class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30">PRODUCT</a>
       <a href="#" class="block py-3 text-white font-semibold hover:text-green-800">CONTACT</a>
       <hr class="my-6 border-white/30" />
       <div class="space-y-4">
@@ -152,7 +195,7 @@
   <section class="relative w-full py-16 lg:py-24 overflow-hidden">
 
     <div class_="" absolute="" top-0="" left-0="" w-1="" 2="" h-1="" bg-orange-300="" 20="" blur-3xl=""
-      -translate-x-1="" 4="" -translate-y-1="" z-0="" opacity-50"="" aria-hidden="true"></div>
+      -translate-x-1="" 4="" -translate-y-1="" z-0="" opacity-50="" aria-hidden="true"></div>
 
     <div class="container mx-auto px-6 md:px-16 relative z-10">
 
@@ -196,23 +239,16 @@
           <p class="mt-2 text-sm text-gray-500">
             Apapun yang ingin Anda sampaikan pertanyaan, masukan, atau sekadar salam tuliskan di bawah ini.
           </p>
-
-          <form class="mt-8 space-y-6 h-165">
-            <div>
-              <label for="email" class="block text-lg font-semibold text-gray-700 mb-2">Email</label>
-              <input type="email" id="email"
-                class="mt-1 block w-full rounded-2xl border border-gray-300 bg-white p-4 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500" />
-            </div>
-
-            <div>
-              <label for="name" class="block text-lg font-semibold text-gray-700 mb-2">Name</label>
-              <input type="text" id="name"
-                class="mt-1 block w-full rounded-2xl border border-gray-300 bg-white p-4 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500" />
-            </div>
+          <?php
+          if ($error) {
+            echo "<p class=' text-red-500 font-bold'>" . $error . "</p>";
+          }
+          ?>
+          <form class=" space-y-6 h-auto" action="" method="post">
 
             <div>
               <label for="message" class="block text-lg font-semibold text-gray-700 mb-2">Message</label>
-              <textarea id="message" rows="6"
+              <textarea id="message" name="message" rows="6"
                 class="mt-1 block w-full rounded-2xl border border-gray-300 bg-white p-4 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"></textarea>
             </div>
 
@@ -311,6 +347,7 @@
     function openMenu() {
       mobileMenu.classList.remove("translate-x-full");
     }
+
     function closeMenu() {
       mobileMenu.classList.add("translate-x-full");
     }

@@ -1,3 +1,6 @@
+<?php 
+  session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -53,21 +56,21 @@
         <nav
           class="hidden lg:flex py-1 px-2 rounded-full bg-white/30 backdrop-blur-md"
         >
-          <a href="index.html" class="rounded-full py-2 px-8 font-semibold"
+          <a href="index.php" class="rounded-full py-2 px-8 font-semibold"
             >HOME</a
           >
           <a
-            href="about.html"
+            href="about.php"
             class="bg-white rounded-full py-2 px-8 font-semibold hover:text-green-700"
             >ABOUT US</a
           >
           <a
-            href="product.html  "
+            href="product.php  "
             class="rounded-full py-2 px-8 font-semibold hover:text-green-700"
             >PRODUCT</a
           >
           <a
-            href="contact.html"
+            href="contact.php"
             class="rounded-full py-2 px-8 font-semibold hover:text-green-700"
             >CONTACT</a
           >
@@ -82,9 +85,22 @@
               class="h-7 w-7"
             />
           </a>
-          <a href="#" class="bg-white rounded-full py-2 px-8 font-semibold"
-            >Login</a
-          >
+          <?php if (!isset($_SESSION['user'])) { ?>
+            <a href="login.php" class="bg-white rounded-full py-2 px-8 font-semibold">Login</a>
+          <?php } else { ?>
+              <a href="profile_user.php">
+                <?php
+                $pdo = require 'koneksi.php';
+                $query = $pdo->prepare("SELECT profile FROM users WHERE id=:id");
+                $query->execute([
+                  'id' => $_SESSION['user']['id']
+                ]);
+                $user = $query->fetch();
+                $base64 = base64_encode($user['profile']);
+                echo "<img src= 'data:image/*;base64, $base64' class=' w-12 rounded-full' alt='Profile Picture'>";
+                ?>
+              </a>
+          <?php } ?>
         </div>
 
         <!-- Hamburger -->
@@ -115,7 +131,7 @@
         </div>
 
         <a
-          href="#"
+          href="index.php"
           class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30"
           >HOME</a
         >
@@ -125,12 +141,12 @@
           >ABOUT US</a
         >
         <a
-          href="#"
+          href="product.php"
           class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30"
           >PRODUCT</a
         >
         <a
-          href="#"
+          href="contact.php"
           class="block py-3 text-white font-semibold hover:text-green-800"
           >CONTACT</a
         >
