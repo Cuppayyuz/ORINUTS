@@ -88,7 +88,7 @@
           <?php if (!isset($_SESSION['user'])) { ?>
             <a href="login.php" class="bg-white rounded-full py-2 px-8 font-semibold">Login</a>
           <?php } else { ?>
-              <a href="profile_user.php">
+              <a href="profile_user.php?id=<?php echo htmlspecialchars($_SESSION['user']['id']); ?>">
                 <?php
                 $pdo = require 'koneksi.php';
                 $query = $pdo->prepare("SELECT profile FROM users WHERE id=:id");

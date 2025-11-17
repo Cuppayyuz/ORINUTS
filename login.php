@@ -23,9 +23,9 @@ if(!empty($_POST)) {
         'username' => $user['username'],
         'email' => $user['email']
       );
+      header("location: index.php");
+      exit();
     }
-    header("location: index.php");
-    exit();
   }
 ?>
 <!DOCTYPE html>

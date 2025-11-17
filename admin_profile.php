@@ -24,8 +24,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       'profile' => file_get_contents($_FILES['profile']['tmp_name']),
       'id' => $_SESSION['admin']['id']
     ));
-    unset($_FILES);
-    echo "<script>alert('Profile berhasil diubah');</script>";
+    unset($_FILES['profile']);
+    echo "<script>
+    alert('Profile berhasil diubah');
+    window.location.href = window.location.href;
+    </script>";
+    exit;
   }
 }
 
