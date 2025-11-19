@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Detail Produk - Orinuts Roasted Cashew</title>
-    <link rel="stylesheet" href="/src/outputail.css" /> 
+    <link rel="stylesheet" href="src/outputail.css" /> 
     <style>
         /* Gaya tambahan yang sudah Anda sediakan */
         header {
@@ -107,9 +107,17 @@
             </div>
         </div>
     </div>
+    <!-- Main -->
+     <?php 
+     if (isset($_GET['id']) && !empty($_GET['id'])) {
+        $pdo = require 'koneksi.php';
+        $query = $pdo->prepare("SELECT * FROM products WHERE id=:id");
+        $query->execute(['id' => $_GET['id']]);
+        $data = $query->fetch();
+     ?>
     <main class="container mx-auto px-6 md:px-16 pt-8 pb-16">
         <div class="mb-6">
-            <a href="#" class="text-sm text-gray-600 hover:text-green-700 flex items-center space-x-1">
+            <a href="all-product.php" class="text-sm text-gray-600 hover:text-green-700 flex items-center space-x-1">
                 <span class="text-xl">&larr;</span>
                 <span>PRODUCT</span>
             </a>
@@ -118,25 +126,21 @@
         <section class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20">
             <div class="space-y-4">
                 <div class="p-6 bg-white rounded-xl shadow-lg border border-gray-200">
-                    <img src="content/product/ori-roastedcashew-removebg-preview.png" alt="Orinuts Roasted Cashew"
+                    <img src="data:image/*;base64, <?= base64_encode($data['image1']) ?>" alt="<?= $data['nama_produk'] ?>"
                         class="w-full h-auto rounded-lg object-contain" />
                 </div>
                 <div class="flex space-x-4 justify-center">
-                    <img src="content/product/ori-4mighty-removebg-preview.png" alt="Thumbnail 1"
+                    <img src="content/product/Orinuts_4_Mighty_Nuts_200g-removebg-preview.png" alt="Thumbnail 1"
                         class="w-20 h-20 md:w-24 md:h-24 object-cover border-2 border-green-700 p-1 rounded-lg cursor-pointer" />
-                    <img src="content/product/ori-4mighty-removebg-preview.png" alt="Thumbnail 2"
-                        class="w-20 h-20 md:w-24 md:h-24 object-cover border border-gray-300 p-1 rounded-lg cursor-pointer hover:border-green-700" />
-                    <img src="content/product/ori-4mighty-removebg-preview.png" alt="Thumbnail 3"
-                        class="w-20 h-20 md:w-24 md:h-24 object-cover border border-gray-300 p-1 rounded-lg cursor-pointer hover:border-green-700" />
+                    
                 </div>
             </div>
 
             <div class="space-y-6">
-                <h1 id="product-title" class="text-3xl md:text-4xl font-bold text-gray-800">ORINUTS KACANG PANGGANG ROASTED CASHEW</h1>
+                <h1 id="product-title" class="text-3xl md:text-4xl font-bold text-gray-800"><?= $data['nama_produk'] ?></h1>
 
                 <div class="space-y-2">
-                    <p class="text-lg text-gray-500 line-through">Rp35.000</p>
-                    <p id="product-price" class="text-4xl font-extrabold text-green-700">Rp30.000</p>
+                    <p id="product-price" class="text-4xl font-extrabold text-green-700">Rp<?= number_format($data['harga'], 0, ',', '.') ?></p>
                 </div>
 
                 <div class="flex space-x-3" id="gramasi-options">
@@ -191,15 +195,7 @@
                                 &#9660;
                             </span>
                         </summary>
-                        <ul class="list-disc pl-5 pt-3 text-gray-700 space-y-1 text-sm">
-                            <li>Premium Quality.</li>
-                            <li>Tahan 1 tahun dalam kemasan (sebelum kemasan dibuka).</li>
-                            <li>Kacang FRESH & ENAK.</li>
-                            <li>Sudah matang & siap dimakan.</li>
-                            <li>Good Source of Fiber, Gluten Free, No Trans Fat, No Artificial Ingredients.</li>
-                            <li>Sertifikat DINKES P-IRT 2053578161825-26</li>
-                            <li>Diproduksi oleh: Orinuts, Surabaya.</li>
-                        </ul>
+                        <p><?= $data['deskripsi'] ?></p>
                     </details>
 
                     <details class="group">
@@ -380,6 +376,7 @@
             </div>
         </section>
     </main>
+    <?php } ?>
     <img src="content/sret-krem.png" alt="sret krem" class=" w-full rota">
     <footer class="bg-[#F4E9BB] mt-16 py-10 border-t ">
         <div
