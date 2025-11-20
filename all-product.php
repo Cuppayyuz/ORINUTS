@@ -194,7 +194,13 @@ session_start();
                 $sql = "SELECT * FROM products";
                 $query = $pdo->prepare($sql);
                 $query->execute();
-                while ($produk = $query->fetch()) {
+                $produks = $query->fetchAll();
+                foreach ($produks as $produk) {
+                    // rating
+                    $sqlrata = "SELECT ROUND(AVG(rating), 1) as avg_rating FROM reviews WHERE produk_id = ?";
+                    $queryrata = $pdo->prepare($sqlrata);
+                    $queryrata->execute([$produk['id']]);
+                    $rataRata = $queryrata->fetch();
                     $base64 = base64_encode($produk['image1']);
                 ?>
                     <div class="product-card bg-stone-50 rounded-xl shadow-lg p-4 flex flex-col transition-all duration-300 hover:shadow-xl"
@@ -211,7 +217,7 @@ session_start();
                                             d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.847 5.698h5.998c.969 0 1.371 1.24.588 1.81l-4.853 3.53a.997.997 0 00-.364 1.118l1.847 5.698c.3.921-.755 1.688-1.539 1.118l-4.852-3.53a.997.997 0 00-1.176 0l-4.852 3.53c-.784.57-1.838-.197-1.539-1.118l1.847-5.698a.997.997 0 00-.364-1.118L.503 10.435c-.783-.57-.38-1.81.588-1.81h5.998L9.049 2.927z">
                                         </path>
                                     </svg>
-                                    <span class="text-sm font-medium text-gray-600">5.0</span>
+                                    <span class="text-sm font-medium text-gray-600"><?= $rataRata['avg_rating'] ?></span>
                                 </div>
                             </div>
                         </div>
