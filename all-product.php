@@ -234,13 +234,14 @@ session_start();
                                 </svg>
                                 <span>lihat produk</span>
                             </a>
-                            <button
+                            <a
+                                href="cart-handler.php?qty=1&id=<?= $produk['id'] ?>&url=all-product"
                                 class="flex-1 bg-amber-800 text-white py-2.5 px-4 rounded-full text-sm font-semibold flex items-center justify-center space-x-1.5 hover:bg-amber-900 transition-colors">
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16">
                                     <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
                                 </svg>
                                 <span>order now</span>
-                            </button>
+                            </a>
                         </div>
                     </div>
                 <?php } ?>

@@ -151,7 +151,7 @@ $rataRata = $queryrata->fetch();
             <div class="hidden lg:flex items-center space-x-4">
                 <a href="keranjang.php" class="relative">
                     <img src="content/icon/shopping-cart.svg" alt="cart" class="h-7 w-7" />
-                    <span id="cart-count-badge" class="hidden absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    <span id="cartCount" class="hidden absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
                 </a>
                 <?php if (!isset($_SESSION['user'])) { ?>
                     <a href="login.php" class="bg-white rounded-full py-2 px-8 font-semibold">Login</a>
@@ -280,22 +280,21 @@ $rataRata = $queryrata->fetch();
                         <div class="space-y-2">
                             <p id="product-price" class="text-4xl font-extrabold text-green-700">Rp<?= number_format($data['harga'], 0, ',', '.') ?></p>
                         </div>
-
                         <div class="flex items-center space-x-6">
                             <div class="flex items-center border border-gray-300 rounded-full bg-white">
                                 <button id="decrement"
                                     class="p-3 text-xl font-bold text-gray-600 hover:text-green-700 rounded-l-full">&minus;</button>
-                                <input type="number" id="quantity" value="1" min="1"
+                                <input type="number" name="qty" id="quantity" value="1" min="1"
                                     class="w-10 text-center border-x border-gray-200 focus:outline-none text-lg bg-white" />
                                 <button id="increment"
                                     class="p-3 text-xl font-bold text-gray-600 hover:text-green-700 rounded-r-full">&plus;</button>
                             </div>
-
-                            <button
+                            <a
+                                id="addToCart"
                                 class="flex-1 max-w-xs py-3 px-6 bg-amber-800 text-white rounded-full font-bold shadow-md hover:bg-amber-700 transition duration-150 flex items-center justify-center space-x-2">
                                 <img src="content/icon/shopping-cart.svg" alt="Cart Icon" class="h-5 w-5 invert" />
                                 <span>Add to cart</span>
-                            </button>
+                            </a>
                         </div>
 
                         <button
@@ -758,6 +757,7 @@ $rataRata = $queryrata->fetch();
 
         // Initial validation
         validateForm();
+
         // Helper function untuk format Rupiah
         const formatRupiah = (angka) => {
             return 'Rp' + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -795,10 +795,16 @@ $rataRata = $queryrata->fetch();
         const quantityInput = document.getElementById("quantity");
         const incrementButton = document.getElementById("increment");
         const decrementButton = document.getElementById("decrement");
+        const addToCartBtn = document.getElementById("addToCart");
+
+        function updateHref() {
+            addToCartBtn.href = `cart-handler.php?qty=${quantityInput.value}&id=<?= $_GET['id'] ?>&url=detail-product`;
+        }
 
         incrementButton.addEventListener("click", () => {
             let currentValue = parseInt(quantityInput.value);
             quantityInput.value = currentValue + 1;
+            updateHref();
         });
 
         decrementButton.addEventListener("click", () => {
@@ -806,13 +812,18 @@ $rataRata = $queryrata->fetch();
             if (currentValue > 1) {
                 quantityInput.value = currentValue - 1;
             }
+            updateHref();
         });
 
         quantityInput.addEventListener('change', (e) => {
             if (parseInt(e.target.value) < 1 || isNaN(parseInt(e.target.value))) {
                 e.target.value = 1;
             }
+            updateHref();
         });
+
+        // Inisialisasi pertama kali saat halaman load
+        updateHref();
     </script>
 </body>
 

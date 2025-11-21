@@ -4,8 +4,20 @@ if (!$_SESSION['admin']) {
   header('Location: index.php');
   exit();
 }
-
+// Cek kode unik
 $pdo = require 'koneksi.php';
+$stmt = $pdo->query("SELECT produk_kode FROM products ORDER BY produk_kode DESC LIMIT 1");
+$last = $stmt->fetchColumn();
+
+if (!$last) {
+  $newCode = "P001";
+} else {
+  $number = (int) substr($last, 1);
+  $number++;
+
+  $newCode = "P" . str_pad($number, 3, "0", STR_PAD_LEFT);
+}
+
 $error = '';
 $success = '';
 
@@ -15,11 +27,12 @@ if (isset($_POST['submitProduk'])) {
     $image1 = !empty($_FILES['image']['tmp_name'][0]) ? file_get_contents($_FILES['image']['tmp_name'][0]) : null;
     $image2 = !empty($_FILES['image']['tmp_name'][1]) ? file_get_contents($_FILES['image']['tmp_name'][1]) : null;
     $image3 = !empty($_FILES['image']['tmp_name'][2]) ? file_get_contents($_FILES['image']['tmp_name'][2]) : null;
-    
-    $sql = "INSERT INTO products (nama_produk, harga, varian, kategori, deskripsi, stok, image1, image2, image3) 
-            VALUES (:nama_produk, :harga, :varian, :kategori, :deskripsi, :stok, :image1, :image2, :image3)";
+
+    $sql = "INSERT INTO products (produk_kode, nama_produk, harga, varian, kategori, deskripsi, stok, image1, image2, image3) 
+            VALUES (:produk_kode, :nama_produk, :harga, :varian, :kategori, :deskripsi, :stok, :image1, :image2, :image3)";
     $query = $pdo->prepare($sql);
     $query->execute([
+      "produk_kode" => $newCode,
       "nama_produk" => $_POST['nama_produk'],
       "harga" => $_POST['harga_jual'],
       "varian" => (int)$_POST['berat'],
@@ -30,7 +43,7 @@ if (isset($_POST['submitProduk'])) {
       "image2" => $image2,
       "image3" => $image3
     ]);
-    
+
     header('Location: admin_product.php?success=tambah');
     exit();
   } catch (Exception $e) {
@@ -42,7 +55,7 @@ if (isset($_POST['submitProduk'])) {
 if (isset($_POST['submitEdit'])) {
   try {
     $productId = $_POST['product_id'];
-    
+
     // Cek apakah ada gambar baru
     $updateImage = "";
     $params = [
@@ -54,7 +67,7 @@ if (isset($_POST['submitEdit'])) {
       "stok" => $_POST['stok'],
       "id" => $productId
     ];
-    
+
     if (!empty($_FILES['image']['tmp_name'][0])) {
       $image1 = file_get_contents($_FILES['image']['tmp_name'][0]);
       $updateImage .= ", image1 = :image1";
@@ -70,7 +83,7 @@ if (isset($_POST['submitEdit'])) {
       $updateImage .= ", image3 = :image3";
       $params['image3'] = $image3;
     }
-    
+
     $sql = "UPDATE products SET 
             nama_produk = :nama_produk, 
             harga = :harga, 
@@ -80,10 +93,10 @@ if (isset($_POST['submitEdit'])) {
             stok = :stok
             {$updateImage}
             WHERE id = :id";
-    
+
     $query = $pdo->prepare($sql);
     $query->execute($params);
-    
+
     header('Location: admin_product.php?success=edit');
     exit();
   } catch (Exception $e) {
@@ -97,7 +110,7 @@ if (isset($_GET['hapus'])) {
     $sql = "DELETE FROM products WHERE id = :id";
     $query = $pdo->prepare($sql);
     $query->execute(['id' => $_GET['hapus']]);
-    
+
     header('Location: admin_product.php?success=hapus');
     exit();
   } catch (Exception $e) {
@@ -185,179 +198,179 @@ if (isset($_GET['edit'])) {
         <span class="text-white text-xl ml-4">👤</span>
       </div>
     </header>
-    
+
     <!-- Alert Success -->
     <?php if (isset($_GET['success'])): ?>
       <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-        <?php 
-          if ($_GET['success'] == 'tambah') echo 'Produk berhasil ditambahkan!';
-          else if ($_GET['success'] == 'edit') echo 'Produk berhasil diupdate!';
-          else if ($_GET['success'] == 'hapus') echo 'Produk berhasil dihapus!';
+        <?php
+        if ($_GET['success'] == 'tambah') echo 'Produk berhasil ditambahkan!';
+        else if ($_GET['success'] == 'edit') echo 'Produk berhasil diupdate!';
+        else if ($_GET['success'] == 'hapus') echo 'Produk berhasil dihapus!';
         ?>
       </div>
     <?php endif; ?>
-    
+
     <!-- Alert Error -->
     <?php if ($error): ?>
       <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
         <?php echo $error; ?>
       </div>
     <?php endif; ?>
-    
+
     <!-- Tombol Tambah Produk -->
     <?php if (!isset($_GET['tambah']) && !isset($_GET['edit'])): ?>
-    <div class="flex justify-end mb-5">
-      <a href="?tambah=1" class="bg-[#8D5A40] text-white px-6 py-3 rounded-full hover:bg-[#8D5A40]/90 transition duration-150 shadow-lg flex items-center">
-        <span class="text-xl mr-2">+</span> Tambah Produk
-      </a>
-    </div>
+      <div class="flex justify-end mb-5">
+        <a href="?tambah=1" class="bg-[#8D5A40] text-white px-6 py-3 rounded-full hover:bg-[#8D5A40]/90 transition duration-150 shadow-lg flex items-center">
+          <span class="text-xl mr-2">+</span> Tambah Produk
+        </a>
+      </div>
     <?php endif; ?>
 
     <!-- Daftar Produk -->
     <?php if (!isset($_GET['tambah']) && !isset($_GET['edit'])): ?>
-    <div class="bg-[#F7F7F7] p-6 rounded-xl shadow-lg">
-      <div class="grid grid-cols-7 gap-4 font-bold uppercase text-xs text-[#8D5A40] border-b-2 border-[#8D5A40] pb-3 mb-4">
-        <div class="col-span-1">Picture</div>
-        <div class="col-span-3">Nama Produk</div>
-        <div class="col-span-1 text-center">Harga</div>
-        <div class="col-span-1 text-center">Stok</div>
-        <div class="col-span-1 text-center">Aksi</div>
-      </div>
+      <div class="bg-[#F7F7F7] p-6 rounded-xl shadow-lg">
+        <div class="grid grid-cols-7 gap-4 font-bold uppercase text-xs text-[#8D5A40] border-b-2 border-[#8D5A40] pb-3 mb-4">
+          <div class="col-span-1">Picture</div>
+          <div class="col-span-3">Nama Produk</div>
+          <div class="col-span-1 text-center">Harga</div>
+          <div class="col-span-1 text-center">Stok</div>
+          <div class="col-span-1 text-center">Aksi</div>
+        </div>
 
-      <div class="space-y-3 pb-20">
-        <?php foreach ($products as $index => $product): ?>
-        <div class="grid grid-cols-7 gap-4 items-center <?php echo $index % 2 == 0 ? 'bg-[#D0A37D] bg-opacity-70' : 'bg-[#D0A37D] bg-opacity-40'; ?> p-3 rounded-lg shadow-sm text-[#8D5A40] font-medium">
-          <div class="col-span-1">
-            <?php if ($product['image1']): ?>
-              <img src="data:image/jpeg;base64,<?php echo base64_encode($product['image1']); ?>" alt="<?php echo htmlspecialchars($product['nama_produk']); ?>" class="w-10 h-10 object-cover rounded shadow" />
-            <?php else: ?>
-              <img src="https://dummyimage.com/40x40/fff/8D5A40&text=No+Img" alt="No Image" class="w-10 h-10 object-cover rounded shadow" />
-            <?php endif; ?>
-          </div>
-          <div class="col-span-3"><?php echo htmlspecialchars($product['nama_produk']); ?></div>
-          <div class="col-span-1 text-center">Rp <?php echo number_format($product['harga'], 0, ',', '.'); ?></div>
-          <div class="col-span-1 text-center"><?php echo $product['stok']; ?></div>
-          <div class="col-span-1 flex justify-center space-x-2 text-sm">
-            <a href="?edit=<?php echo $product['id']; ?>" class="text-green-800 hover:text-green-600 flex items-center">
-              <span class="mr-1">📝</span> edit
-            </a>
-            <a href="?hapus=<?php echo $product['id']; ?>" onclick="return confirm('Yakin ingin menghapus produk ini?')" class="text-red-700 hover:text-red-500 flex items-center">
-              <span class="mr-1">🗑️</span> hapus
-            </a>
-          </div>
+        <div class="space-y-3 pb-20">
+          <?php foreach ($products as $index => $product): ?>
+            <div class="grid grid-cols-7 gap-4 items-center <?php echo $index % 2 == 0 ? 'bg-[#D0A37D] bg-opacity-70' : 'bg-[#D0A37D] bg-opacity-40'; ?> p-3 rounded-lg shadow-sm text-[#8D5A40] font-medium">
+              <div class="col-span-1">
+                <?php if ($product['image1']): ?>
+                  <img src="data:image/jpeg;base64,<?php echo base64_encode($product['image1']); ?>" alt="<?php echo htmlspecialchars($product['nama_produk']); ?>" class="w-10 h-10 object-cover rounded shadow" />
+                <?php else: ?>
+                  <img src="https://dummyimage.com/40x40/fff/8D5A40&text=No+Img" alt="No Image" class="w-10 h-10 object-cover rounded shadow" />
+                <?php endif; ?>
+              </div>
+              <div class="col-span-3"><?php echo htmlspecialchars($product['nama_produk']); ?></div>
+              <div class="col-span-1 text-center">Rp <?php echo number_format($product['harga'], 0, ',', '.'); ?></div>
+              <div class="col-span-1 text-center"><?php echo $product['stok']; ?></div>
+              <div class="col-span-1 flex justify-center space-x-2 text-sm">
+                <a href="?edit=<?php echo $product['id']; ?>" class="text-green-800 hover:text-green-600 flex items-center">
+                  <span class="mr-1">📝</span> edit
+                </a>
+                <a href="?hapus=<?php echo $product['id']; ?>" onclick="return confirm('Yakin ingin menghapus produk ini?')" class="text-red-700 hover:text-red-500 flex items-center">
+                  <span class="mr-1">🗑️</span> hapus
+                </a>
+              </div>
+            </div>
+          <?php endforeach; ?>
+
+          <?php if (empty($products)): ?>
+            <div class="text-center text-gray-500 py-8">
+              Belum ada produk. Silakan tambah produk baru.
+            </div>
+          <?php endif; ?>
         </div>
-        <?php endforeach; ?>
-        
-        <?php if (empty($products)): ?>
-        <div class="text-center text-gray-500 py-8">
-          Belum ada produk. Silakan tambah produk baru.
-        </div>
-        <?php endif; ?>
       </div>
-    </div>
     <?php endif; ?>
 
     <!-- Form Tambah/Edit Produk -->
     <?php if (isset($_GET['tambah']) || isset($_GET['edit'])): ?>
-    <div class="bg-[#F7F7F7] p-6 rounded-xl shadow-lg max-w-4xl">
-      <h2 class="text-2xl font-bold text-[#8D5A40] mb-6">
-        <?php echo isset($_GET['edit']) ? 'Edit Produk' : 'Tambah Produk Baru'; ?>
-      </h2>
+      <div class="bg-[#F7F7F7] p-6 rounded-xl shadow-lg max-w-4xl">
+        <h2 class="text-2xl font-bold text-[#8D5A40] mb-6">
+          <?php echo isset($_GET['edit']) ? 'Edit Produk' : 'Tambah Produk Baru'; ?>
+        </h2>
 
-      <form id="formProduk" action="" method="post" enctype="multipart/form-data">
-        <?php if (isset($_GET['edit'])): ?>
-          <input type="hidden" name="product_id" value="<?php echo $editProduct['id']; ?>">
-        <?php endif; ?>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <!-- Kolom Kiri -->
-          <div>
-            <!-- Foto Produk -->
-            <div class="mb-4">
-              <label class="block text-sm font-medium text-gray-700 mb-2">Foto Produk (Maks. 3)</label>
-              <div id="foto-uploader" class="border-2 border-dashed border-gray-400 p-6 text-center rounded-lg cursor-pointer hover:border-[#8D5A40] transition duration-150">
-                <span class="text-[#8D5A40] text-xl">+</span>
-                <p class="text-sm text-gray-500">Klik untuk Tambah Foto</p>
-                <input type="file" name="image[]" id="foto-input" class="hidden" multiple accept="image/*" />
+        <form id="formProduk" action="" method="post" enctype="multipart/form-data">
+          <?php if (isset($_GET['edit'])): ?>
+            <input type="hidden" name="product_id" value="<?php echo $editProduct['id']; ?>">
+          <?php endif; ?>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Kolom Kiri -->
+            <div>
+              <!-- Foto Produk -->
+              <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Foto Produk (Maks. 3)</label>
+                <div id="foto-uploader" class="border-2 border-dashed border-gray-400 p-6 text-center rounded-lg cursor-pointer hover:border-[#8D5A40] transition duration-150">
+                  <span class="text-[#8D5A40] text-xl">+</span>
+                  <p class="text-sm text-gray-500">Klik untuk Tambah Foto</p>
+                  <input type="file" name="image[]" id="foto-input" class="hidden" multiple accept="image/*" />
+                </div>
+                <div id="foto-preview-container" class="mt-4 flex flex-wrap gap-4"></div>
+                <span id="error-foto" class="text-red-600 text-sm hidden">Minimal 1 foto harus diupload</span>
               </div>
-              <div id="foto-preview-container" class="mt-4 flex flex-wrap gap-4"></div>
-              <span id="error-foto" class="text-red-600 text-sm hidden">Minimal 1 foto harus diupload</span>
+
+              <!-- Nama Produk -->
+              <div class="mb-4">
+                <label for="nama_produk" class="block text-sm font-medium text-gray-700">Nama Produk *</label>
+                <input type="text" id="nama_produk" name="nama_produk" value="<?php echo $editProduct ? htmlspecialchars($editProduct['nama_produk']) : ''; ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:border-[#8D5A40] focus-ring-primary-custom" />
+                <span id="error-nama" class="text-red-600 text-sm hidden">Nama produk harus diisi</span>
+              </div>
+
+              <!-- Kategori -->
+              <div class="mb-4">
+                <label for="kategori" class="block text-sm font-medium text-gray-700">Kategori *</label>
+                <select id="kategori" name="kategori" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:border-[#8D5A40] focus-ring-primary-custom">
+                  <option value="Orinuts" <?php echo ($editProduct && $editProduct['kategori'] == 'Orinuts') ? 'selected' : ''; ?>>Orinuts</option>
+                  <option value="Orithin" <?php echo ($editProduct && $editProduct['kategori'] == 'Orithin') ? 'selected' : ''; ?>>Orithin</option>
+                  <option value="Orimond" <?php echo ($editProduct && $editProduct['kategori'] == 'Orimond') ? 'selected' : ''; ?>>Orimond</option>
+                  <option value="Rumah Mente" <?php echo ($editProduct && $editProduct['kategori'] == 'Rumah Mente') ? 'selected' : ''; ?>>Rumah Mente</option>
+                </select>
+              </div>
             </div>
 
-            <!-- Nama Produk -->
-            <div class="mb-4">
-              <label for="nama_produk" class="block text-sm font-medium text-gray-700">Nama Produk *</label>
-              <input type="text" id="nama_produk" name="nama_produk" value="<?php echo $editProduct ? htmlspecialchars($editProduct['nama_produk']) : ''; ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:border-[#8D5A40] focus-ring-primary-custom" />
-              <span id="error-nama" class="text-red-600 text-sm hidden">Nama produk harus diisi</span>
-            </div>
+            <!-- Kolom Kanan -->
+            <div>
+              <!-- Harga Jual -->
+              <div class="mb-4">
+                <label for="harga_jual" class="block text-sm font-medium text-gray-700">Harga Jual *</label>
+                <input type="number" id="harga_jual" name="harga_jual" value="<?php echo $editProduct ? $editProduct['harga'] : ''; ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:border-[#8D5A40] focus-ring-primary-custom" />
+                <span id="error-harga" class="text-red-600 text-sm hidden">Harga harus diisi dan lebih dari 0</span>
+              </div>
 
-            <!-- Kategori -->
-            <div class="mb-4">
-              <label for="kategori" class="block text-sm font-medium text-gray-700">Kategori *</label>
-              <select id="kategori" name="kategori" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:border-[#8D5A40] focus-ring-primary-custom">
-                <option value="Orinuts" <?php echo ($editProduct && $editProduct['kategori'] == 'Orinuts') ? 'selected' : ''; ?>>Orinuts</option>
-                <option value="Orithin" <?php echo ($editProduct && $editProduct['kategori'] == 'Orithin') ? 'selected' : ''; ?>>Orithin</option>
-                <option value="Orimond" <?php echo ($editProduct && $editProduct['kategori'] == 'Orimond') ? 'selected' : ''; ?>>Orimond</option>
-                <option value="Rumah Mente" <?php echo ($editProduct && $editProduct['kategori'] == 'Rumah Mente') ? 'selected' : ''; ?>>Rumah Mente</option>
-              </select>
+              <!-- Stok -->
+              <div class="mb-4">
+                <label for="stok" class="block text-sm font-medium text-gray-700">Stok *</label>
+                <input type="number" id="stok" name="stok" value="<?php echo $editProduct ? $editProduct['stok'] : ''; ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:border-[#8D5A40] focus-ring-primary-custom" />
+                <span id="error-stok" class="text-red-600 text-sm hidden">Stok harus diisi dan tidak boleh negatif</span>
+              </div>
+
+              <!-- Varian Berat -->
+              <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Varian Berat *</label>
+                <div class="flex flex-wrap gap-2">
+                  <label class="flex items-center space-x-2 bg-gray-100 p-2 rounded-lg cursor-pointer hover:bg-gray-200 transition">
+                    <input type="radio" name="berat" value="75" <?php echo ($editProduct && $editProduct['varian'] == '75gr') ? 'checked' : ''; ?> class="text-[#8D5A40] focus:ring-[#8D5A40]" />
+                    <span class="text-sm">75 gram</span>
+                  </label>
+                  <label class="flex items-center space-x-2 bg-gray-100 p-2 rounded-lg cursor-pointer hover:bg-gray-200 transition">
+                    <input type="radio" name="berat" value="200" <?php echo ($editProduct && $editProduct['varian'] == '200gr') ? 'checked' : ''; ?> class="text-[#8D5A40] focus:ring-[#8D5A40]" />
+                    <span class="text-sm">200 gram</span>
+                  </label>
+                  <label class="flex items-center space-x-2 bg-gray-100 p-2 rounded-lg cursor-pointer hover:bg-gray-200 transition">
+                    <input type="radio" name="berat" value="500" <?php echo ($editProduct && $editProduct['varian'] == '500gr') ? 'checked' : ''; ?> class="text-[#8D5A40] focus:ring-[#8D5A40]" />
+                    <span class="text-sm">500 gram</span>
+                  </label>
+                </div>
+                <span id="error-berat" class="text-red-600 text-sm hidden">Pilih salah satu varian berat</span>
+              </div>
+
+              <!-- Deskripsi -->
+              <div class="mb-4">
+                <label for="deskripsi" class="block text-sm font-medium text-gray-700">Deskripsi</label>
+                <textarea id="deskripsi" name="deskripsi" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:border-[#8D5A40] focus-ring-primary-custom"><?php echo $editProduct ? htmlspecialchars($editProduct['deskripsi']) : ''; ?></textarea>
+              </div>
             </div>
           </div>
 
-          <!-- Kolom Kanan -->
-          <div>
-            <!-- Harga Jual -->
-            <div class="mb-4">
-              <label for="harga_jual" class="block text-sm font-medium text-gray-700">Harga Jual *</label>
-              <input type="number" id="harga_jual" name="harga_jual" value="<?php echo $editProduct ? $editProduct['harga'] : ''; ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:border-[#8D5A40] focus-ring-primary-custom" />
-              <span id="error-harga" class="text-red-600 text-sm hidden">Harga harus diisi dan lebih dari 0</span>
-            </div>
-
-            <!-- Stok -->
-            <div class="mb-4">
-              <label for="stok" class="block text-sm font-medium text-gray-700">Stok *</label>
-              <input type="number" id="stok" name="stok" value="<?php echo $editProduct ? $editProduct['stok'] : ''; ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:border-[#8D5A40] focus-ring-primary-custom" />
-              <span id="error-stok" class="text-red-600 text-sm hidden">Stok harus diisi dan tidak boleh negatif</span>
-            </div>
-
-            <!-- Varian Berat -->
-            <div class="mb-4">
-              <label class="block text-sm font-medium text-gray-700 mb-2">Varian Berat *</label>
-              <div class="flex flex-wrap gap-2">
-                <label class="flex items-center space-x-2 bg-gray-100 p-2 rounded-lg cursor-pointer hover:bg-gray-200 transition">
-                  <input type="radio" name="berat" value="75" <?php echo ($editProduct && $editProduct['varian'] == '75gr') ? 'checked' : ''; ?> class="text-[#8D5A40] focus:ring-[#8D5A40]" />
-                  <span class="text-sm">75 gram</span>
-                </label>
-                <label class="flex items-center space-x-2 bg-gray-100 p-2 rounded-lg cursor-pointer hover:bg-gray-200 transition">
-                  <input type="radio" name="berat" value="200" <?php echo ($editProduct && $editProduct['varian'] == '200gr') ? 'checked' : ''; ?> class="text-[#8D5A40] focus:ring-[#8D5A40]" />
-                  <span class="text-sm">200 gram</span>
-                </label>
-                <label class="flex items-center space-x-2 bg-gray-100 p-2 rounded-lg cursor-pointer hover:bg-gray-200 transition">
-                  <input type="radio" name="berat" value="500" <?php echo ($editProduct && $editProduct['varian'] == '500gr') ? 'checked' : ''; ?> class="text-[#8D5A40] focus:ring-[#8D5A40]" />
-                  <span class="text-sm">500 gram</span>
-                </label>
-              </div>
-              <span id="error-berat" class="text-red-600 text-sm hidden">Pilih salah satu varian berat</span>
-            </div>
-
-            <!-- Deskripsi -->
-            <div class="mb-4">
-              <label for="deskripsi" class="block text-sm font-medium text-gray-700">Deskripsi</label>
-              <textarea id="deskripsi" name="deskripsi" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:border-[#8D5A40] focus-ring-primary-custom"><?php echo $editProduct ? htmlspecialchars($editProduct['deskripsi']) : ''; ?></textarea>
-            </div>
+          <!-- Tombol Aksi -->
+          <div class="mt-8 pt-4 border-t border-gray-200 flex justify-end">
+            <a href="admin_product.php" class="bg-gray-400 text-white px-6 py-2 rounded-lg hover:bg-gray-500 transition duration-150 mr-3">
+              Batal
+            </a>
+            <button type="submit" name="<?php echo isset($_GET['edit']) ? 'submitEdit' : 'submitProduk'; ?>" id="btnSubmit" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition duration-150 disabled:bg-gray-300 disabled:cursor-not-allowed">
+              Simpan Produk
+            </button>
           </div>
-        </div>
-
-        <!-- Tombol Aksi -->
-        <div class="mt-8 pt-4 border-t border-gray-200 flex justify-end">
-          <a href="admin_product.php" class="bg-gray-400 text-white px-6 py-2 rounded-lg hover:bg-gray-500 transition duration-150 mr-3">
-            Batal
-          </a>
-          <button type="submit" name="<?php echo isset($_GET['edit']) ? 'submitEdit' : 'submitProduk'; ?>" id="btnSubmit" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition duration-150 disabled:bg-gray-300 disabled:cursor-not-allowed">
-            Simpan Produk
-          </button>
-        </div>
-      </form>
-    </div>
+        </form>
+      </div>
     <?php endif; ?>
   </main>
 
@@ -508,7 +521,7 @@ if (isset($_GET['edit'])) {
 
       // Enable/Disable Button
       btnSubmit.disabled = !isValid;
-      
+
       return isValid;
     }
 
