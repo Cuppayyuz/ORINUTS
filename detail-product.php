@@ -3,36 +3,34 @@ session_start();
 
 // input ulasan
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Cek apakah user sudah login
-        if (!isset($_SESSION['user'])) {
-            echo "<script>alert('Anda harus login dahulu!');</script>";
-        } else {
-            // Ambil gambar jika ada
-            $image = !empty($_FILES['image']['tmp_name']) ? file_get_contents($_FILES['image']['tmp_name']) : null;
-            
-            $pdo = require 'koneksi.php';
-            $sql = "INSERT INTO reviews (fullname, ulasan, image, rating, tanggal, produk_id, user_id) 
-                    VALUES (:fullname, :ulasan, :image, :rating, NOW(), :produk_id, :user_id)";
-            $query = $pdo->prepare($sql);
-            
-            try {
-                $query->execute([
-                    'fullname' => trim($_POST['fullname']),
-                    'ulasan' => trim($_POST['ulasan']),
-                    'image' => $image,
-                    'rating' => (int)$_POST['rating'],
-                    'produk_id' => $_GET['id'],
-                    'user_id' => $_SESSION['user']['id']
-                ]);
-                
-                // Redirect untuk mencegah resubmit saat refresh
-                header("Location: detail-product.php?id=" . $_GET['id'] . "&success=1");
-                exit();
-                
-            } catch (PDOException $e) {
-                echo "<script>alert('Gagal menyimpan ulasan: " . $e->getMessage() . "');</script>";
-            }
+    // Cek apakah user sudah login
+    if (!isset($_SESSION['user'])) {
+        echo "<script>alert('Anda harus login dahulu!');</script>";
+    } else {
+        // Ambil gambar jika ada
+        $image = !empty($_FILES['image']['tmp_name']) ? file_get_contents($_FILES['image']['tmp_name']) : null;
+
+        $pdo = require 'koneksi.php';
+        $sql = "INSERT INTO reviews (ulasan, image, rating, tanggal, produk_id, user_id) 
+                    VALUES (:ulasan, :image, :rating, NOW(), :produk_id, :user_id)";
+        $query = $pdo->prepare($sql);
+
+        try {
+            $query->execute([
+                'ulasan' => $_POST['ulasan'],
+                'image' => $image,
+                'rating' => (int)$_POST['rating'],
+                'produk_id' => $_GET['id'],
+                'user_id' => $_SESSION['user']['id']
+            ]);
+
+            // Redirect untuk mencegah resubmit saat refresh
+            header("Location: detail-product.php?id=" . $_GET['id'] . "&success=1");
+            exit();
+        } catch (PDOException $e) {
+            echo "<script>alert('Gagal menyimpan ulasan: " . $e->getMessage() . "');</script>";
         }
+    }
 }
 
 // Tampilkan pesan sukses jika ada
@@ -151,8 +149,9 @@ $rataRata = $queryrata->fetch();
             </nav>
 
             <div class="hidden lg:flex items-center space-x-4">
-                <a href="#">
-                    <img src="/content/icon/shopping-cart.svg" alt="cart" class="h-7 w-7" />
+                <a href="keranjang.php" class="relative">
+                    <img src="content/icon/shopping-cart.svg" alt="cart" class="h-7 w-7" />
+                    <span id="cart-count-badge" class="hidden absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
                 </a>
                 <?php if (!isset($_SESSION['user'])) { ?>
                     <a href="login.php" class="bg-white rounded-full py-2 px-8 font-semibold">Login</a>
@@ -294,19 +293,8 @@ $rataRata = $queryrata->fetch();
 
                             <button
                                 class="flex-1 max-w-xs py-3 px-6 bg-amber-800 text-white rounded-full font-bold shadow-md hover:bg-amber-700 transition duration-150 flex items-center justify-center space-x-2">
-                                <img src="/content/icon/shopping-cart.svg" alt="Cart Icon" class="h-5 w-5 invert" />
+                                <img src="content/icon/shopping-cart.svg" alt="Cart Icon" class="h-5 w-5 invert" />
                                 <span>Add to cart</span>
-                            </button>
-                            <button
-                                class="hidden md:block py-3 px-6 border-2 border-amber-800 text-amber-800 rounded-full font-bold shadow-md hover:bg-amber-100 transition duration-150">
-                                Buy now
-                            </button>
-                            <button id="wishlist-button" class="text-gray-400 hover:text-red-500 transition duration-150">
-                                <svg id="wishlist-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                                </svg>
                             </button>
                         </div>
 
@@ -368,7 +356,7 @@ $rataRata = $queryrata->fetch();
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                         <div class="flex flex-col items-center md:items-start space-y-2">
-                            <p class="text-6xl font-extrabold text-green-700"><?= $rataRata['avg_rating'] ?><span class="text-3xl text-gray-500">/5</span>
+                            <p class="text-6xl font-extrabold text-green-700"><?= isset($rataRata['avg_rating']) ? $rataRata['avg_rating'] : '-'; ?><span class="text-3xl text-gray-500">/5</span>
                             </p>
                             <div class="flex space-x-0.5 text-2xl">
                                 <?php
@@ -421,18 +409,6 @@ $rataRata = $queryrata->fetch();
                                     </div>
                                     <input type="hidden" name="rating" id="ratingInput" value="0">
                                     <p id="ratingError" class="text-red-500 text-sm mt-1 hidden">Silakan pilih rating</p>
-                                </div>
-
-                                <!-- Nama Reviewer -->
-                                <div>
-                                    <label for="reviewerName" class="block text-sm font-semibold text-gray-800 mb-2">Nama <span class="text-red-500">*</span></label>
-                                    <input
-                                        type="text"
-                                        id="reviewerName"
-                                        name="fullname"
-                                        placeholder="Masukkan nama Anda"
-                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent" />
-                                    <p id="nameError" class="text-red-500 text-sm mt-1 hidden">Nama wajib diisi</p>
                                 </div>
 
                                 <!-- Ulasan Text -->
@@ -507,40 +483,32 @@ $rataRata = $queryrata->fetch();
                     </div>
                     <div class="mt-8 space-y-4">
                         <h3 class="text-xl font-bold text-gray-800">Review</h3>
-
-                        <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-                            <div class="flex items-center justify-between">
-                                <div class="flex space-x-0.5 text-lg">
-                                    <span class="star-filled">&#9733;</span>
-                                    <span class="star-filled">&#9733;</span>
-                                    <span class="star-filled">&#9733;</span>
-                                    <span class="star-filled">&#9733;</span>
-                                    <span class="star-filled">&#9733;</span>
+                        <?php
+                        $pdo = require 'koneksi.php';
+                        $sqlUlasan = "SELECT reviews.*, users.fullname FROM reviews INNER JOIN users on reviews.user_id = users.id WHERE produk_id=:produk_id";
+                        $queryUlasan = $pdo->prepare($sqlUlasan);
+                        $queryUlasan->execute(['produk_id' => $_GET['id']]);
+                        $reviews = $queryUlasan->fetchAll();
+                        foreach ($reviews as $review) {
+                        ?>
+                            <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex space-x-0.5 text-lg">
+                                        <span class="star-filled">&#9733;</span>
+                                        <span class="star-filled">&#9733;</span>
+                                        <span class="star-filled">&#9733;</span>
+                                        <span class="star-filled">&#9733;</span>
+                                        <span class="star-filled">&#9733;</span>
+                                    </div>
+                                    <p class="text-xs text-gray-500">Via Shopee, 2 hari lalu</p>
                                 </div>
-                                <p class="text-xs text-gray-500">Via Shopee, 2 hari lalu</p>
+                                <?php if ($review['image'] != NULL) { ?>
+                                    <img src="data:image/*;base64,<?= base64_encode($review['image']) ?> " alt="Foto Ulasan" class=" w-20">
+                                <?php } ?>
+                                <p class="mt-2 text-gray-700"><?= $review['ulasan'] ?></p>
+                                <p class="text-xs text-gray-500 mt-1">oleh: <span class="font-semibold"><?= $review['fullname'] ?></span></p>
                             </div>
-                            <img src="content/product/Orimond_bubble_gum.png" alt="Foto Ulasan" class=" w-20">
-                            <p class="mt-2 text-gray-700">enak... dan renyah... esta repeat order juga disini. packing aman
-                                dan pengiriman cepat.</p>
-                            <p class="text-xs text-gray-500 mt-1">oleh: <span class="font-semibold">customer****</span></p>
-                        </div>
-
-                        <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-                            <div class="flex items-center justify-between">
-                                <div class="flex space-x-0.5 text-lg">
-                                    <span class="star-filled">&#9733;</span>
-                                    <span class="star-filled">&#9733;</span>
-                                    <span class="star-filled">&#9733;</span>
-                                    <span class="star-filled">&#9733;</span>
-                                    <span class="star-filled">&#9733;</span>
-                                </div>
-                                <p class="text-xs text-gray-500">Via Tokopedia, 4 hari lalu</p>
-                            </div>
-                            <p class="mt-2 text-gray-700">Kacangnya fresh banget, rasanya pas. Anak-anak suka! Sudah order
-                                berkali-kali.</p>
-                            <p class="text-xs text-gray-500 mt-1">oleh: <span class="font-semibold">user_toped_A</span></p>
-                        </div>
-
+                        <?php } ?>
                         <div class="text-center pt-4">
                             <button class="text-green-700 font-semibold hover:text-green-800">Lihat Semua Review
                                 (15)</button>
@@ -643,7 +611,6 @@ $rataRata = $queryrata->fetch();
 
         const reviewForm = document.getElementById('reviewForm');
         const ratingInput = document.getElementById('ratingInput');
-        const reviewerName = document.getElementById('reviewerName');
         const reviewText = document.getElementById('reviewText');
         const reviewImage = document.getElementById('reviewImage');
         const submitBtn = document.getElementById('submitBtn');
@@ -737,16 +704,6 @@ $rataRata = $queryrata->fetch();
             return isValid;
         }
 
-        function validateName() {
-            const name = reviewerName.value.trim();
-            const isValid = name.length > 0;
-            if (!isValid) {
-                document.getElementById('nameError').classList.remove('hidden');
-            } else {
-                document.getElementById('nameError').classList.add('hidden');
-            }
-            return isValid;
-        }
 
         function validateReview() {
             const review = reviewText.value.trim();
@@ -761,22 +718,20 @@ $rataRata = $queryrata->fetch();
 
         function validateForm() {
             const isRatingValid = validateRating();
-            const isNameValid = validateName();
             const isReviewValid = validateReview();
 
-            const isFormValid = isRatingValid && isNameValid && isReviewValid;
+            const isFormValid = isRatingValid && isReviewValid;
             submitBtn.disabled = !isFormValid;
 
             return isFormValid;
         }
 
         // Real-time validation
-        reviewerName.addEventListener('input', validateForm);
         reviewText.addEventListener('input', validateForm);
 
         // Form submission
         reviewForm.addEventListener('submit', function(e) {
-
+            e.preventDefault()
             if (validateForm()) {
 
                 const formData = new FormData(this);
@@ -784,13 +739,9 @@ $rataRata = $queryrata->fetch();
 
                 console.log('Form submitted with:');
                 console.log('Rating:', formData.get('rating'));
-                console.log('Name:', formData.get('reviewer_name'));
-                console.log('Review:', formData.get('review_text'));
+                console.log('Review:', formData.get('ulasan'));
                 console.log('Image:', formData.get('review_image'));
 
-                // Here you would typically send the data to your PHP backend
-                // For now, just show success message
-                alert('Ulasan berhasil dikirim!');
                 e.target.submit();
 
                 // Reset form

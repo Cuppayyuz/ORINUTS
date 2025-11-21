@@ -69,8 +69,9 @@ session_start();
             </nav>
 
             <div class="hidden lg:flex items-center space-x-4">
-                <a href="#">
+                <a href="keranjang.php" class="relative">
                     <img src="content/icon/shopping-cart.svg" alt="cart" class="h-7 w-7" />
+                    <span id="cart-count-badge" class="hidden absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
                 </a>
                 <?php if (!isset($_SESSION['user'])) { ?>
                     <a href="login.php" class="bg-white rounded-full py-2 px-8 font-semibold">Login</a>
@@ -217,7 +218,7 @@ session_start();
                                             d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.847 5.698h5.998c.969 0 1.371 1.24.588 1.81l-4.853 3.53a.997.997 0 00-.364 1.118l1.847 5.698c.3.921-.755 1.688-1.539 1.118l-4.852-3.53a.997.997 0 00-1.176 0l-4.852 3.53c-.784.57-1.838-.197-1.539-1.118l1.847-5.698a.997.997 0 00-.364-1.118L.503 10.435c-.783-.57-.38-1.81.588-1.81h5.998L9.049 2.927z">
                                         </path>
                                     </svg>
-                                    <span class="text-sm font-medium text-gray-600"><?= $rataRata['avg_rating'] ?></span>
+                                    <span class="text-sm font-medium text-gray-600"><?= isset($rataRata['avg_rating']) ? $rataRata['avg_rating'] : '-'; ?></span>
                                 </div>
                             </div>
                         </div>
@@ -236,9 +237,7 @@ session_start();
                             <button
                                 class="flex-1 bg-amber-800 text-white py-2.5 px-4 rounded-full text-sm font-semibold flex items-center justify-center space-x-1.5 hover:bg-amber-900 transition-colors">
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16">
-                                    <path
-                                        d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z">
-                                    </path>
+                                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
                                 </svg>
                                 <span>order now</span>
                             </button>
