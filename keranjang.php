@@ -1,5 +1,11 @@
+<?php
+session_start();
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -50,6 +56,7 @@
             -webkit-appearance: none;
             margin: 0;
         }
+
         input[type="number"] {
             -moz-appearance: textfield;
         }
@@ -59,56 +66,50 @@
 <body class="bg-orinuts-cream w-full text-stone-800">
     <header
         id="navbar"
-        class="fixed left-0 right-0 top-0 z-50 py-2 transition-all duration-300 backdrop-blur-sm"
-    >
+        class="fixed left-0 right-0 top-0 z-50 py-2 transition-all duration-300 backdrop-blur-sm">
         <div
-            class="container mx-auto px-6 md:px-16 flex justify-between items-center"
-        >
+            class="container mx-auto px-6 md:px-16 flex justify-between items-center">
             <div>
                 <img src="content/logo.png" alt="logo" class="h-14" />
             </div>
 
             <nav
-                class="hidden lg:flex py-1 px-2 rounded-full bg-white/30 backdrop-blur-md"
-            >
-                <a href="index.html" class="rounded-full py-2 px-8 font-semibold"
-                    >HOME</a
-                >
+                class="hidden lg:flex py-1 px-2 rounded-full bg-white/30 backdrop-blur-md">
+                <a href="index.html" class="rounded-full py-2 px-8 font-semibold">HOME</a>
                 <a
                     href="about.html"
-                    class="rounded-full py-2 px-8 font-semibold hover:text-green-700"
-                    >ABOUT US</a
-                >
+                    class="rounded-full py-2 px-8 font-semibold hover:text-green-700">ABOUT US</a>
                 <a
                     href="product.html  "
-                    class="rounded-full py-2 px-8 font-semibold hover:text-green-700"
-                    >PRODUCT</a
-                >
+                    class="rounded-full py-2 px-8 font-semibold hover:text-green-700">PRODUCT</a>
                 <a
                     href="contact.html"
-                    class="rounded-full py-2 px-8 font-semibold hover:text-green-700"
-                    >CONTACT</a
-                >
+                    class="rounded-full py-2 px-8 font-semibold hover:text-green-700">CONTACT</a>
             </nav>
 
             <div class="hidden lg:flex items-center space-x-4">
-                <a href="#">
-                    <img
-                        src="content/icon/shopping-cart.svg"
-                        alt="cart"
-                        class="h-7 w-7"
-                    />
-                </a>
-                <a href="#" class="bg-white rounded-full py-2 px-8 font-semibold"
-                    >Login</a
-                >
+                <?php if (!isset($_SESSION['user'])) { ?>
+                    <a href="login.php" class="bg-white rounded-full py-2 px-8 font-semibold">Login</a>
+                <?php } else { ?>
+                    <a href="profile_user.php?id=<?php echo htmlspecialchars($_SESSION['user']['id']); ?>">
+                        <?php
+                        $pdo = require 'koneksi.php';
+                        $query = $pdo->prepare("SELECT profile FROM users WHERE id=:id");
+                        $query->execute([
+                            'id' => $_SESSION['user']['id']
+                        ]);
+                        $user = $query->fetch();
+                        $base64 = base64_encode($user['profile']);
+                        echo "<img src= 'data:image/*;base64, $base64' class=' w-12 rounded-full' alt='Profile Picture'>";
+                        ?>
+                    </a>
+                <?php } ?>
             </div>
 
             <div class="lg:hidden flex items-center">
                 <button
                     id="hamburger-button"
-                    class="relative z-[60] w-8 h-6 flex flex-col justify-between items-center focus:outline-none"
-                >
+                    class="relative z-[60] w-8 h-6 flex flex-col justify-between items-center focus:outline-none">
                     <span class="block w-full h-0.5 bg-white"></span>
                     <span class="block w-full h-0.5 bg-white"></span>
                     <span class="block w-full h-0.5 bg-white"></span>
@@ -119,10 +120,9 @@
 
     <div
         id="mobile-menu"
-        class="lg:hidden fixed top-0 right-0 h-screen w-3/4 max-w-sm bg-amber-800 transform translate-x-full transition-transform duration-300 ease-in-out z-50 overflow-y-auto"
-    >
+        class="lg:hidden fixed top-0 right-0 h-screen w-3/4 max-w-sm bg-amber-800 transform translate-x-full transition-transform duration-300 ease-in-out z-50 overflow-y-auto">
         <div class="p-8">
-            </div>
+        </div>
     </div>
 
     <main class="container mx-auto px-6 md:px-16 mt-28 mb-16">
@@ -131,204 +131,125 @@
         <form id="cart-form" action="proses_checkout.php" method="POST">
             <div class="flex flex-col lg:flex-row lg:space-x-12">
                 <div class="lg:w-2/3 w-full">
-                    
+
                     <div
-                        class="flex items-center border-b-2 border-orinuts-brown-light pb-4 mb-4 text-sm font-medium"
-                    >
+                        class="flex items-center border-b-2 border-orinuts-brown-light pb-4 mb-4 text-sm font-medium">
                         <label class="flex flex-grow items-center space-x-3">
                             <input
                                 type="checkbox"
                                 id="select-all"
-                                class="rounded border-gray-400 focus:ring-amber-800 text-amber-800"
-                            />
+                                class="rounded border-gray-400 focus:ring-amber-800 text-amber-800" />
                             <span>Select All</span>
                         </label>
                         <span class="w-100 text-center">Jumlah</span>
                         <span class="w-24 text-right">Total</span>
-                        <span class="w-12"></span> </div>
+                        <span class="w-12"></span>
+                    </div>
                     <div id="cart-items-container" class="space-y-6">
-                        
-                        <div
-                            class="cart-item flex items-center py-6 border-b border-orinuts-brown-light"
-                            data-price="30000"
-                        >
-                            <div class="flex flex-grow items-center">
-                                <input
-                                    type="checkbox"
-                                    name="item_ids[]"
-                                    value="P001"
-                                    class="item-checkbox rounded border-gray-400 focus:ring-amber-800 text-amber-800"
-                                />
-                                <img
-                                    src="content/product/Orinuts_Roasted_Cashew_Original_200g-removebg-preview.png"
-                                    alt="Product"
-                                    class="w-16 h-16 sm:w-20 sm:h-20 object-contain rounded-md mx-4"
-                                />
-                                <div class="flex-grow">
-                                    <h3 class="font-bold text-stone-800">
-                                        Roasted Cashew
-                                    </h3>
-                                    <p class="text-sm text-gray-500">75 gram</p>
-                                    <p
-                                        class="item-price text-sm font-semibold text-stone-800"
-                                    >
-                                        Rp 30.000
-                                    </p>
-                                </div>
-                            </div>
-                            
-                            <div class="w-100 flex justify-center">
+
+                        <?php
+                        if (empty($_SESSION['user'])) {
+
+                            echo 'hai';
+                        } else {
+                            // Ambil data
+                            $pdo = require 'koneksi.php';
+                            $query = $pdo->prepare("SELECT * FROM cart WHERE user_id=:uid");
+                            $query->execute([
+                                'uid' => $_SESSION['user']['id']
+                            ]);
+                            $products = $query->fetchAll();
+                            foreach ($products as $product) {
+                        ?>
                                 <div
-                                    class="flex items-center border border-gray-300 rounded-full"
-                                >
-                                    <button
-                                        type="button"
-                                        class="minus-btn px-3 py-1 text-lg font-bold text-gray-600 focus:outline-none"
-                                    >
-                                        -
-                                    </button>
-                                    <input
-                                        type="number"
-                                        name="quantity[P001]"
-                                        value="1"
-                                        min="1"
-                                        class="quantity-input w-10 text-center border-0 p-0 focus:ring-0 font-medium bg-transparent"
-                                    />
-                                    <button
-                                        type="button"
-                                        class="plus-btn px-3 py-1 text-lg font-bold text-gray-600 focus:outline-none"
-                                    >
-                                        +
-                                    </button>
+                                    class="cart-item flex items-center py-6 border-b border-orinuts-brown-light"
+                                    data-price="<?= $product['price'] ?>">
+                                    <div class="flex flex-grow items-center">
+                                        <input
+                                            type="checkbox"
+                                            name="item_ids[]"
+                                            value="<?= $product['id'] ?>"
+                                            class="item-checkbox rounded border-gray-400 focus:ring-amber-800 text-amber-800" />
+                                        <img
+                                            src="data:image/*;base64, <?= base64_encode($product['img']) ?>"
+                                            alt="Product"
+                                            class="w-16 h-16 sm:w-20 sm:h-20 object-contain rounded-md mx-4" />
+                                        <div class="flex-grow">
+                                            <h3 class="font-bold text-stone-800">
+                                                <?= $product['product_name'] ?>
+                                            </h3>
+                                            <p class="text-sm text-gray-500"><?= $product['varian'] ?> gram</p>
+                                            <p
+                                                class="item-price text-sm font-semibold text-stone-800">
+                                                Rp <?= number_format($product['price'], 0, ',', '.') ?>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="w-100 flex justify-center">
+                                        <div
+                                            class="flex items-center border border-gray-300 rounded-full">
+                                            <button
+                                                type="button"
+                                                class="minus-btn px-3 py-1 text-lg font-bold text-gray-600 focus:outline-none">
+                                                -
+                                            </button>
+                                            <input
+                                                type="number"
+                                                name="quantity[<?= $product['id'] ?>]"
+                                                value="<?= $product['qty'] ?>"
+                                                min="1"
+                                                class="quantity-input w-10 text-center border-0 p-0 focus:ring-0 font-medium bg-transparent" />
+                                            <button
+                                                type="button"
+                                                class="plus-btn px-3 py-1 text-lg font-bold text-gray-600 focus:outline-none">
+                                                +
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <span
+                                        class="row-total w-24 text-right font-semibold text-stone-800"></span>
+
+                                    <div class="w-12 flex justify-end">
+                                        <button
+                                            type="button"
+                                            class="delete-btn text-red-500 hover:text-red-900">
+                                            <svg
+                                                class="w-5 h-5"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    stroke-width="2"
+                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
+                            <?php } ?>
+                        <?php } ?>
+                        <!-- end -->
+                    </div>
 
-                            <span
-                                class="row-total w-24 text-right font-semibold text-stone-800"
-                                >Rp 30.000</span
-                            >
-
-                            <div class="w-12 flex justify-end">
-                                <button
-                                    type="button"
-                                    class="delete-btn text-red-500 hover:text-red-900"
-                                >
-                                    <svg
-                                        class="w-5 h-5"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                                        ></path>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                        <div
-                            class="cart-item flex items-center py-6 border-b border-orinuts-brown-light"
-                            data-price="50000"
-                        >
-                            <div class="flex flex-grow items-center">
-                                <input
-                                    type="checkbox"
-                                    name="item_ids[]"
-                                    value="P002"
-                                    class="item-checkbox rounded border-gray-400 focus:ring-amber-800 text-amber-800"
-                                />
-                                <img
-                                    src="content/product/Orinuts_Roasted_Duo_Mix_200g-removebg-preview.png"
-                                    alt="Product"
-                                    class="w-16 h-16 sm:w-20 sm:h-20 object-contain rounded-md mx-4"
-                                />
-                                <div class="flex-grow">
-                                    <h3 class="font-bold text-stone-800">Duo Mix</h3>
-                                    <p class="text-sm text-gray-500">200 gram</p>
-                                    <p
-                                        class="item-price text-sm font-semibold text-stone-800"
-                                    >
-                                        Rp 50.000
-                                    </p>
-                                </div>
-                            </div>
-                            
-                            <div class="w-100 flex justify-center">
-                                <div
-                                    class="flex items-center border border-gray-300 rounded-full"
-                                >
-                                    <button
-                                        type="button"
-                                        class="minus-btn px-3 py-1 text-lg font-bold text-gray-600 focus:outline-none"
-                                    >
-                                        -
-                                    </button>
-                                    <input
-                                        type="number"
-                                        name="quantity[P002]"
-                                        value="1"
-                                        min="1"
-                                        class="quantity-input w-10 text-center border-0 p-0 focus:ring-0 font-medium bg-transparent"
-                                    />
-                                    <button
-                                        type="button"
-                                        class="plus-btn px-3 py-1 text-lg font-bold text-gray-600 focus:outline-none"
-                                    >
-                                        +
-                                    </button>
-                                </div>
-                            </div>
-
-                            <span
-                                class="row-total w-24 text-right font-semibold text-stone-800"
-                                >Rp 50.000</span
-                            >
-
-                            <div class="w-12 flex justify-end">
-                                <button
-                                    type="button"
-                                    class="delete-btn text-red-500 hover:text-red-900"
-                                >
-                                    <svg
-                                        class="w-5 h-5"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                                        ></path>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                        </div>
 
                     <a
-                        href="all-product.html"
-                        class="inline-flex items-center space-x-2 font-medium text-orinuts-brown hover:bg-amber-100 rounded-full py-2 px-5 transition-colors duration-200 mt-8"
-                    >
+                        href="all-product.php"
+                        class="inline-flex items-center space-x-2 font-medium text-orinuts-brown hover:bg-amber-100 rounded-full py-2 px-5 transition-colors duration-200 mt-8">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             class="h-5 w-5"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
-                            stroke-width="2"
-                        >
+                            stroke-width="2">
                             <path
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
-                                d="M10 19l-7-7m0 0l7-7m-7 7h18"
-                            />
+                                d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                         </svg>
                         <span>Kembali belanja</span>
                     </a>
@@ -343,22 +264,18 @@
                         <div class="flex justify-between items-center mb-4">
                             <span
                                 id="current-payment-method"
-                                class="font-semibold text-stone-700"
-                                >sistem<br />COD</span
-                            >
+                                class="font-semibold text-stone-700">sistem<br />Cash On Delivery</span>
                             <img
                                 id="current-payment-logo"
-                                src="content/cod-logo.png"
+                                src="content/"
                                 alt="Metode Pembayaran"
-                                class="h-6"
-                            />
+                                class="h-6" />
                         </div>
 
                         <button
                             id="ubah-pembayaran-btn"
                             type="button"
-                            class="w-full bg-white text-stone-800 font-bold py-2 px-4 rounded-lg mb-6 hover:bg-gray-100 transition-colors"
-                        >
+                            class="w-full bg-white text-stone-800 font-bold py-2 px-4 rounded-lg mb-6 hover:bg-gray-100 transition-colors">
                             Ubah metode pembayaran
                         </button>
 
@@ -369,49 +286,33 @@
                                 <span>Subtotal</span>
                                 <span
                                     id="summary-subtotal"
-                                    class="font-semibold text-stone-800"
-                                    >Rp0</span
-                                >
+                                    class="font-semibold text-stone-800">Rp0</span>
                             </div>
                             <div class="flex justify-between">
                                 <span>Proteksi produk</span>
                                 <span
                                     id="summary-protection"
-                                    class="font-semibold text-stone-800"
-                                    >Rp1.000</span
-                                >
+                                    class="font-semibold text-stone-800">Rp1.000</span>
                             </div>
                             <div class="flex justify-between">
                                 <span>Pengiriman</span>
                                 <span
                                     id="summary-shipping"
-                                    class="font-semibold text-stone-800"
-                                    >Rp8.000</span
-                                >
-                            </div>
-                            <div class="flex justify-between text-sm">
-                                <span>Diskon</span>
-                                <span
-                                    id="summary-discount"
-                                    class="font-semibold text-red-600"
-                                    >- Rp7.500</span
-                                >
+                                    class="font-semibold text-stone-800">Rp8.000</span>
                             </div>
                         </div>
 
                         <hr class="my-6 border-gray-300" />
 
                         <div
-                            class="flex justify-between text-xl font-bold text-stone-900"
-                        >
+                            class="flex justify-between text-xl font-bold text-stone-900">
                             <span>TOTAL</span>
                             <span id="summary-total">Rp1.500</span>
                         </div>
 
                         <button
                             type="submit"
-                            class="w-full bg-orinuts-brown text-white font-bold py-3 px-6 rounded-lg mt-8 hover:bg-opacity-90 transition-colors"
-                        >
+                            class="w-full bg-orinuts-brown text-white font-bold py-3 px-6 rounded-lg mt-8 hover:bg-opacity-90 transition-colors">
                             Bayar
                         </button>
                     </div>
@@ -422,16 +323,13 @@
 
     <div
         id="payment-modal"
-        class="fixed inset-0 z-[60] flex items-center justify-center p-4 hidden"
-    >
+        class="fixed inset-0 z-[60] flex items-center justify-center p-4 hidden">
         <div
             id="modal-overlay"
-            class="absolute inset-0 bg-black/50 backdrop-blur-sm"
-        ></div>
+            class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
 
         <div
-            class="relative z-10 w-full max-w-md bg-white rounded-lg shadow-xl p-6"
-        >
+            class="relative z-10 w-full max-w-md bg-white rounded-lg shadow-xl p-6">
             <div class="flex justify-between items-center mb-6">
                 <h3 class="text-xl font-bold text-stone-900">
                     Pilih Metode Pembayaran
@@ -443,13 +341,11 @@
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
-                        stroke-width="2"
-                    >
+                        stroke-width="2">
                         <path
                             stroke-linecap="round"
                             stroke-linejoin="round"
-                            d="M6 18L18 6M6 6l12 12"
-                        />
+                            d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
             </div>
@@ -457,18 +353,18 @@
             <div class="space-y-3">
                 <button
                     data-method="Qris"
-                    data-logo-src="content/qris-logo.png" 
-                    class="payment-option-btn flex justify-between items-center w-full p-4 border rounded-lg hover:border-amber-800 focus:border-amber-800 focus:ring-2 focus:ring-amber-200 transition-colors"
-                >
+                    data-logo-src="content/qris-logo.png"
+                    class="payment-option-btn flex justify-between items-center w-full p-4 border rounded-lg hover:border-amber-800 focus:border-amber-800 focus:ring-2 focus:ring-amber-200 transition-colors">
                     <span class="font-medium">Qris</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                    </svg>
                 </button>
 
                 <button
                     data-method="Cash On Delivery"
                     data-logo-src="content/cod-logo.png"
-                    class="payment-option-btn flex justify-between items-center w-full p-4 border rounded-lg hover:border-amber-800 focus:border-amber-800 focus:ring-2 focus:ring-amber-200 transition-colors"
-                >
+                    class="payment-option-btn flex justify-between items-center w-full p-4 border rounded-lg hover:border-amber-800 focus:border-amber-800 focus:ring-2 focus:ring-amber-200 transition-colors">
                     <span class="font-medium">Cash On Delivery</span>
                     <span class="font-bold text-red-600">COD</span>
                 </button>
@@ -476,8 +372,7 @@
                 <div>
                     <button
                         id="transfer-bank-btn"
-                        class="flex justify-between items-center w-full p-4 border rounded-lg hover:border-amber-800 transition-colors"
-                    >
+                        class="flex justify-between items-center w-full p-4 border rounded-lg hover:border-amber-800 transition-colors">
                         <span class="font-medium">Transfer Bank</span>
                         <svg
                             id="transfer-arrow"
@@ -486,19 +381,17 @@
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
-                            stroke-width="2"
-                        >
+                            stroke-width="2">
                             <path
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
-                                d="M19 9l-7 7-7-7"
-                            />
+                                d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
                     <div id="transfer-bank-options" class="pl-4 mt-2 space-y-2 hidden">
                         <button data-method="Transfer BCA" data-logo-src="content/bca-logo.png" class="payment-option-btn flex justify-between items-center w-full p-3 border rounded-lg hover:border-amber-800">
                             <span>BCA</span>
-                            <span class="text-sm font-bold text-blue-600">BCA</span> 
+                            <span class="text-sm font-bold text-blue-600">BCA</span>
                         </button>
                         <button data-method="Transfer BNI" data-logo-src="content/bni-logo.png" class="payment-option-btn flex justify-between items-center w-full p-3 border rounded-lg hover:border-amber-800">
                             <span>BNI</span>
@@ -508,11 +401,11 @@
                             <span>BRI</span>
                             <span class="text-sm font-bold text-blue-800">BRI</span>
                         </button>
-                         <button data-method="Transfer Mandiri" data-logo-src="content/mandiri-logo.png" class="payment-option-btn flex justify-between items-center w-full p-3 border rounded-lg hover:border-amber-800">
+                        <button data-method="Transfer Mandiri" data-logo-src="content/mandiri-logo.png" class="payment-option-btn flex justify-between items-center w-full p-3 border rounded-lg hover:border-amber-800">
                             <span>Mandiri</span>
                             <span class="text-sm font-bold text-blue-900">Mandiri</span>
                         </button>
-                         <button data-method="Transfer BSI" data-logo-src="content/bsi-logo.png" class="payment-option-btn flex justify-between items-center w-full p-3 border rounded-lg hover:border-amber-800">
+                        <button data-method="Transfer BSI" data-logo-src="content/bsi-logo.png" class="payment-option-btn flex justify-between items-center w-full p-3 border rounded-lg hover:border-amber-800">
                             <span>BSI</span>
                             <span class="text-sm font-bold text-green-700">BSI</span>
                         </button>
@@ -523,7 +416,7 @@
     </div>
     <script>
         // Script Navbar & Hamburger (Tidak Berubah)
-        (function () {
+        (function() {
             const navbar = document.getElementById("navbar");
             window.addEventListener("scroll", () => {
                 if (window.scrollY > 50) {
@@ -568,7 +461,7 @@
 
         // --- 👇 Fungsionalitas Keranjang & Modal ---
         document.addEventListener("DOMContentLoaded", () => {
-            
+
             // === 1. ELEMEN KERANJANG ===
             const cartContainer = document.getElementById(
                 "cart-items-container"
@@ -579,13 +472,11 @@
             const subtotalEl = document.getElementById("summary-subtotal");
             const protectionEl = document.getElementById("summary-protection");
             const shippingEl = document.getElementById("summary-shipping");
-            const discountEl = document.getElementById("summary-discount");
             const totalEl = document.getElementById("summary-total");
 
             // Biaya Tetap
             const SHIPPING_COST = 8000;
             const PROTECTION_COST = 1000;
-            const DISCOUNT = 7500;
 
             // === 2. FUNGSI KERANJANG ===
 
@@ -609,9 +500,7 @@
 
                     if (checkbox.checked) {
                         itemsSelected++;
-                        const price = parseFloat(
-                            item.getAttribute("data-price")
-                        );
+                        const price = item.getAttribute("data-price");
                         const quantity = parseInt(
                             item.querySelector(".quantity-input").value
                         );
@@ -633,18 +522,15 @@
 
                 const currentProtection = itemsSelected > 0 ? PROTECTION_COST : 0;
                 const currentShipping = itemsSelected > 0 ? SHIPPING_COST : 0;
-                const currentDiscount = itemsSelected > 0 ? DISCOUNT : 0;
                 const finalSubtotal = itemsSelected > 0 ? currentSubtotal : 0;
                 const grandTotal =
                     finalSubtotal +
                     currentProtection +
-                    currentShipping -
-                    currentDiscount;
+                    currentShipping;
 
                 subtotalEl.textContent = formatRupiah(finalSubtotal);
                 protectionEl.textContent = formatRupiah(currentProtection);
                 shippingEl.textContent = formatRupiah(currentShipping);
-                discountEl.textContent = "- " + formatRupiah(currentDiscount);
                 totalEl.textContent = formatRupiah(grandTotal < 0 ? 0 : grandTotal);
 
                 // Update status checkbox "Select All"
@@ -662,8 +548,6 @@
                     selectAllCheckbox.checked = true;
                     selectAllCheckbox.indeterminate = false;
                 } else {
-                    // [DIUBAH] Sesuai permintaan, "tanda" (indeterminate) dihapus.
-                    // Checkbox akan kosong jika hanya sebagian item terpilih.
                     selectAllCheckbox.checked = false;
                     selectAllCheckbox.indeterminate = false;
                 }
@@ -731,13 +615,13 @@
             calculateTotals();
 
             // === 4. [BARU] LOGIKA MODAL PEMBAYARAN ===
-            
+
             // Elemen Modal
             const openModalBtn = document.getElementById("ubah-pembayaran-btn");
             const closeModalBtn = document.getElementById("close-modal-btn");
             const paymentModal = document.getElementById("payment-modal");
             const modalOverlay = document.getElementById("modal-overlay");
-            
+
             // Elemen Accordion
             const transferBtn = document.getElementById("transfer-bank-btn");
             const transferOptions = document.getElementById("transfer-bank-options");
@@ -745,7 +629,7 @@
 
             // Elemen Pilihan di Modal
             const paymentOptionButtons = document.querySelectorAll(".payment-option-btn");
-            
+
             // Elemen Tampilan di Ringkasan
             const currentMethodText = document.getElementById("current-payment-method");
             const currentMethodLogo = document.getElementById("current-payment-logo");
@@ -755,6 +639,7 @@
                 paymentModal.classList.remove("hidden");
                 paymentModal.classList.add("flex");
             }
+
             function closeModal() {
                 paymentModal.classList.add("hidden");
                 paymentModal.classList.remove("flex");
@@ -783,12 +668,12 @@
                     if (methodName.toLowerCase() === 'cash on delivery') {
                         currentMethodText.innerHTML = "sistem<br/>Cash On Delivery";
                     } else {
-                         currentMethodText.innerHTML = methodName;
+                        currentMethodText.innerHTML = methodName;
                     }
-                    
+
                     // 2. Update logo di ringkasan
                     currentMethodLogo.src = logoSrc;
-                    
+
                     // 3. (Opsional) Tambahkan style 'selected' di modal
                     // Hapus 'selected' dari semua tombol
                     paymentOptionButtons.forEach(btn => btn.classList.remove('border-amber-800', 'ring-2', 'ring-amber-200'));
@@ -803,4 +688,5 @@
         });
     </script>
 </body>
+
 </html>

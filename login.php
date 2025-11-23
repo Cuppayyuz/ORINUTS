@@ -12,6 +12,7 @@ if(!empty($_POST)) {
     $query = $pdo->prepare($sql);
     $query->execute(['email' => $_POST['email']]);
     $user = $query->fetch();
+    $alamat = $user['alamat_lengkap'] . ', ' . $user['kabupaten'] . ', ' . $user['provinsi'];
     if(!$user) {
       $hasil = false;
     } elseif (sha1($_POST['password']) != $user['password']) {
@@ -21,7 +22,8 @@ if(!empty($_POST)) {
       $_SESSION['user'] = array(
         'id' => $user['id'],
         'username' => $user['username'],
-        'email' => $user['email']
+        'email' => $user['email'],
+        'alamat' => $alamat
       );
       header("location: index.php");
       exit();
