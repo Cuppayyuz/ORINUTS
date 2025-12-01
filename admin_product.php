@@ -337,15 +337,15 @@ if (isset($_GET['edit'])) {
                 <label class="block text-sm font-medium text-gray-700 mb-2">Varian Berat *</label>
                 <div class="flex flex-wrap gap-2">
                   <label class="flex items-center space-x-2 bg-gray-100 p-2 rounded-lg cursor-pointer hover:bg-gray-200 transition">
-                    <input type="radio" name="berat" value="75" <?php echo ($editProduct && $editProduct['varian'] == '75gr') ? 'checked' : ''; ?> class="text-[#8D5A40] focus:ring-[#8D5A40]" />
+                    <input type="radio" name="berat" value="75" <?php echo ($editProduct && $editProduct['varian'] == 75) ? 'checked' : ''; ?> class="text-[#8D5A40] focus:ring-[#8D5A40]" />
                     <span class="text-sm">75 gram</span>
                   </label>
                   <label class="flex items-center space-x-2 bg-gray-100 p-2 rounded-lg cursor-pointer hover:bg-gray-200 transition">
-                    <input type="radio" name="berat" value="200" <?php echo ($editProduct && $editProduct['varian'] == '200gr') ? 'checked' : ''; ?> class="text-[#8D5A40] focus:ring-[#8D5A40]" />
+                    <input type="radio" name="berat" value="200" <?php echo ($editProduct && $editProduct['varian'] == 200) ? 'checked' : ''; ?> class="text-[#8D5A40] focus:ring-[#8D5A40]" />
                     <span class="text-sm">200 gram</span>
                   </label>
                   <label class="flex items-center space-x-2 bg-gray-100 p-2 rounded-lg cursor-pointer hover:bg-gray-200 transition">
-                    <input type="radio" name="berat" value="500" <?php echo ($editProduct && $editProduct['varian'] == '500gr') ? 'checked' : ''; ?> class="text-[#8D5A40] focus:ring-[#8D5A40]" />
+                    <input type="radio" name="berat" value="500" <?php echo ($editProduct && $editProduct['varian'] == 500) ? 'checked' : ''; ?> class="text-[#8D5A40] focus:ring-[#8D5A40]" />
                     <span class="text-sm">500 gram</span>
                   </label>
                 </div>

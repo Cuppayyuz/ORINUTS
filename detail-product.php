@@ -494,10 +494,6 @@ $rataRata = $queryrata->fetch();
                                 <div class="flex items-center justify-between">
                                     <div class="flex space-x-0.5 text-lg">
                                         <span class="star-filled">&#9733;</span>
-                                        <span class="star-filled">&#9733;</span>
-                                        <span class="star-filled">&#9733;</span>
-                                        <span class="star-filled">&#9733;</span>
-                                        <span class="star-filled">&#9733;</span>
                                     </div>
                                     <p class="text-xs text-gray-500">Via Shopee, 2 hari lalu</p>
                                 </div>

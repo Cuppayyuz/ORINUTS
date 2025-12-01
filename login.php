@@ -22,6 +22,7 @@ if(!empty($_POST)) {
       $_SESSION['user'] = array(
         'id' => $user['id'],
         'username' => $user['username'],
+        'fullname' => $user['fullname'],
         'email' => $user['email'],
         'alamat' => $alamat
       );

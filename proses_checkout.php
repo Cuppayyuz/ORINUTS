@@ -52,7 +52,7 @@ $stmt = $pdo->prepare($sql);
 $stmt->execute([
     'uid'    => $user_id,
     'kode'   => $kode,
-    'nama'   => $_SESSION['user']['username'],
+    'nama'   => $_SESSION['user']['fullname'],
     'alamat' => $_SESSION['user']['alamat'],
     'metode' => "COD",
     'total'  => $total
@@ -86,6 +86,7 @@ foreach ($cart as $c) {
 $sql = "DELETE FROM cart WHERE user_id = ? AND id IN ($in)";
 $stmt = $pdo->prepare($sql);
 $stmt->execute(array_merge([$user_id], $selected));
+$_SESSION['payment'] = true;
 
-echo "<script>alert('Checkout berhasil!'); window.location='keranjang.php';</script>";
+echo "<script>alert('Checkout berhasil!'); window.location='struk.php?tid='". $transaksi_id .";</script>";
 exit;

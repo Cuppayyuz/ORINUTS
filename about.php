@@ -1,320 +1,283 @@
-<?php 
-  session_start();
+<?php
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Orinuts</title>
-    <link rel="stylesheet" href="src/outputail.css">
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            screens: {
-              sm: "640px",
-              md: "768px",
-              lg: "1024px",
-              xl: "1440px",
-            },
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Orinuts</title>
+  <link rel="stylesheet" href="src/outputail.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          screens: {
+            sm: "640px",
+            md: "768px",
+            lg: "1024px",
+            xl: "1440px",
           },
         },
-      };
-    </script>
-    <style>
-     
-      #hamburger-button span {
-        transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-      }
-      #hamburger-button.open span:nth-child(1) {
-        transform: translateY(10px) rotate(45deg);
-      }
-      #hamburger-button.open span:nth-child(2) {
-        opacity: 0;
-      }
-      #hamburger-button.open span:nth-child(3) {
-        transform: translateY(-10px) rotate(-45deg);
-      }
-    </style>
-  </head>
+      },
+    };
+  </script>
+  <style>
+    #hamburger-button span {
+      transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    }
 
-  <body class="bg-[#F4EFD8] w-full">
-    <header
-      id="navbar"
-      class="fixed left-0 right-0 top-0 z-50 py-2 transition-all duration-300  backdrop-blur-sm"
-    >
-      <div
-        class="container mx-auto px-6 md:px-16 flex justify-between items-center"
-      >
-        <!-- Logo -->
-        <div>
-          <img src="content/logo.png" alt="logo" class="h-14" />
-        </div>
+    #hamburger-button.open span:nth-child(1) {
+      transform: translateY(10px) rotate(45deg);
+    }
 
-        <!-- Menu Desktop -->
-        <nav
-          class="hidden lg:flex py-1 px-2 rounded-full bg-white/30 backdrop-blur-md"
-        >
-          <a href="index.php" class="rounded-full py-2 px-8 font-semibold"
-            >HOME</a
-          >
-          <a
-            href="about.php"
-            class="bg-white rounded-full py-2 px-8 font-semibold hover:text-green-700"
-            >ABOUT US</a
-          >
-          <a
-            href="product.php  "
-            class="rounded-full py-2 px-8 font-semibold hover:text-green-700"
-            >PRODUCT</a
-          >
-          <a
-            href="contact.php"
-            class="rounded-full py-2 px-8 font-semibold hover:text-green-700"
-            >CONTACT</a
-          >
-        </nav>
+    #hamburger-button.open span:nth-child(2) {
+      opacity: 0;
+    }
 
-        <!-- Login + Cart -->
-        <div class="hidden lg:flex items-center space-x-4">
-          <a href="#">
-            <img
-              src="content/icon/shopping-cart.svg"
-              alt="cart"
-              class="h-7 w-7"
-            />
-          </a>
-          <?php if (!isset($_SESSION['user'])) { ?>
-            <a href="login.php" class="bg-white rounded-full py-2 px-8 font-semibold">Login</a>
-          <?php } else { ?>
-              <a href="profile_user.php?id=<?php echo htmlspecialchars($_SESSION['user']['id']); ?>">
-                <?php
-                $pdo = require 'koneksi.php';
-                $query = $pdo->prepare("SELECT profile FROM users WHERE id=:id");
-                $query->execute([
-                  'id' => $_SESSION['user']['id']
-                ]);
-                $user = $query->fetch();
-                $base64 = base64_encode($user['profile']);
-                echo "<img src= 'data:image/*;base64, $base64' class=' w-12 rounded-full' alt='Profile Picture'>";
-                ?>
-              </a>
-          <?php } ?>
-        </div>
+    #hamburger-button.open span:nth-child(3) {
+      transform: translateY(-10px) rotate(-45deg);
+    }
+  </style>
+</head>
 
-        <!-- Hamburger -->
-        <div class="lg:hidden flex items-center">
-          <button
-            id="hamburger-button"
-            class="relative z-[60] w-8 h-6 flex flex-col justify-between items-center focus:outline-none"
-          >
-            <span class="block w-full h-0.5 bg-white"></span>
-            <span class="block w-full h-0.5 bg-white"></span>
-            <span class="block w-full h-0.5 bg-white"></span>
-          </button>
-        </div>
-      </div>
-    </header>
-
-    <!-- Menu Mobile slide kanan -->
+<body class="bg-[#F4EFD8] w-full">
+  <header
+    id="navbar"
+    class="fixed left-0 right-0 top-0 z-50 py-2 transition-all duration-300  backdrop-blur-sm">
     <div
-      id="mobile-menu"
-      class="lg:hidden fixed top-0 right-0 h-screen w-3/4 max-w-sm bg-amber-800 transform translate-x-full transition-transform duration-300 ease-in-out z-50 overflow-y-auto"
-    >
-      <div class="p-8">
-        <div class="flex justify-between items-center mb-8">
-          <h2 class="text-2xl font-bold text-white">Menu</h2>
-          <button id="close-menu" class="text-white hover:text-gray-300">
-            ✕
-          </button>
-        </div>
+      class="container mx-auto px-6 md:px-16 flex justify-between items-center">
+      <!-- Logo -->
+      <div>
+        <img src="content/logo.png" alt="logo" class="h-14" />
+      </div>
 
+      <!-- Menu Desktop -->
+      <nav
+        class="hidden lg:flex py-1 px-2 rounded-full bg-white/30 backdrop-blur-md">
+        <a href="index.php" class="rounded-full py-2 px-8 font-semibold">HOME</a>
         <a
-          href="index.php"
-          class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30"
-          >HOME</a
-        >
+          href="about.php"
+          class="bg-white rounded-full py-2 px-8 font-semibold hover:text-green-700">ABOUT US</a>
         <a
-          href="#"
-          class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30"
-          >ABOUT US</a
-        >
-        <a
-          href="product.php"
-          class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30"
-          >PRODUCT</a
-        >
+          href="product.php  "
+          class="rounded-full py-2 px-8 font-semibold hover:text-green-700">PRODUCT</a>
         <a
           href="contact.php"
-          class="block py-3 text-white font-semibold hover:text-green-800"
-          >CONTACT</a
-        >
-        <hr class="my-6 border-white/30" />
-        <div class="space-y-4">
-          <a
-            href="#"
-            class="flex items-center space-x-3 py-3 text-white font-semibold hover:text-green-800"
-          >
-            <img
-              src="content/icon/shopping-cart.svg"
-              alt="cart"
-              class="h-6 w-6"
-              style="filter: brightness(0) invert(1)"
-            />
-            <span>Keranjang</span>
+          class="rounded-full py-2 px-8 font-semibold hover:text-green-700">CONTACT</a>
+      </nav>
+
+      <!-- Login + Cart -->
+      <div class="hidden lg:flex items-center space-x-4">
+        <a href="#">
+          <img
+            src="content/icon/shopping-cart.svg"
+            alt="cart"
+            class="h-7 w-7" />
+        </a>
+        <?php if (!isset($_SESSION['user'])) { ?>
+          <a href="login.php" class="bg-white rounded-full py-2 px-8 font-semibold">Login</a>
+        <?php } else { ?>
+          <a href="profile_user.php?id=<?php echo htmlspecialchars($_SESSION['user']['id']); ?>">
+            <?php
+            $pdo = require 'koneksi.php';
+            $query = $pdo->prepare("SELECT profile FROM users WHERE id=:id");
+            $query->execute([
+              'id' => $_SESSION['user']['id']
+            ]);
+            $user = $query->fetch();
+            $base64 = base64_encode($user['profile']);
+            echo "<img src= 'data:image/*;base64, $base64' class=' w-12 rounded-full' alt='Profile Picture'>";
+            ?>
           </a>
-          <a
-            href="#"
-            class="block w-full text-center bg-white hover:bg-gray-200 text-green-700 px-4 py-2 rounded-full font-bold"
-          >
-            Login
-          </a>
-        </div>
+        <?php } ?>
+      </div>
+
+      <!-- Hamburger -->
+      <div class="lg:hidden flex items-center">
+        <button
+          id="hamburger-button"
+          class="relative z-[60] w-8 h-6 flex flex-col justify-between items-center focus:outline-none">
+          <span class="block w-full h-0.5 bg-white"></span>
+          <span class="block w-full h-0.5 bg-white"></span>
+          <span class="block w-full h-0.5 bg-white"></span>
+        </button>
       </div>
     </div>
-    <!-- isi about  -->
-    <section
-      class="relative flex items-center w-full min-h-screen overflow-hidden mt-17"
-    >
-      <img
-        src="content/fotomockup/HEART HEALTHY MIX 11b.jpg"
-        alt="Latar belakang produk Orinuts"
-        class="absolute inset-0 w-full h-full object-cover z-0"
-      />
+  </header>
 
+  <!-- Menu Mobile slide kanan -->
+  <div
+    id="mobile-menu"
+    class="lg:hidden fixed top-0 right-0 h-screen w-3/4 max-w-sm bg-amber-800 transform translate-x-full transition-transform duration-300 ease-in-out z-50 overflow-y-auto">
+    <div class="p-8">
+      <div class="flex justify-between items-center mb-8">
+        <h2 class="text-2xl font-bold text-white">Menu</h2>
+        <button id="close-menu" class="text-white hover:text-gray-300">
+          ✕
+        </button>
+      </div>
+
+      <a
+        href="index.php"
+        class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30">HOME</a>
+      <a
+        href="#"
+        class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30">ABOUT US</a>
+      <a
+        href="product.php"
+        class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30">PRODUCT</a>
+      <a
+        href="contact.php"
+        class="block py-3 text-white font-semibold hover:text-green-800">CONTACT</a>
+      <hr class="my-6 border-white/30" />
+      <div class="space-y-4">
+        <a
+          href="#"
+          class="flex items-center space-x-3 py-3 text-white font-semibold hover:text-green-800">
+          <img
+            src="content/icon/shopping-cart.svg"
+            alt="cart"
+            class="h-6 w-6"
+            style="filter: brightness(0) invert(1)" />
+          <span>Keranjang</span>
+        </a>
+        <a
+          href="#"
+          class="block w-full text-center bg-white hover:bg-gray-200 text-green-700 px-4 py-2 rounded-full font-bold">
+          Login
+        </a>
+      </div>
+    </div>
+  </div>
+  <!-- isi about  -->
+  <section
+    class="relative flex items-center w-full min-h-screen overflow-hidden mt-17">
+    <img
+      src="content/fotomockup/HEART HEALTHY MIX 11b.jpg"
+      alt="Latar belakang produk Orinuts"
+      class="absolute inset-0 w-full h-full object-cover z-0" />
+
+    <div
+      class="absolute inset-0 bg-gradient-to-r from-[#C6B5A4] to-transparent z-10"></div>
+
+    <div class="container relative mx-auto px-6 md:px-16 lg:px-24 z-20">
+      <div class="max-w-lg text-[#491A0B]">
+        <h2
+          class="font-oleo text-5xl md:text-6xl font-bold text-white"
+          style="text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4)">
+          Why Us?
+        </h2>
+
+        <p
+          class="mt-4 text-lg font-semibold uppercase tracking-wider font-poppins">
+          Karena Kami Berbeda
+        </p>
+
+        <p class="mt-6 text-base md:text-lg leading-relaxed font-poppins">
+          Orinuts diciptakan bukan hanya untuk menjadi camilan — tapi untuk
+          menjadi bagian dari gaya hidup sehat dan berkelas. Kami menghadirkan
+          kelezatan alami dalam sentuhan premium yang bisa kamu rasakan di
+          setiap gigitan.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="h-175">
+    <div class="flex items-center justify-center space-x-30 p-30">
+      <div class="font-poppins font-semibold items-center text-[#491A0B]">
+        <h1 class="text-5xl pb-15">Premium <br />Quality</h1>
+        <p class="text-[20px]">
+          Setiap produk Orinuts melalui proses seleksi dan <br />
+          pemanggangan modern dengan standar tinggi. <br />
+          Hasilnya? Tekstur renyah sempurna dan cita <br />
+          rasa yang elegan.
+        </p>
+      </div>
+      <div class="flex space-x-3">
+        <img src="content/items_img/3.png" alt="pec1" class="pb-30" />
+        <img src="content/items_img/2.png" alt="pec2" class="pb-15 pt-15" />
+        <img src="content/items_img/1.png" alt="pec3" class="pt-30" />
+      </div>
+    </div>
+  </section>
+  <section class="h-180 bg-blue-200 container mx-auto px-6 py-12">
+    <div
+      class="max-w-6xl mx-auto w-full aspect-video rounded-lg overflow-hidden shadow-lg">
+      <iframe
+        class="w-full h-full"
+        src="https://www.youtube.com/embed/Ow7BqRQbaZ8?si=m_gJKzvogJEuQyBe"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen></iframe>
+    </div>
+  </section>
+  <section>
+    <div class="flex justify-center items-center space-x-40">
       <div
-        class="absolute inset-0 bg-gradient-to-r from-[#C6B5A4] to-transparent z-10"
-      ></div>
+        class="flex items-start text-6xl text-[#491A0B] py-10 gap-9 leading-tight">
+        <p class="font-ruda pt-17">
+          O <br />R <br />I <br />N <br />U <br />T <br />
+          S
+        </p>
+        <p class="font-ruda pt-10">
+          O <br />R <br />I <br />M <br />O <br />N <br />D
+        </p>
+        <p class="font-ruda pt-14">
+          O <br />R <br />I <br />T <br />H <br />I <br />N
+        </p>
+        <p class="bg-white font-moomoo">R <br />U <br />M <br />A <br />H</p>
+        <p class="bg-white font-moomoo mt-21">
+          M <br />E <br />N <br />T <br />E
+        </p>
+      </div>
+      <div class="font-poppins font-semibold text-[#491A0B]">
+        <h1 class="text-5xl pb-15">Natural <br />Ingredients</h1>
+        <p class="text-[20px]">
+          Dipilih langsung dari sumber terbaik — 100% bahan alami tanpa bahan
+          <br />
+          pengawet atau pewarna buatan. <br />
+          Kami menjaga keaslian rasa dan nutrisi agar tetap <br />
+          murni seperti dari alamnya.
+        </p>
+      </div>
+    </div>
+  </section>
+  <section class="flex items-center justify-center space-x-15">
+    <div
+      class="kotak p-5 bg-gray-100 rounded-3xl shadow-xl w-100 flex-shrink-0 -rotate-5">
+      <img src="content/foto bpk.png" alt="owner" class="rotate-5" />
+    </div>
+    <div
+      class="kotak p-5 bg-gray-100 rounded-3xl shadow-xl w-100 flex-shrink-0 -rotate-5">
+      <img src="content/foto bpk.png" alt="owner" class="rotate-5" />
+    </div>
+    <div
+      class="kotak p-5 bg-gray-100 rounded-3xl shadow-xl w-100 flex-shrink-0 -rotate-5">
+      <img src="content/foto bpk.png" alt="owner" class="rotate-5" />
+    </div>
+  </section>
 
-      <div class="container relative mx-auto px-6 md:px-16 lg:px-24 z-20">
-        <div class="max-w-lg text-[#491A0B]">
-          <h2
-            class="font-oleo text-5xl md:text-6xl font-bold text-white"
-            style="text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4)"
-          >
-            Why Us?
-          </h2>
-
-          <p
-            class="mt-4 text-lg font-semibold uppercase tracking-wider font-poppins"
-          >
-            Karena Kami Berbeda
-          </p>
-
-          <p class="mt-6 text-base md:text-lg leading-relaxed font-poppins">
-            Orinuts diciptakan bukan hanya untuk menjadi camilan — tapi untuk
-            menjadi bagian dari gaya hidup sehat dan berkelas. Kami menghadirkan
-            kelezatan alami dalam sentuhan premium yang bisa kamu rasakan di
-            setiap gigitan.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="h-175">
-      <div class="flex items-center justify-center space-x-30 p-30">
-        <div class="font-poppins font-semibold items-center text-[#491A0B]">
-          <h1 class="text-5xl pb-15">Premium <br />Quality</h1>
-          <p class="text-[20px]">
-            Setiap produk Orinuts melalui proses seleksi dan <br />
-            pemanggangan modern dengan standar tinggi. <br />
-            Hasilnya? Tekstur renyah sempurna dan cita <br />
-            rasa yang elegan.
-          </p>
-        </div>
-        <div class="flex space-x-3">
-          <img src="content/items_img/3.png" alt="pec1" class="pb-30" />
-          <img src="content/items_img/2.png" alt="pec2" class="pb-15 pt-15" />
-          <img src="content/items_img/1.png" alt="pec3" class="pt-30" />
-        </div>
-      </div>
-    </section>
-    <section class="h-180 bg-blue-200 container mx-auto px-6 py-12">
-      <div
-        class="max-w-6xl mx-auto w-full aspect-video rounded-lg overflow-hidden shadow-lg"
-      >
-        <iframe
-          class="w-full h-full"
-          src="https://www.youtube.com/embed/Ow7BqRQbaZ8?si=m_gJKzvogJEuQyBe"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen
-        ></iframe>
-      </div>
-    </section>
-    <section>
-      <div class="flex justify-center items-center space-x-40">
-        <div
-          class="flex items-start text-6xl text-[#491A0B] py-10 gap-9 leading-tight"
-        >
-          <p class="font-ruda pt-17">
-            O <br />R <br />I <br />N <br />U <br />T <br />
-            S
-          </p>
-          <p class="font-ruda pt-10">
-            O <br />R <br />I <br />M <br />O <br />N <br />D
-          </p>
-          <p class="font-ruda pt-14">
-            O <br />R <br />I <br />T <br />H <br />I <br />N
-          </p>
-          <p class="bg-white font-moomoo">R <br />U <br />M <br />A <br />H</p>
-          <p class="bg-white font-moomoo mt-21">
-            M <br />E <br />N <br />T <br />E
-          </p>
-        </div>
-        <div class="font-poppins font-semibold text-[#491A0B]">
-          <h1 class="text-5xl pb-15">Natural <br />Ingredients</h1>
-          <p class="text-[20px]">
-            Dipilih langsung dari sumber terbaik — 100% bahan alami tanpa bahan
-            <br />
-            pengawet atau pewarna buatan. <br />
-            Kami menjaga keaslian rasa dan nutrisi agar tetap <br />
-            murni seperti dari alamnya.
-          </p>
-        </div>
-      </div>
-    </section>
-    <section class="flex items-center justify-center space-x-15">
-      <div
-        class="kotak p-5 bg-gray-100 rounded-3xl shadow-xl w-100 flex-shrink-0 -rotate-5"
-      >
-        <img src="content/foto bpk.png" alt="owner" class="rotate-5" />
-      </div>
-      <div
-        class="kotak p-5 bg-gray-100 rounded-3xl shadow-xl w-100 flex-shrink-0 -rotate-5"
-      >
-        <img src="content/foto bpk.png" alt="owner" class="rotate-5" />
-      </div>
-      <div
-        class="kotak p-5 bg-gray-100 rounded-3xl shadow-xl w-100 flex-shrink-0 -rotate-5"
-      >
-        <img src="content/foto bpk.png" alt="owner" class="rotate-5" />
-      </div>
-    </section>
-
-    <
+  <
     <h1
-      class="testimoni text-amber-950 font-bold text-4xl md:text-6xl text-center pt-20"
-    >
-      Testimoni
+    class="testimoni text-amber-950 font-bold text-4xl md:text-6xl text-center pt-20">
+    Testimoni
     </h1>
     <div
-      class="flex flex-col md:flex-row justify-center gap-8 px-6 md:px-12 pt-14 pb-32"
-    >
+      class="flex flex-col md:flex-row justify-center gap-8 px-6 md:px-12 pt-14 pb-32">
       <div
-        class="kotak p-4 bg-gray-100 rounded-2xl shadow-xl w-full md:w-[32%] flex-shrink-0"
-      >
+        class="kotak p-4 bg-gray-100 rounded-2xl shadow-xl w-full md:w-[32%] flex-shrink-0">
         <div class="flex justify-between items-start">
           <div class="w-2/3 flex flex-col space-y-2">
             <div class="flex items-center space-x-2">
               <img
                 src="content/icon/user.png"
                 alt="user"
-                class="w-8 h-8 rounded-full bg-gray-200"
-              />
+                class="w-8 h-8 rounded-full bg-gray-200" />
               <p class="font-bold text-base">y*****i</p>
             </div>
             <div class="flex items-center space-x-1">
@@ -335,22 +298,19 @@
             <img
               src="content/product/Orinuts_Roasted_Cashew_Original_200g-removebg-preview.png"
               alt="product-cashew"
-              class="w-16 h-auto object-contain mt-6"
-            />
+              class="w-16 h-auto object-contain mt-6" />
           </div>
         </div>
       </div>
       <div
-        class="kotak p-4 bg-gray-100 rounded-2xl shadow-xl w-full md:w-[32%] flex-shrink-0"
-      >
+        class="kotak p-4 bg-gray-100 rounded-2xl shadow-xl w-full md:w-[32%] flex-shrink-0">
         <div class="flex justify-between items-start">
           <div class="w-2/3 flex flex-col space-y-2">
             <div class="flex items-center space-x-2">
               <img
                 src="content/icon/user.png"
                 alt="user"
-                class="w-8 h-8 rounded-full bg-gray-200"
-              />
+                class="w-8 h-8 rounded-full bg-gray-200" />
               <p class="font-bold text-base">t*****n</p>
             </div>
             <div class="flex items-center space-x-1">
@@ -370,22 +330,19 @@
           <div class="w-1/3 flex justify-end">
             <img
               src="content/product/Orinuts_Wonder_Mix_200gr-removebg-preview.png"
-              class="w-16 h-auto object-contain mt-6"
-            />
+              class="w-16 h-auto object-contain mt-6" />
           </div>
         </div>
       </div>
       <div
-        class="kotak p-4 bg-gray-100 rounded-2xl shadow-xl w-full md:w-[32%] flex-shrink-0"
-      >
+        class="kotak p-4 bg-gray-100 rounded-2xl shadow-xl w-full md:w-[32%] flex-shrink-0">
         <div class="flex justify-between items-start">
           <div class="w-2/3 flex flex-col space-y-2">
             <div class="flex items-center space-x-2">
               <img
                 src="content/icon/user.png"
                 alt="user"
-                class="w-8 h-8 rounded-full bg-gray-200"
-              />
+                class="w-8 h-8 rounded-full bg-gray-200" />
               <p class="font-bold text-base">m*****g</p>
             </div>
             <div class="flex items-center space-x-1">
@@ -407,8 +364,7 @@
             <img
               src="content/product/Orinuts_Roasted_Almond_Original_200g-removebg-preview.png"
               alt="product-granola"
-              class="w-16 h-auto object-contain mt-6"
-            />
+              class="w-16 h-auto object-contain mt-6" />
           </div>
         </div>
       </div>
@@ -429,30 +385,22 @@
             </p>
 
             <div class="flex space-x-3 pt-5">
-              <a href=""
-                ><img
+              <a href=""><img
                   src="content/icon/instagram.svg"
                   alt="Instagram"
-                  class="w-7 h-7 rounded-full border border-gray-100 p-1 brightness-100 bg-white"
-              /></a>
-              <a href=""
-                ><img
+                  class="w-7 h-7 rounded-full border border-gray-100 p-1 brightness-100 bg-white" /></a>
+              <a href=""><img
                   src="content/icon/twitter.svg"
                   alt="Twitter"
-                  class="w-7 h-7 rounded-full border border-gray-100 p-1 brightness-100 bg-white"
-              /></a>
-              <a href=""
-                ><img
+                  class="w-7 h-7 rounded-full border border-gray-100 p-1 brightness-100 bg-white" /></a>
+              <a href=""><img
                   src="content/icon/facebook.svg"
                   alt="Facebook"
-                  class="w-7 h-7 rounded-full border border-gray-100 p-1 brightness-100 bg-white"
-              /></a>
-              <a href=""
-                ><img
+                  class="w-7 h-7 rounded-full border border-gray-100 p-1 brightness-100 bg-white" /></a>
+              <a href=""><img
                   src="content/icon/mail.svg"
                   alt="Email"
-                  class="w-7 h-7 rounded-full border border-gray-100 p-1 brightness-100 bg-white"
-              /></a>
+                  class="w-7 h-7 rounded-full border border-gray-100 p-1 brightness-100 bg-white" /></a>
             </div>
           </div>
 
@@ -469,9 +417,7 @@
             <div class="w-1/3 text-white">
               <h2 class="font-bold text-lg pb-4 uppercase">main menu</h2>
               <a href="" class="block leading-loose hover:underline">HOME</a>
-              <a href="" class="block leading-loose hover:underline"
-                >ABOUT US</a
-              >
+              <a href="" class="block leading-loose hover:underline">ABOUT US</a>
               <a href="" class="block leading-loose hover:underline">PRODUCT</a>
               <a href="" class="block leading-loose hover:underline">CONTACT</a>
             </div>
@@ -527,5 +473,6 @@
       hamburgerButton.addEventListener("click", openMenu);
       closeMenuButton.addEventListener("click", closeMenu);
     </script>
-  </body>
+</body>
+
 </html>

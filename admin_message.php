@@ -95,7 +95,7 @@ function formatTanggalHeader($date)
       <div class="flex-grow flex flex-col" id="chat-window">
 
         <!-- AREA SCROLL -->
-        <div class="flex-grow p-5 overflow-y-scroll space-y-4 rounded-tr-3xl max-h-[600px]">
+        <div id="scroll-area" class="flex-grow p-5 overflow-y-scroll space-y-4 rounded-tr-3xl max-h-[600px]">
           <?php
           $lastDate = null;
           foreach ($messages as $msg) {
@@ -144,8 +144,12 @@ function formatTanggalHeader($date)
   </main>
 
   <script>
-
+    document.addEventListener("DOMContentLoaded", function() {
+      const scrollArea = document.getElementById("scroll-area");
+      scrollArea.scrollTop = scrollArea.scrollHeight;
+    });
   </script>
+
 </body>
 
 </html>

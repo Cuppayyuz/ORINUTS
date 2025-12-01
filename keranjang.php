@@ -475,7 +475,7 @@ session_start();
             const totalEl = document.getElementById("summary-total");
 
             // Biaya Tetap
-            const SHIPPING_COST = 8000;
+            const SHIPPING_COST = 15000;
             const PROTECTION_COST = 1000;
 
             // === 2. FUNGSI KERANJANG ===

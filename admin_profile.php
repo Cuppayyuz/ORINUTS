@@ -37,11 +37,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $error = '';
 if (isset($_POST['submitUser'])) {
   $pdo = require 'koneksi.php';
-  if ($_POST['username'] === '' || $_POST['email'] === '') {
-    // Jika kedua field kosong, tidak perlu melakukan update
-    header('Location: admin_profile.php');
-    exit();
-  }
   $sqlEmail = "SELECT count(*) FROM admins WHERE email=:email and id!=:id";
   $queryEmail = $pdo->prepare($sqlEmail);
   $queryEmail->execute(array(
@@ -57,13 +52,14 @@ if (isset($_POST['submitUser'])) {
     $sql = 'UPDATE admins SET username=:username, email=:email WHERE id = :id';
     $query = $pdo->prepare($sql);
     $query->execute(array(
-      'username' => $_POST['username'],
-      'email' => $_POST['email'],
+      'username' => !empty($_POST['username']) ? $_POST['username'] : $_SESSION['admin']['username'],
+      'email' => !empty($_POST['email']) ? $_POST['email'] : $_SESSION['admin']['email'],
       'id' => $_SESSION['admin']['id']
     ));
     // update session
-    $_SESSION['admin']['username'] = $_POST['username'];
-    $_SESSION['admin']['email'] = $_POST['email'];
+    $_SESSION['admin']['username'] = !empty($_POST['username']) ? $_POST['username'] : $_SESSION['admin']['username'];
+    $_SESSION['admin']['email'] = !empty($_POST['email']) ? $_POST['email'] : $_SESSION['admin']['email'];
+    echo "<script>window.location.href = window.location.href</script>";
   }
 }
 // ganti password
