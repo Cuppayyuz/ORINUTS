@@ -232,7 +232,7 @@ session_start();
         </nav>
 
         <div class="hidden lg:flex items-center space-x-4">
-          <a href="#">
+          <a href="keranjang.php">
             <img
               src="content/icon/shopping-cart.svg"
               alt="cart"
@@ -241,18 +241,18 @@ session_start();
           <?php if (!isset($_SESSION['user'])) { ?>
             <a href="login.php" class="bg-white rounded-full py-2 px-8 font-semibold">Login</a>
           <?php } else { ?>
-              <a href="profile_user.php?id=<?php echo htmlspecialchars($_SESSION['user']['id']); ?>">
-                <?php
-                $pdo = require 'koneksi.php';
-                $query = $pdo->prepare("SELECT profile FROM users WHERE id=:id");
-                $query->execute([
-                  'id' => $_SESSION['user']['id']
-                ]);
-                $user = $query->fetch();
-                $base64 = base64_encode($user['profile']);
-                echo "<img src= 'data:image/*;base64, $base64' class=' w-12 rounded-full' alt='Profile Picture'>";
-                ?>
-              </a>
+            <a href="profile_user.php?id=<?php echo htmlspecialchars($_SESSION['user']['id']); ?>">
+              <?php
+              $pdo = require 'koneksi.php';
+              $query = $pdo->prepare("SELECT profile FROM users WHERE id=:id");
+              $query->execute([
+                'id' => $_SESSION['user']['id']
+              ]);
+              $user = $query->fetch();
+              $base64 = base64_encode($user['profile']);
+              echo "<img src= 'data:image/*;base64, $base64' class=' w-12 rounded-full' alt='Profile Picture'>";
+              ?>
+            </a>
           <?php } ?>
         </div>
 
@@ -270,42 +270,41 @@ session_start();
 
     <div
       id="mobile-menu"
-      class="lg:hidden fixed top-0 right-0 h-full w-3/4 max-w-sm bg-amber-800 transform translate-x-full transition-transform duration-300 ease-in-out z-50 overflow-y-auto">
+      class="lg:hidden fixed top-0 right-0 h-full w-3/4 max-w-sm bg-white transform translate-x-full transition-transform duration-300 ease-in-out z-50 overflow-y-auto">
       <div class="p-8">
         <div class="flex justify-between items-center mb-8">
-          <h2 class="text-2xl font-bold text-white">Menu</h2>
-          <button id="close-menu" class="text-white hover:text-gray-300">
+          <h2 class="text-2xl font-bold text-black">Menu</h2>
+          <button id="close-menu" class="text-black hover:text-gray-300">
             ✕
           </button>
         </div>
 
         <a
           href="index.html"
-          class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30">HOME</a>
+          class="block py-3 text-black font-semibold hover:text-green-800 border-b border-black">HOME</a>
         <a
-          href="#"
-          class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30">ABOUT US</a>
+          href="about.php"
+          class="block py-3 text-black font-semibold hover:text-green-800 border-b border-black">ABOUT US</a>
         <a
-          href="p_orinuts.html"
-          class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30">PRODUCT</a>
+          href="product.php"
+          class="block py-3 text-black font-semibold hover:text-green-800 border-b border-black">PRODUCT</a>
         <a
-          href="#"
-          class="block py-3 text-white font-semibold hover:text-green-800">CONTACT</a>
-        <hr class="my-6 border-white/30" />
+          href="contact.php"
+          class="block py-3 text-black font-semibold hover:text-green-800">CONTACT</a>
+        <hr class="my-6 border-black" />
         <div class="space-y-4">
           <a
-            href="#"
-            class="flex items-center space-x-3 py-3 text-white font-semibold hover:text-green-800">
+            href="keranjang.php"
+            class="flex items-center space-x-3 py-3 text-black font-semibold ">
             <img
               src="content/icon/shopping-cart.svg"
               alt="cart"
-              class="h-6 w-6"
-              style="filter: brightness(0) invert(1)" />
+              class="h-6 w-6">
             <span>Keranjang</span>
           </a>
           <a
-            href="#"
-            class="block w-full text-center bg-white hover:bg-gray-200 text-green-700 px-4 py-2 rounded-full font-bold">
+            href="login.php"
+            class="block w-full text-center bg-black text-white px-4 py-2 rounded-full font-bold">
             Login
           </a>
         </div>
@@ -342,7 +341,7 @@ session_start();
           </div>
           <h1
             id="hero-title"
-            class="hero-title text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-4 tracking-wide text-white">
+            class="hero-title text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-4 tracking-wide text-gray-50 ">
             ANTI OXIDANT <br />MIX
           </h1>
           <p
@@ -354,10 +353,10 @@ session_start();
           <div
             class="flex flex-col sm:flex-row justify-center lg:justify-start items-center space-y-4 sm:space-y-0 sm:space-x-5">
             <a
-              href="#"
+              href="keranjang.php"
               class="btn-primary rounded-full py-3 px-10 text-lg font-semibold shadow-lg bg-white">ORDER NOW</a>
             <a
-              href="#"
+              href="all-product.php"
               class="text-white text-lg underline underline-offset-15 hover:opacity-80 transition-opacity font-semibold">SEE ALL PRODUCT -></a>
           </div>
 
@@ -404,32 +403,32 @@ session_start();
             id="nut-1"
             src="content/kacang/almond1-removebg-preview.png"
             alt="almond"
-            class="floating-nut absolute w-16 sm:w-20 md:w-24 z-5 -top-2 left-3 sm:-top-4 sm:left-5 lg:left-32 rotate-38" />
+            class="floating-nut absolute w-16 md:w-20 lg:w-34 z-10 -top-2 left-3 sm:-top-4 sm:left-5 lg:left-32 rotate-38 " />
           <img
             id="nut-2"
             src="content/kacang/kismis.png"
             alt="cashew"
-            class="floating-nut-2 absolute w-10 sm:w-12 md:w-14 z-20 bottom-15 -left-50 sm:bottom-12 sm:left-10 lg:-bottom-3 lg:left-45 rotate-35" />
+            class="floating-nut-2 absolute w-10 md:w-12 lg:w-18 z-20 bottom-15 -left-50 sm:bottom-12 sm:left-10 lg:-bottom-3 lg:left-45 rotate-35" />
           <img
             id="nut-3"
             src="content/kacang/biji_labu.png"
             alt="pistachio"
-            class="floating-nut-3 absolute w-10 sm:w-12 md:w-16 z-5 -top-5 -right-4 sm:-top-1 sm:-right-4 lg:right-16" />
+            class="floating-nut-3 absolute w-10 md:w-12 lg:w-16 z-5 -top-10 -right-4 sm:-top-1 sm:-right-4 lg:right-30" />
           <img
             id="nut-4"
             src="content/kacang/almond1-removebg-preview.png"
             alt="walnut"
-            class="floating-nut-4 absolute w-16 sm:w-20 md:w-28 z-20 bottom-14 right-0 sm:bottom-12 lg:right-24 rotate-38" />
+            class="floating-nut-4 absolute w-16 md:w-20 lg:w-30 z-20 bottom-12 right-0 lg:-bottom-5 lg:right-24 rotate-38" />
           <img
             id="nut-5"
             src="content/kacang/kuaci.png"
             alt="pecan"
-            class="floating-nut-5 absolute w-12 sm:w-16 md:w-24 z-5 top-24 -left-2 sm:left-0 lg:left-20" />
+            class="floating-nut-5 absolute w-12 md:w-16 lg:w-30 z-5 top-40 -left-2 sm:left-0 lg:left-20" />
           <img
             id="nut-6"
             src="content/kacang/mente.png"
             alt="mente"
-            class="floating-nut-6 absolute w-16 sm:w-20 md:w-24 z-5 bottom-0 right-8 sm:right-10 lg:bottom-4 lg:right-40 -rotate-45" />
+            class="floating-nut-6 absolute w-16 md:w-20 lg:w-40 z-5 bottom-0 right-8 sm:right-10 lg:bottom-30 lg:right-20 -rotate-45" />
         </div>
       </div>
     </section>
@@ -623,7 +622,7 @@ session_start();
 
   <img
     id="wave-image-footer"
-    src="/content/sret/sret-hijau.png"
+    src="content/sret/sret-hijau.png"
     alt="sret-foot"
     class="w-full rotate-180 -bottom-1 relative" />
   <footer>
@@ -631,17 +630,17 @@ session_start();
       id="footer-bg"
       class="w-full p-10 bg-[#aaf334] text-[#38761d]"
       data-color-class="bg-[#aaf334]">
-      <img src="/content/logo.png" alt="Orinuts Logo" class="w-32 mb-6" />
+      <img src="content/logo.png" alt="Orinuts Logo" class="w-32 mb-6" />
       <div
         class="flex flex-col md:flex-row justify-between items-start pt-6 text-sm gap-8 md:gap-0">
-        <div class="w-full md:w-1/4 text-[#491A0B]">
+        <div class="w-full md:w-1/4 pr-8 text-[#491A0B]">
           <p class="leading-relaxed">
             the No.1 Healthy Snack in Indonesia. We provide premium quality
             roasted nut snacks, crafted without salt, sugar, preservatives, or
             MSG — delivering a pure and healthy taste in every bite.
           </p>
           <div class="flex space-x-3 pt-5">
-            <a href=""><img
+            <a href="https://www.instagram.com/orinuts.official?igsh=em1tazcxOWFqNGpm"><img
                 src="content/icon/instagram.svg"
                 alt="Instagram"
                 class="w-7 h-7 rounded-full border border-[#38761d] p-1"
@@ -649,15 +648,15 @@ session_start();
                     filter: invert(30%) sepia(20%) saturate(600%)
                       hue-rotate(60deg) brightness(50%) contrast(100%);
                   " /></a>
-            <a href=""><img
-                src="content/icon/twitter.svg"
-                alt="Twitter"
+            <a href="https://wa.me/62816521369"><img
+                src="content/icon/whatsapp.png"
+                alt="Whatsapp"
                 class="w-7 h-7 rounded-full border border-[#38761d] p-1"
                 style="
                     filter: invert(30%) sepia(20%) saturate(600%)
                       hue-rotate(60deg) brightness(50%) contrast(100%);
                   " /></a>
-            <a href=""><img
+            <a href="https://www.facebook.com/share/16N9e3564B/"><img
                 src="content/icon/facebook.svg"
                 alt="Facebook"
                 class="w-7 h-7 rounded-full border border-[#38761d] p-1"
@@ -665,7 +664,7 @@ session_start();
                     filter: invert(30%) sepia(20%) saturate(600%)
                       hue-rotate(60deg) brightness(50%) contrast(100%);
                   " /></a>
-            <a href=""><img
+            <a href="mailto:orinuts.official@gmail.com"><img
                 src="content/icon/mail.svg"
                 alt="Email"
                 class="w-7 h-7 rounded-full border border-[#38761d] p-1"
@@ -687,10 +686,10 @@ session_start();
           </div>
           <div class="w-full sm:w-1/3 text-[#491A0B]">
             <h2 class="font-bold text-lg pb-4 uppercase">main menu</h2>
-            <a href="" class="block leading-loose hover:underline">HOME</a>
-            <a href="" class="block leading-loose hover:underline">ABOUT US</a>
-            <a href="" class="block leading-loose hover:underline">PRODUCT</a>
-            <a href="" class="block leading-loose hover:underline">CONTACT</a>
+            <a href="index.php" class="block leading-loose hover:underline">HOME</a>
+            <a href="about.php" class="block leading-loose hover:underline">ABOUT US</a>
+            <a href="product.php" class="block leading-loose hover:underline">PRODUCT</a>
+            <a href="contact.php" class="block leading-loose hover:underline">CONTACT</a>
           </div>
           <div class="w-full sm:w-1/3 text-[#491A0B]">
             <h2 class="font-bold text-lg pb-4 uppercase">
@@ -760,13 +759,30 @@ session_start();
         headingColor: "text-[#38761d]",
         blurColor: "bg-[#72C84A]",
         // KEMBALI: 'nuts' hanya berisi daftar gambar
-        nuts: [
-          "content/kacang/almond1-removebg-preview.png",
-          "content/kacang/kismis.png",
-          "content/kacang/biji_labu.png",
-          "content/kacang/almond1-removebg-preview.png",
-          "content/kacang/kuaci.png",
-          "content/kacang/mente.png",
+        nuts: [{
+            src: "content/kacang/almond1-removebg-preview.png",
+            cls: "floating-nut absolute w-16 md:w-20 lg:w-34 z-10 -top-2 left-3 sm:-top-4 sm:left-5 lg:left-32 rotate-38"
+          },
+          {
+            src: "content/kacang/kismis.png",
+            cls: "floating-nut-2 absolute w-10 md:w-12 lg:w-18 z-20 bottom-15 -left-50 sm:bottom-12 sm:left-10 lg:-bottom-3 lg:left-45 rotate-35"
+          },
+          {
+            src: "content/kacang/biji_labu.png",
+            cls: "floating-nut-3 absolute w-10 md:w-12 lg:w-16 z-5 -top-10 -right-4 sm:-top-1 sm:-right-4 lg:right-30"
+          },
+          {
+            src: "content/kacang/almond1-removebg-preview.png",
+            cls: "floating-nut-4 absolute w-16 md:w-20 lg:w-30 z-20 bottom-12 right-0 lg:-bottom-5 lg:right-24 rotate-38"
+          },
+          {
+            src: "content/kacang/kuaci.png",
+            cls: "floating-nut-5 absolute w-12 md:w-16 lg:w-30 z-5 top-40 -left-2 sm:left-0 lg:left-20"
+          },
+          {
+            src: "content/kacang/mente.png",
+            cls: "floating-nut-6 absolute w-16 md:w-20 lg:w-40 z-5 bottom-0 right-8 sm:right-10 lg:bottom-30 lg:right-20 -rotate-45"
+          },
         ],
       },
       almond: {
@@ -780,13 +796,30 @@ session_start();
         footerColor: "bg-[#F4E9BB]",
         headingColor: "text-amber-800",
         blurColor: "bg-[#F4E9BB]",
-        nuts: [
-          "content/kacang/almond1-removebg-preview.png",
-          "content/kacang/almond1-removebg-preview.png",
-          "content/kacang/almond1-removebg-preview.png",
-          "content/kacang/almond1-removebg-preview.png",
-          "content/kacang/almond1-removebg-preview.png",
-          "content/kacang/almond1-removebg-preview.png",
+        nuts: [{
+            src: "content/kacang/almond1-removebg-preview.png",
+            cls: "floating-nut absolute w-16 md:w-20 lg:w-34 z-10 -top-2 left-3 sm:-top-4 sm:left-5 lg:left-32 rotate-38"
+          },
+          {
+            src: "content/kacang/almond1-removebg-preview.png",
+            cls: "floating-nut absolute w-10 md:w-12 lg:w-24 z-20 bottom-15 -left-50 sm:bottom-12 sm:left-10 lg:-bottom-3 lg:left-45 rotate-35"
+          },
+          {
+            src: "content/kacang/almond1-removebg-preview.png",
+            cls: "floating-nut-3 absolute w-10 md:w-12 lg:w-24 z-5 -top-10 -right-4 sm:-top-1 sm:-right-4 lg:right-30"
+          },
+          {
+            src: "content/kacang/almond1-removebg-preview.png",
+            cls: "floating-nut-4 absolute w-16 md:w-20 lg:w-30 z-20 bottom-12 right-0 lg:-bottom-5 lg:right-24 rotate-38"
+          },
+          {
+            src: "content/kacang/almond1-removebg-preview.png",
+            cls: "floating-nut-5 absolute w-12 md:w-16 lg:w-30 z-5 top-40 -left-2 sm:left-0 lg:left-20"
+          },
+          {
+            src: "content/kacang/almond1-removebg-preview.png",
+            cls: "floating-nut-6 absolute w-16 md:w-20 lg:w-40 z-5 bottom-0 right-8 sm:right-10 lg:bottom-30 lg:right-20 -rotate-45"
+          },
         ],
       },
       cashew: {
@@ -800,13 +833,30 @@ session_start();
         footerColor: "bg-[#7AB6C4]",
         headingColor: "text-blue-900",
         blurColor: "bg-cyan-400",
-        nuts: [
-          "content/kacang/mente.png",
-          "content/kacang/mente.png",
-          "content/kacang/mente.png",
-          "content/kacang/mente.png",
-          "content/kacang/mente.png",
-          "content/kacang/mente.png",
+        nuts: [{
+            src: "content/kacang/mente.png",
+            cls: "floating-nut absolute w-16 md:w-20 lg:w-60 z-10 -top-2 left-3 lg:-top-12 sm:left-5 lg:left-18 rotate-30"
+          },
+          {
+            src: "content/kacang/mente.png",
+            cls: "floating-nut absolute w-10 md:w-12 lg:w-46 z-20 bottom-15 -left-50  sm:left-10 lg:-bottom-4 lg:left-30 rotate-180"
+          },
+          {
+            src: "content/kacang/mente.png",
+            cls: "floating-nut-3 absolute w-10 md:w-12 lg:w-48 z-5 -top-1 -right-4 lg:-top-10 sm:-right-4 lg:right-24"
+          },
+          {
+            src: "content/kacang/mente.png",
+            cls: "floating-nut-4 absolute w-16 md:w-20 lg:w-38 z-20 bottom-12 right-0 lg:-bottom-5 lg:right-24 rotate-38"
+          },
+          {
+            src: "content/kacang/mente.png",
+            cls: "floating-nut-5 absolute w-12 md:w-16 lg:w-38 z-5 top-40 -left-2 sm:left-0 lg:left-20 "
+          },
+          {
+            src: "content/kacang/mente.png",
+            cls: "floating-nut-6 absolute w-16 md:w-20 lg:w-46   z-5 bottom-0 right-8 sm:right-10 lg:bottom-30 lg:right-20 -rotate-45"
+          },
         ],
       },
     };
@@ -870,7 +920,23 @@ session_start();
 
         // KEMBALI: Logika 'nuts' hanya mengganti 'src'
         nuts.forEach((nut, index) => {
-          nut.src = data.nuts[index];
+          // Cek apakah data untuk index ini ada (untuk menghindari error)
+          if (data.nuts[index]) {
+            nut.src = data.nuts[index].src;
+            nut.className = data.nuts[index].cls; // INI YANG MENGUBAH CLASS/POSISI
+
+            // Pastikan animasi fade tetap berjalan, kita tambahkan class 'is-changing' kembali 
+            // sebentar jika diperlukan, tapi karena kita me-replace className sepenuhnya, 
+            // kita tidak perlu menambahkan class transisi lagi di sini karena posisi langsung berubah.
+            // Namun, untuk transisi opacity yang halus saat masuk:
+            nut.classList.add('opacity-0');
+
+            // Trigger reflow agar browser sadar ada perubahan sebelum transisi masuk
+            void nut.offsetWidth;
+
+            nut.classList.remove('opacity-0');
+            nut.style.transition = "opacity 0.5s ease-in-out";
+          }
         });
 
         // --- Ganti Warna Tema ---

@@ -61,11 +61,11 @@ session_start();
             </div>
 
             <nav class="hidden lg:flex py-1 px-2 rounded-full bg-white/30 backdrop-blur-md">
-                <a href="index.html" class="rounded-full py-2 px-8 font-semibold">HOME</a>
-                <a href="about.html" class="rounded-full py-2 px-8 font-semibold hover:text-green-700">ABOUT US</a>
+                <a href="index.php" class="rounded-full py-2 px-8 font-semibold">HOME</a>
+                <a href="about.php" class="rounded-full py-2 px-8 font-semibold hover:text-green-700">ABOUT US</a>
                 <p
                     class="bg-white rounded-full py-2 px-8 font-semibold hover:text-green-700">PRODUCT</p>
-                <a href="contact.html" class="rounded-full py-2 px-8 font-semibold hover:text-green-700">CONTACT</a>
+                <a href="contact.php" class="rounded-full py-2 px-8 font-semibold hover:text-green-700">CONTACT</a>
             </nav>
 
             <div class="hidden lg:flex items-center space-x-4">

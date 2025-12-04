@@ -20,8 +20,7 @@ if (!empty($_POST)) {
           window.location.href = window.location.href;
       </script>";
 
-      exit; 
-
+      exit;
     }
   }
 }
@@ -110,7 +109,7 @@ if (!empty($_POST)) {
       </nav>
 
       <div class="hidden lg:flex items-center space-x-4">
-        <a href="#">
+        <a href="keranjang.php">
           <img src="content/icon/shopping-cart.svg" alt="cart" class="h-7 w-7" />
         </a>
         <?php if (!isset($_SESSION['user'])) { ?>
@@ -142,29 +141,43 @@ if (!empty($_POST)) {
     </div>
   </header>
 
-  <div id="mobile-menu"
-    class="lg:hidden fixed top-0 right-0 h-screen w-3/4 max-w-sm bg-amber-800 transform translate-x-full transition-transform duration-300 ease-in-out z-50 overflow-y-auto">
+  <div
+    id="mobile-menu"
+    class="lg:hidden fixed top-0 right-0 h-full w-3/4 max-w-sm bg-white transform translate-x-full transition-transform duration-300 ease-in-out z-50 overflow-y-auto">
     <div class="p-8">
       <div class="flex justify-between items-center mb-8">
-        <h2 class="text-2xl font-bold text-white">Menu</h2>
-        <button id="close-menu" class="text-white hover:text-gray-300">
+        <h2 class="text-2xl font-bold text-black">Menu</h2>
+        <button id="close-menu" class="text-black hover:text-gray-300">
           ✕
         </button>
       </div>
 
-      <a href="index.php" class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30">HOME</a>
-      <a href="about.php" class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30">ABOUT US</a>
-      <a href="product.php" class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30">PRODUCT</a>
-      <a href="#" class="block py-3 text-white font-semibold hover:text-green-800">CONTACT</a>
-      <hr class="my-6 border-white/30" />
+      <a
+        href="index.html"
+        class="block py-3 text-black font-semibold hover:text-green-800 border-b border-black">HOME</a>
+      <a
+        href="about.php"
+        class="block py-3 text-black font-semibold hover:text-green-800 border-b border-black">ABOUT US</a>
+      <a
+        href="product.php"
+        class="block py-3 text-black font-semibold hover:text-green-800 border-b border-black">PRODUCT</a>
+      <a
+        href="contact.php"
+        class="block py-3 text-black font-semibold hover:text-green-800">CONTACT</a>
+      <hr class="my-6 border-black" />
       <div class="space-y-4">
-        <a href="#" class="flex items-center space-x-3 py-3 text-white font-semibold hover:text-green-800">
-          <img src="content/icon/shopping-cart.svg" alt="cart" class="h-6 w-6"
-            style="filter: brightness(0) invert(1)" />
+        <a
+          href="keranjang.php"
+          class="flex items-center space-x-3 py-3 text-black font-semibold ">
+          <img
+            src="content/icon/shopping-cart.svg"
+            alt="cart"
+            class="h-6 w-6">
           <span>Keranjang</span>
         </a>
-        <a href="#"
-          class="block w-full text-center bg-white hover:bg-gray-200 text-green-700 px-4 py-2 rounded-full font-bold">
+        <a
+          href="login.php"
+          class="block w-full text-center bg-black text-white px-4 py-2 rounded-full font-bold">
           Login
         </a>
       </div>
@@ -267,7 +280,7 @@ if (!empty($_POST)) {
   <img src="content/sret/sret-orange.png" alt="sret orange " class="w-full -bottom-1 relative" />
   <footer>
     <div class="w-full p-10 bg-[#ea7003] text-white">
-      <img src="/content/logo.png" alt="Orinuts Logo" class="w-32 mb-6" />
+      <img src="content/logo.png" alt="Orinuts Logo" class="w-32 mb-6" />
 
       <div class="flex justify-between items-start pt-6 text-sm">
         <div class="w-full md:w-1/4 pr-8 text-white">
@@ -279,13 +292,13 @@ if (!empty($_POST)) {
           </p>
 
           <div class="flex space-x-3 pt-5">
-            <a href=""><img src="content/icon/instagram.svg" alt="Instagram"
+            <a href="https://www.instagram.com/orinuts.official?igsh=em1tazcxOWFqNGpm"><img src="content/icon/instagram.svg" alt="Instagram"
                 class="w-7 h-7 rounded-full border border-gray-100 p-1 brightness-100 bg-white" /></a>
-            <a href=""><img src="content/icon/twitter.svg" alt="Twitter"
+            <a href="https://wa.me/62816521369"><img src="content/icon/whatsapp.png" alt="WhatsApp"
                 class="w-7 h-7 rounded-full border border-gray-100 p-1 brightness-100 bg-white" /></a>
-            <a href=""><img src="content/icon/facebook.svg" alt="Facebook"
+            <a href="https://www.facebook.com/share/16N9e3564B/"><img src="content/icon/facebook.svg" alt="Facebook"
                 class="w-7 h-7 rounded-full border border-gray-100 p-1 brightness-100 bg-white" /></a>
-            <a href=""><img src="content/icon/mail.svg" alt="Email"
+            <a href="mailto:orinuts.official@gmail.com "><img src="content/icon/mail.svg" alt="Email"
                 class="w-7 h-7 rounded-full border border-gray-100 p-1 brightness-100 bg-white" /></a>
           </div>
         </div>
@@ -302,10 +315,10 @@ if (!empty($_POST)) {
 
           <div class="w-1/3 text-white">
             <h2 class="font-bold text-lg pb-4 uppercase">main menu</h2>
-            <a href="" class="block leading-loose hover:underline">HOME</a>
-            <a href="" class="block leading-loose hover:underline">ABOUT US</a>
-            <a href="" class="block leading-loose hover:underline">PRODUCT</a>
-            <a href="" class="block leading-loose hover:underline">CONTACT</a>
+            <a href="index.php" class="block leading-loose hover:underline">HOME</a>
+            <a href="about.php" class="block leading-loose hover:underline">ABOUT US</a>
+            <a href="product.php" class="block leading-loose hover:underline">PRODUCT</a>
+            <a href="contact.php" class="block leading-loose hover:underline">CONTACT</a>
           </div>
 
           <div class="w-1/3 text-white">

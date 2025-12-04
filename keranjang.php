@@ -75,15 +75,15 @@ session_start();
 
             <nav
                 class="hidden lg:flex py-1 px-2 rounded-full bg-white/30 backdrop-blur-md">
-                <a href="index.html" class="rounded-full py-2 px-8 font-semibold">HOME</a>
+                <a href="index.php" class="rounded-full py-2 px-8 font-semibold hover:text-green-700">HOME</a>
                 <a
-                    href="about.html"
+                    href="about.php"
                     class="rounded-full py-2 px-8 font-semibold hover:text-green-700">ABOUT US</a>
                 <a
-                    href="product.html  "
+                    href="product.php  "
                     class="rounded-full py-2 px-8 font-semibold hover:text-green-700">PRODUCT</a>
                 <a
-                    href="contact.html"
+                    href="contact.php"
                     class="rounded-full py-2 px-8 font-semibold hover:text-green-700">CONTACT</a>
             </nav>
 
@@ -120,12 +120,56 @@ session_start();
 
     <div
         id="mobile-menu"
-        class="lg:hidden fixed top-0 right-0 h-screen w-3/4 max-w-sm bg-amber-800 transform translate-x-full transition-transform duration-300 ease-in-out z-50 overflow-y-auto">
+        class="lg:hidden fixed top-0 right-0 h-full w-3/4 max-w-sm bg-white transform translate-x-full transition-transform duration-300 ease-in-out z-50 overflow-y-auto">
         <div class="p-8">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-2xl font-bold text-black">Menu</h2>
+                <button id="close-menu" class="text-black hover:text-gray-300">
+                    ✕
+                </button>
+            </div>
+
+            <a
+                href="index.php"
+                class="block py-3 text-black font-semibold hover:text-green-800 border-b border-black">HOME</a>
+            <a
+                href="about.php"
+                class="block py-3 text-black font-semibold hover:text-green-800 border-b border-black">ABOUT US</a>
+            <a
+                href="product.php"
+                class="block py-3 text-black font-semibold hover:text-green-800 border-b border-black">PRODUCT</a>
+            <a
+                href="contact.php"
+                class="block py-3 text-black font-semibold hover:text-green-800">CONTACT</a>
+            <hr class="my-6 border-black" />
+            <div class="space-y-4">
+                <a
+                    href="login.php"
+                    class="block w-full text-center bg-black text-white px-4 py-2 rounded-full font-bold">
+                    Login
+                </a>
+            </div>
         </div>
     </div>
 
-    <main class="container mx-auto px-6 md:px-16 mt-28 mb-16">
+    <main class="container mx-auto px-6 md:px-16 mt-8 mb-16">
+        <a
+            href="all-product.php"
+            class="sticky inline-flex items-center space-x-2 font-medium text-orinuts-brown hover:bg-amber-100 rounded-full py-2 px-1 transition-colors duration-200 mt-12 mb-5 ">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2">
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            <span>Kembali belanja</span>
+        </a>
         <h1 class="text-3xl font-bold text-stone-900 mb-8">Keranjang Saya</h1>
 
         <form id="cart-form" action="proses_checkout.php" method="POST">
@@ -149,8 +193,10 @@ session_start();
 
                         <?php
                         if (empty($_SESSION['user'])) {
-
-                            echo 'hai';
+                            // jika user belum login
+                            echo '<div class="flex flex-col justify-center items-center p-50 text-lg">
+                            <h1 class="font-poppins ">Silakan masuk atau daftar untuk melihat item </h1>
+                            <h1 class="font-poppins">di keranjang Anda</h1></div>';
                         } else {
                             // Ambil data
                             $pdo = require 'koneksi.php';
@@ -159,100 +205,91 @@ session_start();
                                 'uid' => $_SESSION['user']['id']
                             ]);
                             $products = $query->fetchAll();
-                            foreach ($products as $product) {
+                            if (empty($products)) {
+                                //    jika keranjang kosong
+                                echo '<div class="flex flex-col justify-center items-center p-50 gap-6">
+                                <h1 class="font-poppins">Wah, keranjangmu masih kosong nih!</h1>
+                                <a href="all-product.php" class="text-center w-52  h-auto p-2 border border-amber-700 text-amber-700 no-underline font-poppins font-medium">Belanja sekarang!</a> </div>';
+                            } else {
+                                foreach ($products as $product) {
                         ?>
-                                <div
-                                    class="cart-item flex items-center py-6 border-b border-orinuts-brown-light"
-                                    data-price="<?= $product['price'] ?>">
-                                    <div class="flex flex-grow items-center">
-                                        <input
-                                            type="checkbox"
-                                            name="item_ids[]"
-                                            value="<?= $product['id'] ?>"
-                                            class="item-checkbox rounded border-gray-400 focus:ring-amber-800 text-amber-800" />
-                                        <img
-                                            src="data:image/*;base64, <?= base64_encode($product['img']) ?>"
-                                            alt="Product"
-                                            class="w-16 h-16 sm:w-20 sm:h-20 object-contain rounded-md mx-4" />
-                                        <div class="flex-grow">
-                                            <h3 class="font-bold text-stone-800">
-                                                <?= $product['product_name'] ?>
-                                            </h3>
-                                            <p class="text-sm text-gray-500"><?= $product['varian'] ?> gram</p>
-                                            <p
-                                                class="item-price text-sm font-semibold text-stone-800">
-                                                Rp <?= number_format($product['price'], 0, ',', '.') ?>
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <div class="w-100 flex justify-center">
-                                        <div
-                                            class="flex items-center border border-gray-300 rounded-full">
-                                            <button
-                                                type="button"
-                                                class="minus-btn px-3 py-1 text-lg font-bold text-gray-600 focus:outline-none">
-                                                -
-                                            </button>
+                                    <div
+                                        class="cart-item flex items-center py-6 border-b border-orinuts-brown-light"
+                                        data-price="<?= $product['price'] ?>">
+                                        <div class="flex flex-grow items-center">
                                             <input
-                                                type="number"
-                                                name="quantity[<?= $product['id'] ?>]"
-                                                value="<?= $product['qty'] ?>"
-                                                min="1"
-                                                class="quantity-input w-10 text-center border-0 p-0 focus:ring-0 font-medium bg-transparent" />
+                                                type="checkbox"
+                                                name="item_ids[]"
+                                                value="<?= $product['id'] ?>"
+                                                class="item-checkbox rounded border-gray-400 focus:ring-amber-800 text-amber-800" />
+                                            <img
+                                                src="data:image/*;base64, <?= base64_encode($product['img']) ?>"
+                                                alt="Product"
+                                                class="w-16 h-16 sm:w-20 sm:h-20 object-contain rounded-md mx-4" />
+                                            <div class="flex-grow">
+                                                <h3 class="font-bold text-stone-800">
+                                                    <?= $product['product_name'] ?>
+                                                </h3>
+                                                <p class="text-sm text-gray-500"><?= $product['varian'] ?> gram</p>
+                                                <p
+                                                    class="item-price text-sm font-semibold text-stone-800">
+                                                    Rp <?= number_format($product['price'], 0, ',', '.') ?>
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="w-100 flex justify-center">
+                                            <div
+                                                class="flex items-center border border-gray-300 rounded-full">
+                                                <button
+                                                    type="button"
+                                                    class="minus-btn px-3 py-1 text-lg font-bold text-gray-600 focus:outline-none">
+                                                    -
+                                                </button>
+                                                <input
+                                                    type="number"
+                                                    name="quantity[<?= $product['id'] ?>]"
+                                                    value="<?= $product['qty'] ?>"
+                                                    min="1"
+                                                    class="quantity-input w-10 text-center border-0 p-0 focus:ring-0 font-medium bg-transparent" />
+                                                <button
+                                                    type="button"
+                                                    class="plus-btn px-3 py-1 text-lg font-bold text-gray-600 focus:outline-none">
+                                                    +
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <span
+                                            class="row-total w-24 text-right font-semibold text-stone-800"></span>
+
+                                        <div class="w-12 flex justify-end">
                                             <button
                                                 type="button"
-                                                class="plus-btn px-3 py-1 text-lg font-bold text-gray-600 focus:outline-none">
-                                                +
+                                                class="delete-btn text-red-500 hover:text-red-900">
+                                                <svg
+                                                    class="w-5 h-5"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    viewBox="0 0 24 24"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                                </svg>
                                             </button>
                                         </div>
                                     </div>
-
-                                    <span
-                                        class="row-total w-24 text-right font-semibold text-stone-800"></span>
-
-                                    <div class="w-12 flex justify-end">
-                                        <button
-                                            type="button"
-                                            class="delete-btn text-red-500 hover:text-red-900">
-                                            <svg
-                                                class="w-5 h-5"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                viewBox="0 0 24 24"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    stroke-width="2"
-                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </div>
+                                <?php } ?>
                             <?php } ?>
                         <?php } ?>
                         <!-- end -->
                     </div>
 
 
-                    <a
-                        href="all-product.php"
-                        class="inline-flex items-center space-x-2 font-medium text-orinuts-brown hover:bg-amber-100 rounded-full py-2 px-5 transition-colors duration-200 mt-8">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="h-5 w-5"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            stroke-width="2">
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                        </svg>
-                        <span>Kembali belanja</span>
-                    </a>
+
                 </div>
 
                 <div class="lg:w-1/3 w-full mt-12 lg:mt-0">

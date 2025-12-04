@@ -56,10 +56,10 @@ session_start();
       <!-- Menu Desktop -->
       <nav
         class="hidden lg:flex py-1 px-2 rounded-full bg-white/30 backdrop-blur-md">
-        <a href="index.php" class="rounded-full py-2 px-8 font-semibold">HOME</a>
+        <a href="index.php" class="rounded-full py-2 px-8 font-semibold hover:text-green-700">HOME</a>
         <a
           href="about.php"
-          class="bg-white rounded-full py-2 px-8 font-semibold hover:text-green-700">ABOUT US</a>
+          class="bg-white rounded-full py-2 px-8 font-semibold ">ABOUT US</a>
         <a
           href="product.php  "
           class="rounded-full py-2 px-8 font-semibold hover:text-green-700">PRODUCT</a>
@@ -70,7 +70,7 @@ session_start();
 
       <!-- Login + Cart -->
       <div class="hidden lg:flex items-center space-x-4">
-        <a href="#">
+        <a href="keranjang.php">
           <img
             src="content/icon/shopping-cart.svg"
             alt="cart"
@@ -110,42 +110,41 @@ session_start();
   <!-- Menu Mobile slide kanan -->
   <div
     id="mobile-menu"
-    class="lg:hidden fixed top-0 right-0 h-screen w-3/4 max-w-sm bg-amber-800 transform translate-x-full transition-transform duration-300 ease-in-out z-50 overflow-y-auto">
+    class="lg:hidden fixed top-0 right-0 h-full w-3/4 max-w-sm bg-white transform translate-x-full transition-transform duration-300 ease-in-out z-50 overflow-y-auto">
     <div class="p-8">
       <div class="flex justify-between items-center mb-8">
-        <h2 class="text-2xl font-bold text-white">Menu</h2>
-        <button id="close-menu" class="text-white hover:text-gray-300">
+        <h2 class="text-2xl font-bold text-black">Menu</h2>
+        <button id="close-menu" class="text-black hover:text-gray-300">
           ✕
         </button>
       </div>
 
       <a
-        href="index.php"
-        class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30">HOME</a>
+        href="index.html"
+        class="block py-3 text-black font-semibold hover:text-green-800 border-b border-black">HOME</a>
       <a
-        href="#"
-        class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30">ABOUT US</a>
+        href="about.php"
+        class="block py-3 text-black font-semibold hover:text-green-800 border-b border-black">ABOUT US</a>
       <a
         href="product.php"
-        class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30">PRODUCT</a>
+        class="block py-3 text-black font-semibold hover:text-green-800 border-b border-black">PRODUCT</a>
       <a
         href="contact.php"
-        class="block py-3 text-white font-semibold hover:text-green-800">CONTACT</a>
-      <hr class="my-6 border-white/30" />
+        class="block py-3 text-black font-semibold hover:text-green-800">CONTACT</a>
+      <hr class="my-6 border-black" />
       <div class="space-y-4">
         <a
-          href="#"
-          class="flex items-center space-x-3 py-3 text-white font-semibold hover:text-green-800">
+          href="keranjang.php"
+          class="flex items-center space-x-3 py-3 text-black font-semibold ">
           <img
             src="content/icon/shopping-cart.svg"
             alt="cart"
-            class="h-6 w-6"
-            style="filter: brightness(0) invert(1)" />
+            class="h-6 w-6">
           <span>Keranjang</span>
         </a>
         <a
-          href="#"
-          class="block w-full text-center bg-white hover:bg-gray-200 text-green-700 px-4 py-2 rounded-full font-bold">
+          href="login.php"
+          class="block w-full text-center bg-black text-white px-4 py-2 rounded-full font-bold">
           Login
         </a>
       </div>
@@ -236,13 +235,11 @@ session_start();
         </p>
       </div>
       <div class="font-poppins font-semibold text-[#491A0B]">
-        <h1 class="text-5xl pb-15">Natural <br />Ingredients</h1>
+        <h1 class="text-5xl pb-15">Visi & Misi</h1>
         <p class="text-[20px]">
-          Dipilih langsung dari sumber terbaik — 100% bahan alami tanpa bahan
+         <span class="font-extrabold">Visi:</span> menjadi salah satu perusahaan penghasil snack sehat <br> yang berpengaruh di Indonesia.
           <br />
-          pengawet atau pewarna buatan. <br />
-          Kami menjaga keaslian rasa dan nutrisi agar tetap <br />
-          murni seperti dari alamnya.
+         <span class="font-extrabold">Misi:</span>  menciptakan snack sehat yang sepenuhnya aman <br> dengan harga yang dijangkau semua kalangan.
         </p>
       </div>
     </div>
@@ -253,226 +250,224 @@ session_start();
       <img src="content/foto bpk.png" alt="owner" class="rotate-5" />
     </div>
     <div
-      class="kotak p-5 bg-gray-100 rounded-3xl shadow-xl w-100 flex-shrink-0 -rotate-5">
-      <img src="content/foto bpk.png" alt="owner" class="rotate-5" />
+      class="kotak p-5 bg-gray-100 rounded-3xl shadow-xl w-100 flex-shrink-0 rotate-5 mb-45">
+      <img src="content/fotomockup/HEART HEALTHY MIX 3b.jpg" alt="mockup" class="rounded-3xl w-100 h-100" />
     </div>
     <div
-      class="kotak p-5 bg-gray-100 rounded-3xl shadow-xl w-100 flex-shrink-0 -rotate-5">
-      <img src="content/foto bpk.png" alt="owner" class="rotate-5" />
+      class="kotak p-5 bg-gray-100 rounded-3xl shadow-xl w-100 flex-shrink-0 -rotate-7 mt-50">
+      <img src="content/fotomodelproduct/ORINUTS DUO MIX 1 b.jpg" alt="model" class="rounded-3xl w-100 h-100 " />
     </div>
   </section>
 
-  <
-    <h1
+
+  <h1
     class="testimoni text-amber-950 font-bold text-4xl md:text-6xl text-center pt-20">
     Testimoni
-    </h1>
+  </h1>
+  <div
+    class="flex flex-col md:flex-row justify-center gap-8 px-6 md:px-12 pt-14 pb-32">
     <div
-      class="flex flex-col md:flex-row justify-center gap-8 px-6 md:px-12 pt-14 pb-32">
-      <div
-        class="kotak p-4 bg-gray-100 rounded-2xl shadow-xl w-full md:w-[32%] flex-shrink-0">
-        <div class="flex justify-between items-start">
-          <div class="w-2/3 flex flex-col space-y-2">
-            <div class="flex items-center space-x-2">
-              <img
-                src="content/icon/user.png"
-                alt="user"
-                class="w-8 h-8 rounded-full bg-gray-200" />
-              <p class="font-bold text-base">y*****i</p>
-            </div>
-            <div class="flex items-center space-x-1">
-              <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
-              <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
-              <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
-              <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
-              <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
-              <h1 class="font-extrabold text-lg ml-1">5.0</h1>
-            </div>
-            <div>
-              <p class="font-extrabold text-sm leading-snug">
-                Enak... dan sehat... uda repeat order juga disini.
-              </p>
-            </div>
-          </div>
-          <div class="w-1/3 flex justify-end">
+      class="kotak p-4 bg-gray-100 rounded-2xl shadow-xl w-full md:w-[32%] flex-shrink-0">
+      <div class="flex justify-between items-start">
+        <div class="w-2/3 flex flex-col space-y-2">
+          <div class="flex items-center space-x-2">
             <img
-              src="content/product/Orinuts_Roasted_Cashew_Original_200g-removebg-preview.png"
-              alt="product-cashew"
-              class="w-16 h-auto object-contain mt-6" />
+              src="content/icon/user.png"
+              alt="user"
+              class="w-8 h-8 rounded-full bg-gray-200" />
+            <p class="font-bold text-base">y*****i</p>
+          </div>
+          <div class="flex items-center space-x-1">
+            <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
+            <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
+            <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
+            <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
+            <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
+            <h1 class="font-extrabold text-lg ml-1">5.0</h1>
+          </div>
+          <div>
+            <p class="font-extrabold text-sm leading-snug">
+              Enak... dan sehat... uda repeat order juga disini.
+            </p>
           </div>
         </div>
-      </div>
-      <div
-        class="kotak p-4 bg-gray-100 rounded-2xl shadow-xl w-full md:w-[32%] flex-shrink-0">
-        <div class="flex justify-between items-start">
-          <div class="w-2/3 flex flex-col space-y-2">
-            <div class="flex items-center space-x-2">
-              <img
-                src="content/icon/user.png"
-                alt="user"
-                class="w-8 h-8 rounded-full bg-gray-200" />
-              <p class="font-bold text-base">t*****n</p>
-            </div>
-            <div class="flex items-center space-x-1">
-              <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
-              <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
-              <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
-              <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
-              <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
-              <h1 class="font-extrabold text-lg ml-1">5.0</h1>
-            </div>
-            <div>
-              <p class="font-extrabold text-sm leading-snug">
-                mantab enak & krg seruasal (teks disesuaikan dengan gambar)
-              </p>
-            </div>
-          </div>
-          <div class="w-1/3 flex justify-end">
-            <img
-              src="content/product/Orinuts_Wonder_Mix_200gr-removebg-preview.png"
-              class="w-16 h-auto object-contain mt-6" />
-          </div>
-        </div>
-      </div>
-      <div
-        class="kotak p-4 bg-gray-100 rounded-2xl shadow-xl w-full md:w-[32%] flex-shrink-0">
-        <div class="flex justify-between items-start">
-          <div class="w-2/3 flex flex-col space-y-2">
-            <div class="flex items-center space-x-2">
-              <img
-                src="content/icon/user.png"
-                alt="user"
-                class="w-8 h-8 rounded-full bg-gray-200" />
-              <p class="font-bold text-base">m*****g</p>
-            </div>
-            <div class="flex items-center space-x-1">
-              <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
-              <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
-              <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
-              <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
-              <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
-              <h1 class="font-extrabold text-lg ml-1">5.0</h1>
-            </div>
-            <div>
-              <p class="font-extrabold text-sm leading-snug">
-                Puas banget pengiriman cepat kemasan aman appe pun di kasih
-                (teks disesuaikan)
-              </p>
-            </div>
-          </div>
-          <div class="w-1/3 flex justify-end">
-            <img
-              src="content/product/Orinuts_Roasted_Almond_Original_200g-removebg-preview.png"
-              alt="product-granola"
-              class="w-16 h-auto object-contain mt-6" />
-          </div>
+        <div class="w-1/3 flex justify-end">
+          <img
+            src="content/product/Orinuts_Roasted_Cashew_Original_200g-removebg-preview.png"
+            alt="product-cashew"
+            class="w-16 h-auto object-contain mt-6" />
         </div>
       </div>
     </div>
-    <img src="content/sret/sret-orange.png" alt="sret orenge" class="w-full -bottom-1 relative ">
-    <!-- Footer  -->
-    <footer>
-      <div class="w-full p-10 bg-[#ea7003] text-white">
-        <img src="/content/logo.png" alt="Orinuts Logo" class="w-32 mb-6" />
-
-        <div class="flex justify-between items-start pt-6 text-sm">
-          <div class="w-full md:w-1/4 pr-8 text-white">
-            <p class="leading-relaxed">
-              the No.1 Healthy Snack in Indonesia. We provide <br />
-              premium quality roasted nut snacks, crafted <br />
-              without salt, sugar, preservatives, or MSG — <br />
-              delivering a pure and healthy taste in every bite.
-            </p>
-
-            <div class="flex space-x-3 pt-5">
-              <a href=""><img
-                  src="content/icon/instagram.svg"
-                  alt="Instagram"
-                  class="w-7 h-7 rounded-full border border-gray-100 p-1 brightness-100 bg-white" /></a>
-              <a href=""><img
-                  src="content/icon/twitter.svg"
-                  alt="Twitter"
-                  class="w-7 h-7 rounded-full border border-gray-100 p-1 brightness-100 bg-white" /></a>
-              <a href=""><img
-                  src="content/icon/facebook.svg"
-                  alt="Facebook"
-                  class="w-7 h-7 rounded-full border border-gray-100 p-1 brightness-100 bg-white" /></a>
-              <a href=""><img
-                  src="content/icon/mail.svg"
-                  alt="Email"
-                  class="w-7 h-7 rounded-full border border-gray-100 p-1 brightness-100 bg-white" /></a>
-            </div>
+    <div
+      class="kotak p-4 bg-gray-100 rounded-2xl shadow-xl w-full md:w-[32%] flex-shrink-0">
+      <div class="flex justify-between items-start">
+        <div class="w-2/3 flex flex-col space-y-2">
+          <div class="flex items-center space-x-2">
+            <img
+              src="content/icon/user.png"
+              alt="user"
+              class="w-8 h-8 rounded-full bg-gray-200" />
+            <p class="font-bold text-base">t*****n</p>
           </div>
+          <div class="flex items-center space-x-1">
+            <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
+            <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
+            <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
+            <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
+            <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
+            <h1 class="font-extrabold text-lg ml-1">5.0</h1>
+          </div>
+          <div>
+            <p class="font-extrabold text-sm leading-snug">
+              mantab enak & krg seruasal (teks disesuaikan dengan gambar)
+            </p>
+          </div>
+        </div>
+        <div class="w-1/3 flex justify-end">
+          <img
+            src="content/product/Orinuts_Wonder_Mix_200gr-removebg-preview.png"
+            class="w-16 h-auto object-contain mt-6" />
+        </div>
+      </div>
+    </div>
+    <div
+      class="kotak p-4 bg-gray-100 rounded-2xl shadow-xl w-full md:w-[32%] flex-shrink-0">
+      <div class="flex justify-between items-start">
+        <div class="w-2/3 flex flex-col space-y-2">
+          <div class="flex items-center space-x-2">
+            <img
+              src="content/icon/user.png"
+              alt="user"
+              class="w-8 h-8 rounded-full bg-gray-200" />
+            <p class="font-bold text-base">m*****g</p>
+          </div>
+          <div class="flex items-center space-x-1">
+            <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
+            <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
+            <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
+            <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
+            <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
+            <h1 class="font-extrabold text-lg ml-1">5.0</h1>
+          </div>
+          <div>
+            <p class="font-extrabold text-sm leading-snug">
+              Puas banget pengiriman cepat kemasan aman appe pun di kasih
+              (teks disesuaikan)
+            </p>
+          </div>
+        </div>
+        <div class="w-1/3 flex justify-end">
+          <img
+            src="content/product/Orinuts_Roasted_Almond_Original_200g-removebg-preview.png"
+            alt="product-granola"
+            class="w-16 h-auto object-contain mt-6" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <img src="content/sret/sret-orange.png" alt="sret orenge" class="w-full -bottom-1 relative ">
+  <!-- Footer  -->
+  <footer>
+    <div class="w-full p-10 bg-[#ea7003] text-white">
+      <img src="content/logo.png" alt="Orinuts Logo" class="w-32 mb-6" />
 
-          <div class="flex justify-between w-full md:w-3/4">
-            <div class="w-1/3 text-white">
-              <h2 class="font-bold text-lg pb-4 uppercase">main office</h2>
-              <p class="leading-relaxed">
-                Bavarian Village A 7,<br />
-                Darmo Permai Baru III,<br />
-                Surabaya, Indonesia 60188
-              </p>
-            </div>
+      <div class="flex justify-between items-start pt-6 text-sm">
+        <div class="w-full md:w-1/4 pr-8 text-white">
+          <p class="leading-relaxed">
+            the No.1 Healthy Snack in Indonesia. We provide <br />
+            premium quality roasted nut snacks, crafted <br />
+            without salt, sugar, preservatives, or MSG — <br />
+            delivering a pure and healthy taste in every bite.
+          </p>
 
-            <div class="w-1/3 text-white">
-              <h2 class="font-bold text-lg pb-4 uppercase">main menu</h2>
-              <a href="" class="block leading-loose hover:underline">HOME</a>
-              <a href="" class="block leading-loose hover:underline">ABOUT US</a>
-              <a href="" class="block leading-loose hover:underline">PRODUCT</a>
-              <a href="" class="block leading-loose hover:underline">CONTACT</a>
-            </div>
-
-            <div class="w-1/3 text-white">
-              <h2 class="font-bold text-lg pb-4 uppercase">
-                Official Online Store
-              </h2>
-              <p class="leading-loose">
-                Official Shopee <br />
-                Official Tokopedia <br />
-                <br />
-                +62 816-521-369
-              </p>
-            </div>
+          <div class="flex space-x-3 pt-5">
+            <a href="https://www.instagram.com/orinuts.official?igsh=em1tazcxOWFqNGpm"><img
+                src="content/icon/instagram.svg"
+                alt="Instagram"
+                class="w-7 h-7 rounded-full border border-gray-100 p-1 brightness-100 bg-white" /></a>
+            <a href="https://wa.me/62816521369"><img src="content/icon/whatsapp.png" alt="WhatsApp"
+                class="w-7 h-7 rounded-full border border-gray-100 p-1 brightness-100 bg-white" /></a>
+            <a href="https://www.facebook.com/share/16N9e3564B/"><img
+                src="content/icon/facebook.svg"
+                alt="Facebook"
+                class="w-7 h-7 rounded-full border border-gray-100 p-1 brightness-100 bg-white" /></a>
+            <a href="mailto:orinuts.official@gmail.com "><img
+                src="content/icon/mail.svg"
+                alt="Email"
+                class="w-7 h-7 rounded-full border border-gray-100 p-1 brightness-100 bg-white" /></a>
           </div>
         </div>
 
-        <hr class="mt-12 mb-4 border-white" />
+        <div class="flex justify-between w-full md:w-3/4">
+          <div class="w-1/3 text-white">
+            <h2 class="font-bold text-lg pb-4 uppercase">main office</h2>
+            <p class="leading-relaxed">
+              Bavarian Village A 7,<br />
+              Darmo Permai Baru III,<br />
+              Surabaya, Indonesia 60188
+            </p>
+          </div>
 
-        <p class="text-sm text-white mt-2">
-          Orinuts © 2025 All Rights Reserved. | Privacy Policy Term of Service
-        </p>
+          <div class="w-1/3 text-white">
+            <h2 class="font-bold text-lg pb-4 uppercase">main menu</h2>
+            <a href="index.php" class="block leading-loose hover:underline">HOME</a>
+            <a href="about.php" class="block leading-loose hover:underline">ABOUT US</a>
+            <a href="product.php" class="block leading-loose hover:underline">PRODUCT</a>
+            <a href="contact.php" class="block leading-loose hover:underline">CONTACT</a>
+          </div>
+
+          <div class="w-1/3 text-white">
+            <h2 class="font-bold text-lg pb-4 uppercase">
+              Official Online Store
+            </h2>
+            <p class="leading-loose">
+              Official Shopee <br />
+              Official Tokopedia <br />
+              <br />
+              +62 816-521-369
+            </p>
+          </div>
+        </div>
       </div>
-    </footer>
-    <script>
-      // Script untuk shadow navbar (tidak diubah)
-      const navbar = document.getElementById("navbar");
-      window.addEventListener("scroll", () => {
-        if (window.scrollY > 50) {
-          navbar.classList.add("shadow-lg");
-        } else {
-          navbar.classList.remove("shadow-lg");
-        }
-      });
 
-      // 👇 SCRIPT HAMBURGER SETELAH MODIFIKASI 👇
-      const hamburgerButton = document.getElementById("hamburger-button");
-      const mobileMenu = document.getElementById("mobile-menu");
-      const closeMenuButton = document.getElementById("close-menu");
+      <hr class="mt-12 mb-4 border-white" />
 
-      // Fungsi untuk membuka menu
-      function openMenu() {
-        mobileMenu.classList.remove("translate-x-full"); // Tampilkan menu
+      <p class="text-sm text-white mt-2">
+        Orinuts © 2025 All Rights Reserved. | Privacy Policy Term of Service
+      </p>
+    </div>
+  </footer>
+  <script>
+    // Script untuk shadow navbar (tidak diubah)
+    const navbar = document.getElementById("navbar");
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add("shadow-lg");
+      } else {
+        navbar.classList.remove("shadow-lg");
       }
+    });
 
-      // Fungsi untuk menutup menu
-      function closeMenu() {
-        mobileMenu.classList.add("translate-x-full"); // Sembunyikan menu
-      }
+    // 👇 SCRIPT HAMBURGER SETELAH MODIFIKASI 👇
+    const hamburgerButton = document.getElementById("hamburger-button");
+    const mobileMenu = document.getElementById("mobile-menu");
+    const closeMenuButton = document.getElementById("close-menu");
 
-      // Tambahkan event listener ke setiap elemen
-      hamburgerButton.addEventListener("click", openMenu);
-      closeMenuButton.addEventListener("click", closeMenu);
-    </script>
+    // Fungsi untuk membuka menu
+    function openMenu() {
+      mobileMenu.classList.remove("translate-x-full"); // Tampilkan menu
+    }
+
+    // Fungsi untuk menutup menu
+    function closeMenu() {
+      mobileMenu.classList.add("translate-x-full"); // Sembunyikan menu
+    }
+
+    // Tambahkan event listener ke setiap elemen
+    hamburgerButton.addEventListener("click", openMenu);
+    closeMenuButton.addEventListener("click", closeMenu);
+  </script>
 </body>
 
 </html>

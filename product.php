@@ -1,5 +1,5 @@
-<?php 
-    session_start();
+<?php
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -80,7 +80,7 @@
 
 <body class="bg-[#F4EFD8] w-full">
     <header id="navbar" class="fixed left-0 right-0 top-0 z-50 py-2 transition-all duration-300 backdrop-blur-sm">
-        <div class="container mx-auto px-6 md:px-16 flex justify-between md:items-end items-center">
+        <div class="container mx-auto px-6 md:px-16 flex justify-between items-center">
             <div>
                 <img src="content/logo.png" alt="logo" class="h-14" />
             </div>
@@ -94,25 +94,25 @@
             </nav>
 
             <div class="hidden lg:flex items-center space-x-4">
-                <a href="#">
+                <a href="keranjang.php">
                     <img src="content/icon/shopping-cart.svg" alt="cart" class="h-7 w-7" />
                 </a>
                 <?php if (!isset($_SESSION['user'])) { ?>
-            <a href="login.php" class="bg-white rounded-full py-2 px-8 font-semibold">Login</a>
-          <?php } else { ?>
-              <a href="profile_user.php?id=<?php echo htmlspecialchars($_SESSION['user']['id']); ?>">
-                <?php
-                $pdo = require 'koneksi.php';
-                $query = $pdo->prepare("SELECT profile FROM users WHERE id=:id");
-                $query->execute([
-                  'id' => $_SESSION['user']['id']
-                ]);
-                $user = $query->fetch();
-                $base64 = base64_encode($user['profile']);
-                echo "<img src= 'data:image/*;base64, $base64' class=' w-12 rounded-full' alt='Profile Picture'>";
-                ?>
-              </a>
-          <?php } ?>
+                    <a href="login.php" class="bg-white rounded-full py-2 px-8 font-semibold">Login</a>
+                <?php } else { ?>
+                    <a href="profile_user.php?id=<?php echo htmlspecialchars($_SESSION['user']['id']); ?>">
+                        <?php
+                        $pdo = require 'koneksi.php';
+                        $query = $pdo->prepare("SELECT profile FROM users WHERE id=:id");
+                        $query->execute([
+                            'id' => $_SESSION['user']['id']
+                        ]);
+                        $user = $query->fetch();
+                        $base64 = base64_encode($user['profile']);
+                        echo "<img src= 'data:image/*;base64, $base64' class=' w-12 rounded-full' alt='Profile Picture'>";
+                        ?>
+                    </a>
+                <?php } ?>
             </div>
 
             <div class="lg:hidden flex items-center">
@@ -126,32 +126,43 @@
         </div>
     </header>
 
-    <div id="mobile-menu"
-        class="lg:hidden fixed top-0 right-0 h-screen w-3/4 max-w-sm bg-amber-800 transform translate-x-full transition-transform duration-300 ease-in-out z-50 overflow-y-auto">
+    <div
+        id="mobile-menu"
+        class="lg:hidden fixed top-0 right-0 h-full w-3/4 max-w-sm bg-white transform translate-x-full transition-transform duration-300 ease-in-out z-50 overflow-y-auto">
         <div class="p-8">
             <div class="flex justify-between items-center mb-8">
-                <h2 class="text-2xl font-bold text-white">Menu</h2>
-                <button id="close-menu" class="text-white hover:text-gray-300">
+                <h2 class="text-2xl font-bold text-black">Menu</h2>
+                <button id="close-menu" class="text-black hover:text-gray-300">
                     ✕
                 </button>
             </div>
 
-            <a href="index.php"
-                class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30">HOME</a>
-            <a href="about.php" class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30">ABOUT
-                US</a>
-            <a href="#"
-                class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30">PRODUCT</a>
-            <a href="contact.php" class="block py-3 text-white font-semibold hover:text-green-800">CONTACT</a>
-            <hr class="my-6 border-white/30" />
+            <a
+                href="index.html"
+                class="block py-3 text-black font-semibold hover:text-green-800 border-b border-black">HOME</a>
+            <a
+                href="about.php"
+                class="block py-3 text-black font-semibold hover:text-green-800 border-b border-black">ABOUT US</a>
+            <a
+                href="product.php"
+                class="block py-3 text-black font-semibold hover:text-green-800 border-b border-black">PRODUCT</a>
+            <a
+                href="contact.php"
+                class="block py-3 text-black font-semibold hover:text-green-800">CONTACT</a>
+            <hr class="my-6 border-black" />
             <div class="space-y-4">
-                <a href="#" class="flex items-center space-x-3 py-3 text-white font-semibold hover:text-green-800">
-                    <img src="content/icon/shopping-cart.svg" alt="cart" class="h-6 w-6"
-                        style="filter: brightness(0) invert(1)" />
+                <a
+                    href="keranjang.php"
+                    class="flex items-center space-x-3 py-3 text-black font-semibold ">
+                    <img
+                        src="content/icon/shopping-cart.svg"
+                        alt="cart"
+                        class="h-6 w-6">
                     <span>Keranjang</span>
                 </a>
-                <a href="#"
-                    class="block w-full text-center bg-white hover:bg-gray-200 text-green-700 px-4 py-2 rounded-full font-bold">
+                <a
+                    href="login.php"
+                    class="block w-full text-center bg-black text-white px-4 py-2 rounded-full font-bold">
                     Login
                 </a>
             </div>
@@ -186,25 +197,21 @@
             class="produk-meja absolute h-auto w-40 top-95 right-148 z-10" />
         <div class="w-full bg-gray-500 h-9 absolute top-169 z-40 blur-3xl"></div>
     </div>
-        <!-- product -->
+    <!-- product -->
     <div id="product-content-container" class="mt-[45rem]">
         <!-- blur -->
-            <div class="absolute w-100 h-100 -left-10  bg-[#82BBC9] rounded-full blur-[100px] z-0">
-            </div>
-            <div class="absolute w-100 h-100 right-30 top-290 bg-[#82BBC9]  rounded-full blur-[100px] -z-10">
-            </div>  
-            <div class="absolute w-100 h-100 left-10 top-665 bg-[#F876C1] rounded-full blur-[100px] z-0"></div>
-            <div class="absolute w-100 h-100 right-30 top-580  bg-[#F876C1] rounded-full blur-[100px] -z-10"></div>
-            <div class="absolute w-100 h-100 left-50 -bottom-890 bg-[#ECE856] rounded-full blur-[100px] z-0"></div>
-            <div class="absolute w-100 h-100 right-30 -bottom-810 bg-[#0300A6] opacity-90 rounded-full blur-[100px] -z-10"></div>
-            <div class="absolute w-100 h-100 -left-25 -bottom-1200 bg-[#78B0F1] rounded-full blur-[100px] z-0"></div>
-            <div class="absolute w-100 h-100 right-65 -bottom-1140 bg-[#78B0F1] rounded-full blur-[100px] -z-10"></div>
-            <div class="absolute w-100 h-100 left-25 -bottom-1490 bg-[#FA7268] rounded-full blur-[100px] z-0"></div>
-            <div class="absolute w-100 h-100 right-30 -bottom-1550 bg-[#FA7268] rounded-full blur-[100px] -z-10"></div>
-        <!-- diskon -->
-        <img src="content/diskon.png" alt="diskon" class="absolute top-212 w-80 -rotate-15 h-auto z-20 left-37" />
-        <img src="content/diskon.png" alt="diskon" class="absolute top-403 w-80 rotate-15 h-auto z-20 right-25" />
-
+        <div class="absolute w-100 h-100 -left-10  bg-[#82BBC9] rounded-full blur-[100px] z-0">
+        </div>
+        <div class="absolute w-100 h-100 right-30 top-290 bg-[#82BBC9]  rounded-full blur-[100px] -z-10">
+        </div>
+        <div class="absolute w-100 h-100 left-10 top-665 bg-[#F876C1] rounded-full blur-[100px] z-0"></div>
+        <div class="absolute w-100 h-100 right-30 top-580  bg-[#F876C1] rounded-full blur-[100px] -z-10"></div>
+        <div class="absolute w-100 h-100 left-50 -bottom-890 bg-[#ECE856] rounded-full blur-[100px] z-0"></div>
+        <div class="absolute w-100 h-100 right-30 -bottom-810 bg-[#0300A6] opacity-90 rounded-full blur-[100px] -z-10"></div>
+        <div class="absolute w-100 h-100 -left-25 -bottom-1200 bg-[#78B0F1] rounded-full blur-[100px] z-0"></div>
+        <div class="absolute w-100 h-100 right-65 -bottom-1140 bg-[#78B0F1] rounded-full blur-[100px] -z-10"></div>
+        <div class="absolute w-100 h-100 left-25 -bottom-1490 bg-[#FA7268] rounded-full blur-[100px] z-0"></div>
+        <div class="absolute w-100 h-100 right-30 -bottom-1550 bg-[#FA7268] rounded-full blur-[100px] -z-10"></div>
         <!-- p1 -->
         <div class="flex flex-col md:flex-row items-center justify-center  px-30 h-165 py-55 space-x-10 pt-70">
             <img src="content/product/Orinuts_Roasted_Cashew_Original_200g-removebg-preview.png" alt="Roasted Cashew"
@@ -238,7 +245,7 @@
                 </div>
             </div>
         </div>
-<!-- p2 -->
+        <!-- p2 -->
         <div class="trapr w-[100%] h-225 z-0 bg-[#EDCF3E]">
             <div class="flex flex-col md:flex-row items-center justify-center pl-75 space-x-10 px-30 py-50">
                 <div>
@@ -274,7 +281,7 @@
                     class="imgr h-130" />
             </div>
         </div>
-<!-- p3 -->
+        <!-- p3 -->
         <div class="flex flex-col md:flex-row items-center justify-center space-x-10 pr-60 h-125    ">
             <img src="content/product/Orinuts_Heart_Healthy_Mix_200.png" alt="Hearth Healthy Mix"
                 class="imgl h-125 " />
@@ -315,17 +322,17 @@
                         Orithin Chocolate
                     </h2>
                     <p class="font-medium font-poppins tracking-[1px] text-[18px] uppercase mt-2 text-white">
-                        Kacang mete, Almond, Sunflower, pumpkin,<br />
-                        cranberry, gojiberry, golden raisin.
+                        Tepung almond, tepung beras, tepung tapioka,<br> biji flax, biji wijen, coklat covertur, gula aren,<br> garam rendah sodium, minya nabati
                     </p>
                     <ul class="list-disc list-inside font-bold font-poppins py-5 tracking-[1px] text-white">
-                        <li>Premium Quality.</li>
-                        <li>Tahan 1 tahun dalam kemasan (sebelum kemasan dibuka).</li>
-                        <li>Rasa FRESH & ENAK.</li>
-                        <li>Sudah matang & siap dimakan.</li>
-                        <li>Kacang & biji-bijian dipanggang.</li>
+                        <li>Tidak mengandung gluten</li>
+                        <li>Tidak mengandung telur</li>
+                        <li>Tidak mengandung susu</li>
+                        <li>Tidak mengandung msg</li>
+                        <li>Tidak mengandung pengawet</li>
+                        <li>Tidak mengandung kolesterol</li>
                     </ul>
-                    <hr class="text-white"/>
+                    <hr class="text-white" />
                     <div class="flex justify-between items-center p-5 ">
                         <h3 class="text-2xl font-semibold font-poppins text-white">
                             Rp. 70,000-135,000
@@ -343,7 +350,7 @@
                     class="imgr w-125 h-auto" />
             </div>
         </div>
-<!-- p5 -->
+        <!-- p5 -->
         <div class="flex flex-col md:flex-row items-center justify-center space-x-10 pr-60 h-100">
             <img src="content/product/Orithin_Original-removebg-preview.png" alt="Orithin Original"
                 class="imgl w-125 h-auto drop-shadow-lg" />
@@ -351,16 +358,16 @@
                 <h2 class="text-4xl font-extrabold mb-6 font-inter uppercase tracking-[7px]">
                     Orithin Original
                 </h2>
-                <p class="font-medium font-poppins tracking-[1px] text-[18px] uppercase mt-2">
-                    Kacang mete, Almond, Sunflower, pumpkin,<br />
-                    cranberry, gojiberry, golden raisin.
+                <p class="font-medium font-poppins tracking-[1px] text-[18px] uppercase mt-2 text-white">
+                    Tepung almond, tepung beras, tepung tapioka,<br> biji flax, biji wijen, coklat covertur, gula aren,<br> garam rendah sodium, minya nabati
                 </p>
-                <ul class="list-disc list-inside font-bold font-poppins py-5 tracking-[1px]">
-                    <li>Premium Quality.</li>
-                    <li>Tahan 1 tahun dalam kemasan (sebelum kemasan dibuka).</li>
-                    <li>Rasa FRESH & ENAK.</li>
-                    <li>Sudah matang & siap dimakan.</li>
-                    <li>Kacang & biji-bijian dipanggang.</li>
+                <ul class="list-disc list-inside font-bold font-poppins py-5 tracking-[1px] text-white">
+                    <li>Tidak mengandung gluten</li>
+                    <li>Tidak mengandung telur</li>
+                    <li>Tidak mengandung susu</li>
+                    <li>Tidak mengandung msg</li>
+                    <li>Tidak mengandung pengawet</li>
+                    <li>Tidak mengandung kolesterol</li>
                 </ul>
                 <hr class="py-3" />
                 <div class="flex justify-between items-center p-5">
@@ -385,8 +392,7 @@
                         Orimond Himalayan Salt
                     </h2>
                     <p class="font-medium font-poppins tracking-[1px] text-[18px] uppercase mt-2">
-                        Kacang mete, Almond, Sunflower, pumpkin,<br />
-                        cranberry, gojiberry, golden raisin.
+                        kacang almond panggang 
                     </p>
                     <ul class="list-disc list-inside font-bold font-poppins py-5 tracking-[1px]">
                         <li>Premium Quality.</li>
@@ -422,8 +428,7 @@
                     Orimond Bubble Gum
                 </h2>
                 <p class="font-medium font-poppins tracking-[1px] text-[18px] uppercase mt-2">
-                    Kacang mete, Almond, Sunflower, pumpkin,<br />
-                    cranberry, gojiberry, golden raisin.
+                    kacang almond panggang 
                 </p>
                 <ul class="list-disc list-inside font-bold font-poppins py-5 tracking-[1px]">
                     <li>Premium Quality.</li>
@@ -455,8 +460,7 @@
                         Rumah Mente Pumpkin Seed
                     </h2>
                     <p class="font-medium font-poppins tracking-[1px] text-[18px] uppercase mt-2">
-                        Kacang mete, Almond, Sunflower, pumpkin,<br />
-                        cranberry, gojiberry, golden raisin.
+                        pumpkin seed dan sunflower seed
                     </p>
                     <ul class="list-disc list-inside font-bold font-poppins py-5 tracking-[1px]">
                         <li>Premium Quality.</li>
@@ -492,8 +496,7 @@
                     Rumah Mente Sweet & Spicy
                 </h2>
                 <p class="font-medium font-poppins tracking-[1px] text-[18px] uppercase mt-2">
-                    Kacang mete, Almond, Sunflower, pumpkin,<br />
-                    cranberry, gojiberry, golden raisin.
+                    kacang mente panggang
                 </p>
                 <ul class="list-disc list-inside font-bold font-poppins py-5 tracking-[1px]">
                     <li>Premium Quality.</li>
@@ -522,7 +525,7 @@
     <img src="content/sret/sret-pink.png" alt="sret-pink" class="w-full -bottom-1 relative pt-30 ">
     <footer>
         <div class="w-full p-10 bg-[#FA7369] text-white">
-            <img src="/content/logo.png" alt="Orinuts Logo" class="w-32 mb-6" />
+            <img src="content/logo.png" alt="Orinuts Logo" class="w-32 mb-6" />
             <div class="flex justify-between items-start pt-6 text-sm">
                 <div class="w-full md:w-1/4 pr-8 text-white">
                     <p class="leading-relaxed">
@@ -533,13 +536,13 @@
                     </p>
 
                     <div class="flex space-x-3 pt-5">
-                        <a href=""><img src="content/icon/instagram.svg" alt="Instagram"
+                        <a href="https://www.instagram.com/orinuts.official?igsh=em1tazcxOWFqNGpm"><img src="content/icon/instagram.svg" alt="Instagram"
                                 class="w-7 h-7 rounded-full border border-gray-100 p-1 brightness-100 bg-white" /></a>
-                        <a href=""><img src="content/icon/twitter.svg" alt="Twitter"
+                        <a href="https://wa.me/62816521369"><img src="content/icon/whatsapp.png" alt="WhatsApp"
                                 class="w-7 h-7 rounded-full border border-gray-100 p-1 brightness-100 bg-white" /></a>
-                        <a href=""><img src="content/icon/facebook.svg" alt="Facebook"
+                        <a href="https://www.facebook.com/share/16N9e3564B/"><img src="content/icon/facebook.svg" alt="Facebook"
                                 class="w-7 h-7 rounded-full border border-gray-100 p-1 brightness-100 bg-white" /></a>
-                        <a href=""><img src="content/icon/mail.svg" alt="Email"
+                        <a href="mailto:orinuts.official@gmail.com "><img src="content/icon/mail.svg" alt="Email"
                                 class="w-7 h-7 rounded-full border border-gray-100 p-1 brightness-100 bg-white" /></a>
                     </div>
                 </div>
@@ -556,10 +559,10 @@
 
                     <div class="w-1/3 text-white">
                         <h2 class="font-bold text-lg pb-4 uppercase">main menu</h2>
-                        <a href="" class="block leading-loose hover:underline">HOME</a>
-                        <a href="" class="block leading-loose hover:underline">ABOUT US</a>
-                        <a href="" class="block leading-loose hover:underline">PRODUCT</a>
-                        <a href="" class="block leading-loose hover:underline">CONTACT</a>
+                        <a href="index.php" class="block leading-loose hover:underline">HOME</a>
+                        <a href="about.php" class="block leading-loose hover:underline">ABOUT US</a>
+                        <a href="product.php" class="block leading-loose hover:underline">PRODUCT</a>
+                        <a href="contact.php" class="block leading-loose hover:underline">CONTACT</a>
                     </div>
 
                     <div class="w-1/3 text-white">
