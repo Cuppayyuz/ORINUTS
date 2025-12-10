@@ -143,11 +143,23 @@ session_start();
                 class="block py-3 text-black font-semibold hover:text-green-800">CONTACT</a>
             <hr class="my-6 border-black" />
             <div class="space-y-4">
-                <a
-                    href="login.php"
-                    class="block w-full text-center bg-black text-white px-4 py-2 rounded-full font-bold">
-                    Login
-                </a>
+                <?php if (!isset($_SESSION['user'])) { ?>
+                    <a href="login.php" class="bg-black text-white rounded-full py-2 px-8 font-semibold">Login</a>
+                <?php } else { ?>
+                    <a href="profile_user.php?id=<?php echo htmlspecialchars($_SESSION['user']['id']); ?>" class="flex items-center gap-3">
+                        <?php
+                        $pdo = require 'koneksi.php';
+                        $query = $pdo->prepare("SELECT profile, fullname FROM users WHERE id=:id");
+                        $query->execute([
+                            'id' => $_SESSION['user']['id']
+                        ]);
+                        $user = $query->fetch();
+                        $base64 = base64_encode($user['profile']);
+                        ?>
+                        <img src='data:image/*;base64, <?= $base64 ?>' class=' w-12 rounded-full' alt='Profile Picture'>
+                        <p class=' text-xl'><?= $user['fullname'] ?></p>
+                    </a>
+                <?php } ?>
             </div>
         </div>
     </div>
@@ -264,8 +276,8 @@ session_start();
                                             class="row-total w-24 text-right font-semibold text-stone-800"></span>
 
                                         <div class="w-12 flex justify-end">
-                                            <button
-                                                type="button"
+                                            <a
+                                                href="deleteItemCart.php?id=<?= $product['id'] ?>"
                                                 class="delete-btn text-red-500 hover:text-red-900">
                                                 <svg
                                                     class="w-5 h-5"
@@ -279,7 +291,7 @@ session_start();
                                                         stroke-width="2"
                                                         d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                                                 </svg>
-                                            </button>
+                                            </a>
                                         </div>
                                     </div>
                                 <?php } ?>
@@ -304,17 +316,12 @@ session_start();
                                 class="font-semibold text-stone-700">sistem<br />Cash On Delivery</span>
                             <img
                                 id="current-payment-logo"
-                                src="content/"
+                                src="content/icon/cod.png"
                                 alt="Metode Pembayaran"
-                                class="h-6" />
+                                class=" w-[50px]" />
                         </div>
 
-                        <button
-                            id="ubah-pembayaran-btn"
-                            type="button"
-                            class="w-full bg-white text-stone-800 font-bold py-2 px-4 rounded-lg mb-6 hover:bg-gray-100 transition-colors">
-                            Ubah metode pembayaran
-                        </button>
+
 
                         <hr class="my-6 border-gray-300" />
 
@@ -335,7 +342,7 @@ session_start();
                                 <span>Pengiriman</span>
                                 <span
                                     id="summary-shipping"
-                                    class="font-semibold text-stone-800">Rp8.000</span>
+                                    class="font-semibold text-stone-800">Rp15.000</span>
                             </div>
                         </div>
 
@@ -358,99 +365,7 @@ session_start();
         </form>
     </main>
 
-    <div
-        id="payment-modal"
-        class="fixed inset-0 z-[60] flex items-center justify-center p-4 hidden">
-        <div
-            id="modal-overlay"
-            class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
 
-        <div
-            class="relative z-10 w-full max-w-md bg-white rounded-lg shadow-xl p-6">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="text-xl font-bold text-stone-900">
-                    Pilih Metode Pembayaran
-                </h3>
-                <button id="close-modal-btn" class="text-gray-400 hover:text-gray-600">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-6 w-6"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        stroke-width="2">
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-
-            <div class="space-y-3">
-                <button
-                    data-method="Qris"
-                    data-logo-src="content/qris-logo.png"
-                    class="payment-option-btn flex justify-between items-center w-full p-4 border rounded-lg hover:border-amber-800 focus:border-amber-800 focus:ring-2 focus:ring-amber-200 transition-colors">
-                    <span class="font-medium">Qris</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                    </svg>
-                </button>
-
-                <button
-                    data-method="Cash On Delivery"
-                    data-logo-src="content/cod-logo.png"
-                    class="payment-option-btn flex justify-between items-center w-full p-4 border rounded-lg hover:border-amber-800 focus:border-amber-800 focus:ring-2 focus:ring-amber-200 transition-colors">
-                    <span class="font-medium">Cash On Delivery</span>
-                    <span class="font-bold text-red-600">COD</span>
-                </button>
-
-                <div>
-                    <button
-                        id="transfer-bank-btn"
-                        class="flex justify-between items-center w-full p-4 border rounded-lg hover:border-amber-800 transition-colors">
-                        <span class="font-medium">Transfer Bank</span>
-                        <svg
-                            id="transfer-arrow"
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="h-5 w-5 transition-transform"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            stroke-width="2">
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M19 9l-7 7-7-7" />
-                        </svg>
-                    </button>
-                    <div id="transfer-bank-options" class="pl-4 mt-2 space-y-2 hidden">
-                        <button data-method="Transfer BCA" data-logo-src="content/bca-logo.png" class="payment-option-btn flex justify-between items-center w-full p-3 border rounded-lg hover:border-amber-800">
-                            <span>BCA</span>
-                            <span class="text-sm font-bold text-blue-600">BCA</span>
-                        </button>
-                        <button data-method="Transfer BNI" data-logo-src="content/bni-logo.png" class="payment-option-btn flex justify-between items-center w-full p-3 border rounded-lg hover:border-amber-800">
-                            <span>BNI</span>
-                            <span class="text-sm font-bold text-orange-500">BNI</span>
-                        </button>
-                        <button data-method="Transfer BRI" data-logo-src="content/bri-logo.png" class="payment-option-btn flex justify-between items-center w-full p-3 border rounded-lg hover:border-amber-800">
-                            <span>BRI</span>
-                            <span class="text-sm font-bold text-blue-800">BRI</span>
-                        </button>
-                        <button data-method="Transfer Mandiri" data-logo-src="content/mandiri-logo.png" class="payment-option-btn flex justify-between items-center w-full p-3 border rounded-lg hover:border-amber-800">
-                            <span>Mandiri</span>
-                            <span class="text-sm font-bold text-blue-900">Mandiri</span>
-                        </button>
-                        <button data-method="Transfer BSI" data-logo-src="content/bsi-logo.png" class="payment-option-btn flex justify-between items-center w-full p-3 border rounded-lg hover:border-amber-800">
-                            <span>BSI</span>
-                            <span class="text-sm font-bold text-green-700">BSI</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <script>
         // Script Navbar & Hamburger (Tidak Berubah)
         (function() {
@@ -496,7 +411,7 @@ session_start();
             });
         })();
 
-        // --- 👇 Fungsionalitas Keranjang & Modal ---
+        // --- 👇 Fungsionalitas Keranjang ---
         document.addEventListener("DOMContentLoaded", () => {
 
             // === 1. ELEMEN KERANJANG ===
@@ -613,7 +528,6 @@ session_start();
                 }
 
                 if (target.closest(".delete-btn")) {
-                    cartItem.remove();
                     calculateTotals();
                 }
 
@@ -650,77 +564,6 @@ session_start();
             // Kalkulasi awal
             document.querySelectorAll(".item-checkbox").forEach(cb => cb.checked = false);
             calculateTotals();
-
-            // === 4. [BARU] LOGIKA MODAL PEMBAYARAN ===
-
-            // Elemen Modal
-            const openModalBtn = document.getElementById("ubah-pembayaran-btn");
-            const closeModalBtn = document.getElementById("close-modal-btn");
-            const paymentModal = document.getElementById("payment-modal");
-            const modalOverlay = document.getElementById("modal-overlay");
-
-            // Elemen Accordion
-            const transferBtn = document.getElementById("transfer-bank-btn");
-            const transferOptions = document.getElementById("transfer-bank-options");
-            const transferArrow = document.getElementById("transfer-arrow");
-
-            // Elemen Pilihan di Modal
-            const paymentOptionButtons = document.querySelectorAll(".payment-option-btn");
-
-            // Elemen Tampilan di Ringkasan
-            const currentMethodText = document.getElementById("current-payment-method");
-            const currentMethodLogo = document.getElementById("current-payment-logo");
-
-            // Fungsi Buka/Tutup Modal
-            function openModal() {
-                paymentModal.classList.remove("hidden");
-                paymentModal.classList.add("flex");
-            }
-
-            function closeModal() {
-                paymentModal.classList.add("hidden");
-                paymentModal.classList.remove("flex");
-            }
-
-            // Event Listener Buka/Tutup Modal
-            openModalBtn.addEventListener("click", openModal);
-            closeModalBtn.addEventListener("click", closeModal);
-            modalOverlay.addEventListener("click", closeModal);
-
-            // Event Listener Accordion Transfer Bank
-            transferBtn.addEventListener("click", (e) => {
-                e.preventDefault(); // Mencegah tombol submit form
-                transferOptions.classList.toggle("hidden");
-                transferArrow.classList.toggle("rotate-180");
-            });
-
-            // Event Listener untuk SETIAP tombol pilihan pembayaran
-            paymentOptionButtons.forEach(button => {
-                button.addEventListener("click", () => {
-                    const methodName = button.getAttribute("data-method");
-                    const logoSrc = button.getAttribute("data-logo-src");
-
-                    // 1. Update teks di ringkasan
-                    // Memecah "sistem" dan "COD" menjadi dua baris jika itu yg diinginkan
-                    if (methodName.toLowerCase() === 'cash on delivery') {
-                        currentMethodText.innerHTML = "sistem<br/>Cash On Delivery";
-                    } else {
-                        currentMethodText.innerHTML = methodName;
-                    }
-
-                    // 2. Update logo di ringkasan
-                    currentMethodLogo.src = logoSrc;
-
-                    // 3. (Opsional) Tambahkan style 'selected' di modal
-                    // Hapus 'selected' dari semua tombol
-                    paymentOptionButtons.forEach(btn => btn.classList.remove('border-amber-800', 'ring-2', 'ring-amber-200'));
-                    // Tambahkan 'selected' ke tombol yg diklik
-                    button.classList.add('border-amber-800', 'ring-2', 'ring-amber-200');
-
-                    // 4. Tutup modal
-                    closeModal();
-                });
-            });
 
         });
     </script>

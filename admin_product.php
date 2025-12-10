@@ -173,7 +173,16 @@ if (isset($_GET['edit'])) {
         <a href="admin_message.php">
           <li class="nav-item p-2.5 flex items-center gap-3 cursor-pointer hover:bg-[#E0BBA1]/20 rounded-r-3xl transition">
             <i class="fas fa-comment w-4"></i> Message
-            <span class="ml-auto bg-red-600 text-white text-xs font-semibold px-2 py-0.5 rounded-full">2</span>
+            <?php
+            $sql = "SELECT COUNT(status) as total_message FROM messages WHERE status='unread'";
+            $query = $pdo->prepare($sql);
+            $query->execute();
+            $count = $query->fetchColumn();
+
+            if ($count > 0) {
+              echo "<span class='ml-auto bg-red-600 text-white text-xs font-semibold px-2 py-0.5 rounded-full'>$count</span>";
+            }
+            ?>
           </li>
         </a>
         <a href="admin_order.php">

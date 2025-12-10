@@ -133,8 +133,16 @@ if (!empty($_POST['old_password']) && !empty($_POST['password'])) {
             <li
               class="nav-item p-2.5 flex items-center gap-3 cursor-pointer hover:bg-[#E0BBA1]/20 rounded-r-3xl transition">
               <i class="fas fa-comment w-4"></i> Message
-              <span
-                class="ml-auto bg-red-600 text-white text-xs font-semibold px-2 py-0.5 rounded-full">2</span>
+              <?php
+              $sql = "SELECT COUNT(status) as total_message FROM messages WHERE status='unread'";
+              $query = $pdo->prepare($sql);
+              $query->execute();
+              $count = $query->fetchColumn();
+
+              if ($count > 0) {
+                echo "<span class='ml-auto bg-red-600 text-white text-xs font-semibold px-2 py-0.5 rounded-full'>$count</span>";
+              }
+              ?>
             </li>
           </a>
           <a href="admin_order.php">
@@ -286,10 +294,10 @@ if (!empty($_POST['old_password']) && !empty($_POST['password'])) {
             </div>
           </div>
           <?php if ($errorPass): ?>
-              <div class="col-span-2 text-red-600 font-semibold">
-                <?php echo htmlspecialchars($errorPass); ?>
-              </div>
-            <?php endif; ?>
+            <div class="col-span-2 text-red-600 font-semibold">
+              <?php echo htmlspecialchars($errorPass); ?>
+            </div>
+          <?php endif; ?>
           <div class="flex justify-end mt-10">
             <button
               type="submit"

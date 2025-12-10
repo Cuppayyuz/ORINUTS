@@ -43,8 +43,17 @@ if (!$_SESSION['admin']) {
                     <a href="admin_message.php">
                         <li class="nav-item p-2.5 flex items-center gap-3 cursor-pointer hover:bg-[#E0BBA1]/20 rounded-r-3xl transition">
                             <i class="fas fa-comment w-4"></i> Message
-                            <span class="ml-auto bg-red-600 text-white text-xs font-semibold px-2 py-0.5 rounded-full">2</span>
-                        </li>
+                            <?php
+                            $pdo = require 'koneksi.php';
+                            $sql = "SELECT COUNT(status) as total_message FROM messages WHERE status='unread'";
+                            $query = $pdo->prepare($sql);
+                            $query->execute();
+                            $count = $query->fetchColumn();
+
+                            if ($count > 0) {
+                                echo "<span class='ml-auto bg-red-600 text-white text-xs font-semibold px-2 py-0.5 rounded-full'>$count</span>";
+                            }
+                            ?>
                     </a>
                     <li class="nav-item font-bold p-2.5 flex items-center gap-3 cursor-pointer  bg-[#D2A278] rounded-r-3xl shadow-md" style="background-color: #D2A278;">
                         <i class="fas fa-shopping-cart w-4"></i> Order
@@ -163,13 +172,13 @@ if (!$_SESSION['admin']) {
                         </thead>
                         <tbody id="modal-product-list" class="divide-y divide-gray-100">
                             <?php for ($i = 0; $i < count($items); $i++) { ?>
-                            <tr class="hover:bg-gray-50 transition-colors">
-                                <td class="px-3 py-2 whitespace-nowrap text-xs font-medium text-gray-900"><?= $i+1 ?></td>
-                                <td class="px-3 py-2 text-xs text-gray-700"><?= $items[$i]['nama_produk'] ?></td>
-                                <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-700 text-right"><?= $items[$i]['qty'] ?></td>
-                                <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-700 text-right">Rp. <?= number_format($items[$i]['harga'],0,',','.') ?></td>
-                                <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-900 font-medium text-right">Rp. <?= number_format($items[$i]['total'],0,',','.') ?></td>
-                            </tr>
+                                <tr class="hover:bg-gray-50 transition-colors">
+                                    <td class="px-3 py-2 whitespace-nowrap text-xs font-medium text-gray-900"><?= $i + 1 ?></td>
+                                    <td class="px-3 py-2 text-xs text-gray-700"><?= $items[$i]['nama_produk'] ?></td>
+                                    <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-700 text-right"><?= $items[$i]['qty'] ?></td>
+                                    <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-700 text-right">Rp. <?= number_format($items[$i]['harga'], 0, ',', '.') ?></td>
+                                    <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-900 font-medium text-right">Rp. <?= number_format($items[$i]['total'], 0, ',', '.') ?></td>
+                                </tr>
                             <?php } ?>
                         </tbody>
                     </table>
@@ -178,7 +187,7 @@ if (!$_SESSION['admin']) {
                 <div class="mt-4 space-y-1 text-sm text-gray-700 border-t pt-3">
                     <div class="flex justify-between">
                         <span class="font-medium">Subtotal Produk:</span>
-                        <span id="modal-subtotal" class="font-medium">Rp. <?= number_format($trans['total_harga'],0,',','.') ?></span>
+                        <span id="modal-subtotal" class="font-medium">Rp. <?= number_format($trans['total_harga'], 0, ',', '.') ?></span>
                     </div>
                     <div class="flex justify-between">
                         <span class="font-medium">Biaya Pengiriman (JNE Reg):</span>
@@ -186,7 +195,7 @@ if (!$_SESSION['admin']) {
                     </div>
                     <div class="flex justify-between font-bold text-lg text-[#8B4513] border-t mt-2 pt-2">
                         <span>TOTAL PEMBAYARAN:</span>
-                        <span id="modal-total">Rp. <?= number_format(($trans['total_harga']+15000),0,',','.') ?></span>
+                        <span id="modal-total">Rp. <?= number_format(($trans['total_harga'] + 15000), 0, ',', '.') ?></span>
                     </div>
                 </div>
 
@@ -198,7 +207,7 @@ if (!$_SESSION['admin']) {
                     <div>
                         <p class="text-xs text-gray-500 text-right">Status Pesanan:</p>
                         <p id="modal-status" class="text-base font-bold text-white px-3 py-1 rounded-full text-center">
-                            <?=  $trans['status'] == 'complete' ? "<span class='bg-green-500 px-3 py-1 rounded-full shadow'>{$trans['status']}</span>" :
+                            <?= $trans['status'] == 'complete' ? "<span class='bg-green-500 px-3 py-1 rounded-full shadow'>{$trans['status']}</span>" :
                                 "<span class='bg-yellow-500 px-3 py-1 rounded-full shadow'>{$trans['status']}</span>"
                             ?>
                         </p>

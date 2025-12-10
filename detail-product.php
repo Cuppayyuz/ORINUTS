@@ -86,6 +86,61 @@ $queryrata = $pdo->prepare($sqlrata);
 $queryrata->execute([$_GET['id']]);
 $rataRata = $queryrata->fetch();
 
+// Fungsi untuk mendapatkan HTML bintang berdasarkan rating
+function getStarHTML($rating)
+{
+    $html = '';
+    for ($i = 1; $i <= 5; $i++) {
+        if ($i <= $rating) {
+            $html .= '<span class="star-filled">&#9733;</span>';
+        } else {
+            $html .= '<span class="star-empty">&#9733;</span>';
+        }
+    }
+    return $html;
+}
+
+// Fungsi untuk format tanggal Indonesia
+function formatTanggalIndo($tanggal)
+{
+    $bulan = [
+        1 => 'Januari',
+        'Februari',
+        'Maret',
+        'April',
+        'Mei',
+        'Juni',
+        'Juli',
+        'Agustus',
+        'September',
+        'Oktober',
+        'November',
+        'Desember'
+    ];
+
+    $split = explode('-', date('Y-m-d', strtotime($tanggal)));
+    return $split[2] . ' ' . $bulan[(int)$split[1]] . ' ' . $split[0];
+}
+
+// Ambil ulasan dengan limit (default 5)
+$limit = isset($_GET['show_all']) ? PHP_INT_MAX : 5;
+$pdo = require 'koneksi.php';
+$sqlUlasan = "SELECT reviews.*, users.fullname FROM reviews 
+              INNER JOIN users ON reviews.user_id = users.id 
+              WHERE produk_id = :produk_id 
+              ORDER BY reviews.tanggal DESC
+              LIMIT :limit";
+$queryUlasan = $pdo->prepare($sqlUlasan);
+$queryUlasan->bindValue(':produk_id', $_GET['id'], PDO::PARAM_INT);
+$queryUlasan->bindValue(':limit', $limit, PDO::PARAM_INT);
+$queryUlasan->execute();
+$reviews = $queryUlasan->fetchAll();
+
+// Hitung total ulasan untuk tombol "Lihat Semua"
+$sqlCount = "SELECT COUNT(*) as total FROM reviews WHERE produk_id = :produk_id";
+$queryCount = $pdo->prepare($sqlCount);
+$queryCount->execute(['produk_id' => $_GET['id']]);
+$totalReviews = $queryCount->fetch()['total'];
 ?>
 
 
@@ -97,8 +152,12 @@ $rataRata = $queryrata->fetch();
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Detail Produk - Orinuts Roasted Cashew</title>
     <link rel="stylesheet" href="src/outputail.css" />
+    <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Detail Produk - Orinuts Roasted Cashew</title>
+    <link rel="stylesheet" href="src/outputail.css" />
     <style>
-        /* Gaya tambahan yang sudah Anda sediakan */
         header {
             background: rgba(220, 213, 185, 0.15);
         }
@@ -127,7 +186,17 @@ $rataRata = $queryrata->fetch();
         .star-empty {
             color: #D3D3D3;
         }
+
+        /* Thumbnail animation */
+        .thumbnail-img {
+            transition: all 0.3s ease;
+        }
+
+        .thumbnail-img:hover {
+            transform: scale(1.05);
+        }
     </style>
+</head>
 </head>
 
 <body class="bg-[#F4EFD8] w-full min-h-screen pt-20">
@@ -135,23 +204,34 @@ $rataRata = $queryrata->fetch();
         class="fixed left-0 right-0 top-0 z-50 py-2 transition-all duration-300 bg-[#DCD5B9]/90 backdrop-blur-sm">
         <div class="container mx-auto px-6 md:px-16 flex justify-between items-center">
             <div>
-                <img src="/content/logo.png" alt="logo" class="h-14" />
+                <img src="content/logo.png" alt="logo" class="h-14" />
             </div>
 
             <nav class="hidden lg:flex py-1 px-2 rounded-full bg-white/30 backdrop-blur-md">
-                <a href="/index.html" class=" rounded-full py-2 px-8 font-semibold">HOME</a>
-                <a href="/about.html" class=" rounded-full py-2 px-8 font-semibold hover:text-green-700">ABOUT
+                <a href="index.php" class=" rounded-full py-2 px-8 font-semibold">HOME</a>
+                <a href="/about.php" class=" rounded-full py-2 px-8 font-semibold hover:text-green-700">ABOUT
                     US</a>
-                <a href="/p_orinuts.html"
+                <a href="product.php"
                     class=" bg-white rounded-full py-2 px-8 font-semibold hover:text-green-700">PRODUCT</a>
-                <a href="/contact.html"
+                <a href="contact.php"
                     class="rounded-full py-2 px-8 font-semibold hover:text-green-700">CONTACT</a>
             </nav>
 
             <div class="hidden lg:flex items-center space-x-4">
                 <a href="keranjang.php" class="relative">
                     <img src="content/icon/shopping-cart.svg" alt="cart" class="h-7 w-7" />
-                    <span id="cartCount" class="hidden absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    <?php
+                    if (isset($_SESSION['user'])) {
+                        $pdo = require 'koneksi.php';
+                        $sql = "SELECT COUNT(*) FROM cart WHERE user_id = ?";
+                        $query = $pdo->prepare($sql);
+                        $query->execute([$_SESSION['user']['id']]);
+                        $count = $query->fetchColumn();
+                        if ($count > 0) {
+                            echo "<span class='absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center'>$count</span>";
+                        }
+                    }
+                    ?>
                 </a>
                 <?php if (!isset($_SESSION['user'])) { ?>
                     <a href="login.php" class="bg-white rounded-full py-2 px-8 font-semibold">Login</a>
@@ -192,25 +272,55 @@ $rataRata = $queryrata->fetch();
                 </button>
             </div>
 
-            <a href="#"
+            <a href="index.php"
                 class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30">HOME</a>
-            <a href="#"
+            <a href="about.php"
                 class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30">ABOUT
                 US</a>
-            <a href="#"
+            <a href="product.php"
                 class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30">PRODUCT</a>
-            <a href="#" class="block py-3 text-white font-semibold hover:text-green-800">CONTACT</a>
+            <a href="contact.php" class="block py-3 text-white font-semibold hover:text-green-800">CONTACT</a>
             <hr class="my-6 border-white/30" />
             <div class="space-y-4">
-                <a href="#" class="flex items-center space-x-3 py-3 text-white font-semibold hover:text-green-800">
-                    <img src="/content/icon/shopping-cart.svg" alt="cart" class="h-6 w-6"
-                        style="filter: brightness(0) invert(1)" />
+                <a href="keranjang.php" class="flex items-center space-x-3 py-3 text-white font-semibold hover:text-green-800">
+                    <div class="relative">
+                        <img
+                            src="content/icon/shopping-cart.svg"
+                            alt="cart"
+                            class="h-6 w-6"
+                            style="filter: brightness(0) invert(1);">
+                        <?php
+                        if (isset($_SESSION['user'])) {
+                            $pdo = require 'koneksi.php';
+                            $sql = "SELECT COUNT(*) FROM cart WHERE user_id = ?";
+                            $query = $pdo->prepare($sql);
+                            $query->execute([$_SESSION['user']['id']]);
+                            $count = $query->fetchColumn();
+                            if ($count > 0) {
+                                echo "<span class='absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center'>$count</span>";
+                            }
+                        }
+                        ?>
+                    </div>
                     <span>Keranjang</span>
                 </a>
-                <a href="#"
-                    class="block w-full text-center bg-white hover:bg-gray-200 text-green-700 px-4 py-2 rounded-full font-bold">
-                    Login
-                </a>
+                <?php if (!isset($_SESSION['user'])) { ?>
+                    <a href="login.php" class="bg-white rounded-full py-2 px-8 font-semibold">Login</a>
+                <?php } else { ?>
+                    <a href="profile_user.php?id=<?php echo htmlspecialchars($_SESSION['user']['id']); ?>" class="flex items-center gap-3">
+                        <?php
+                        $pdo = require 'koneksi.php';
+                        $query = $pdo->prepare("SELECT profile, fullname FROM users WHERE id=:id");
+                        $query->execute([
+                            'id' => $_SESSION['user']['id']
+                        ]);
+                        $user = $query->fetch();
+                        $base64 = base64_encode($user['profile']);
+                        ?>
+                        <img src='data:image/*;base64, <?= $base64 ?>' class=' w-12 rounded-full' alt='Profile Picture'>
+                        <p class=' text-xl'><?= $user['fullname'] ?></p>
+                    </a>
+                <?php } ?>
             </div>
         </div>
     </div>
@@ -221,6 +331,7 @@ $rataRata = $queryrata->fetch();
         $query = $pdo->prepare("SELECT * FROM products WHERE id=:id");
         $query->execute(['id' => $_GET['id']]);
         $data = $query->fetch();
+        echo "<script>let max = {$data['stok']}</script>";
     ?>
         <?php if (empty($data)) { ?>
             <!-- 404 page -->
@@ -262,29 +373,59 @@ $rataRata = $queryrata->fetch();
                 </div>
 
                 <section class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20">
+                    <!-- Image Gallery Section -->
                     <div class="space-y-4">
+                        <!-- Main Image Display -->
                         <div class="p-6 bg-white rounded-xl shadow-lg border border-gray-200">
-                            <img src="data:image/*;base64, <?= base64_encode($data['image1']) ?>" alt="<?= $data['nama_produk'] ?>"
+                            <img
+                                id="mainProductImage"
+                                src="data:image/*;base64, <?= base64_encode($data['image1']) ?>"
+                                alt="<?= htmlspecialchars($data['nama_produk']) ?>"
                                 class="w-full h-auto rounded-lg object-contain" />
                         </div>
-                        <div class="flex space-x-4 justify-center">
-                            <img src="content/product/Orinuts_4_Mighty_Nuts_200g-removebg-preview.png" alt="Thumbnail 1"
-                                class="w-20 h-20 md:w-24 md:h-24 object-cover border-2 border-green-700 p-1 rounded-lg cursor-pointer" />
 
-                        </div>
+                        <!-- Thumbnails -->
+                        <?php
+                        // Kumpulkan semua gambar yang tidak null
+                        $images = [];
+                        if (!empty($data['image1'])) {
+                            $images[] = ['data' => $data['image1'], 'index' => 1];
+                        }
+                        if (!empty($data['image2'])) {
+                            $images[] = ['data' => $data['image2'], 'index' => 2];
+                        }
+                        if (!empty($data['image3'])) {
+                            $images[] = ['data' => $data['image3'], 'index' => 3];
+                        }
+
+                        // Tampilkan thumbnails hanya jika ada lebih dari 1 gambar
+                        if (count($images) > 1):
+                        ?>
+                            <div class="flex space-x-4 justify-center">
+                                <?php foreach ($images as $img): ?>
+                                    <img
+                                        src="data:image/*;base64, <?= base64_encode($img['data']) ?>"
+                                        alt="Thumbnail <?= $img['index'] ?>"
+                                        class="thumbnail-img w-20 h-20 md:w-24 md:h-24 object-cover border-2 border-gray-300 hover:border-green-700 p-1 rounded-lg cursor-pointer transition-all duration-200"
+                                        onclick="changeMainImage(this.src)" />
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
                     </div>
 
+                    <!-- Product Info Section -->
                     <div class="space-y-6">
                         <h1 id="product-title" class="text-3xl md:text-4xl font-bold text-gray-800"><?= $data['nama_produk'] ?></h1>
 
                         <div class="space-y-2">
                             <p id="product-price" class="text-4xl font-extrabold text-green-700">Rp<?= number_format($data['harga'], 0, ',', '.') ?></p>
+                            <span>Stok: <?= $data['stok'] ?></span>
                         </div>
                         <div class="flex items-center space-x-6">
                             <div class="flex items-center border border-gray-300 rounded-full bg-white">
                                 <button id="decrement"
                                     class="p-3 text-xl font-bold text-gray-600 hover:text-green-700 rounded-l-full">&minus;</button>
-                                <input type="number" name="qty" id="quantity" value="1" min="1"
+                                <input type="number" name="qty" id="quantity" value="1" min="1" max="<?= $data['stok'] ?>"
                                     class="w-10 text-center border-x border-gray-200 focus:outline-none text-lg bg-white" />
                                 <button id="increment"
                                     class="p-3 text-xl font-bold text-gray-600 hover:text-green-700 rounded-r-full">&plus;</button>
@@ -312,7 +453,7 @@ $rataRata = $queryrata->fetch();
                                         &#9660;
                                     </span>
                                 </summary>
-                                <p><?= $data['deskripsi'] ?></p>
+                                <p class="pt-3 text-gray-700"><?= $data['deskripsi'] ?></p>
                             </details>
 
                             <details class="group">
@@ -326,9 +467,6 @@ $rataRata = $queryrata->fetch();
                                 </summary>
                                 <div class="pt-3 text-gray-700 space-y-3 text-sm">
                                     <div class="flex justify-between items-center">
-                                        <div class="flex items-center space-x-2">
-                                            <span class="text-green-600 font-bold">Disc 20%</span>
-                                        </div>
                                         <div class="flex items-center space-x-2 text-gray-500">
                                             <img src="content/icon/locate.png" alt="Location Icon" class="h-4 w-4" />
                                             <span>Lokasi: <span class="font-semibold text-gray-700">Surabaya</span></span>
@@ -336,11 +474,11 @@ $rataRata = $queryrata->fetch();
                                     </div>
                                     <div class="flex justify-between items-center">
                                         <div class="flex items-center space-x-2">
-                                            <img src="/content/icon/delivery.png" alt="Delivery Icon" class="h-5 w-5" />
+                                            <img src="content/icon/delivery.png" alt="Delivery Icon" class="h-5 w-5" />
                                             <span>Delivery est: <span class="font-semibold">2 - 3 working days</span></span>
                                         </div>
                                         <div class="flex items-center space-x-2">
-                                            <img src="/content/icon/kalender.png" alt="Calendar Icon" class="h-5 w-5" />
+                                            <img src="content/icon/kalender.png" alt="Calendar Icon" class="h-5 w-5" />
                                             <span><span class="font-semibold">11 - 13 September</span></span>
                                         </div>
                                     </div>
@@ -349,6 +487,7 @@ $rataRata = $queryrata->fetch();
                         </div>
                     </div>
                 </section>
+
 
                 <section class="mt-16 pt-10 border-t border-gray-300">
                     <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6">Rating & Review</h2>
@@ -482,96 +621,77 @@ $rataRata = $queryrata->fetch();
                     </div>
                     <div class="mt-8 space-y-4">
                         <h3 class="text-xl font-bold text-gray-800">Review</h3>
-                        <?php
-                        $pdo = require 'koneksi.php';
-                        $sqlUlasan = "SELECT reviews.*, users.fullname FROM reviews INNER JOIN users on reviews.user_id = users.id WHERE produk_id=:produk_id";
-                        $queryUlasan = $pdo->prepare($sqlUlasan);
-                        $queryUlasan->execute(['produk_id' => $_GET['id']]);
-                        $reviews = $queryUlasan->fetchAll();
-                        foreach ($reviews as $review) {
-                        ?>
-                            <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-                                <div class="flex items-center justify-between">
-                                    <div class="flex space-x-0.5 text-lg">
-                                        <span class="star-filled">&#9733;</span>
+
+                        <?php if (count($reviews) > 0): ?>
+                            <?php foreach ($reviews as $review): ?>
+                                <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex space-x-0.5 text-lg">
+                                            <?php echo getStarHTML($review['rating']); ?>
+                                        </div>
+                                        <p class="text-xs text-gray-500"><?php echo formatTanggalIndo($review['tanggal']); ?></p>
                                     </div>
-                                    <p class="text-xs text-gray-500">Via Shopee, 2 hari lalu</p>
+
+                                    <?php if ($review['image'] != NULL): ?>
+                                        <img src="data:image/*;base64,<?= base64_encode($review['image']) ?>"
+                                            alt="Foto Ulasan"
+                                            class="w-20 mt-3 rounded-lg">
+                                    <?php endif; ?>
+
+                                    <p class="mt-2 text-gray-700"><?php echo htmlspecialchars($review['ulasan']); ?></p>
+                                    <p class="text-xs text-gray-500 mt-1">
+                                        oleh: <span class="font-semibold"><?php echo htmlspecialchars($review['fullname']); ?></span>
+                                    </p>
                                 </div>
-                                <?php if ($review['image'] != NULL) { ?>
-                                    <img src="data:image/*;base64,<?= base64_encode($review['image']) ?> " alt="Foto Ulasan" class=" w-20">
-                                <?php } ?>
-                                <p class="mt-2 text-gray-700"><?= $review['ulasan'] ?></p>
-                                <p class="text-xs text-gray-500 mt-1">oleh: <span class="font-semibold"><?= $review['fullname'] ?></span></p>
+                            <?php endforeach; ?>
+
+                            <?php if ($totalReviews > 5 && !isset($_GET['show_all'])): ?>
+                                <div class="text-center pt-4">
+                                    <a href="detail-product.php?id=<?php echo $_GET['id']; ?>&show_all=1"
+                                        class="text-green-700 font-semibold hover:text-green-800 hover:underline">
+                                        Lihat Semua Review (<?php echo $totalReviews; ?>)
+                                    </a>
+                                </div>
+                            <?php elseif (isset($_GET['show_all'])): ?>
+                                <div class="text-center pt-4">
+                                    <a href="detail-product.php?id=<?php echo $_GET['id']; ?>"
+                                        class="text-green-700 font-semibold hover:text-green-800 hover:underline">
+                                        Tampilkan Lebih Sedikit
+                                    </a>
+                                </div>
+                            <?php endif; ?>
+                        <?php else: ?>
+                            <div class="bg-white p-8 rounded-lg shadow-sm border border-gray-200 text-center">
+                                <p class="text-gray-500">Belum ada ulasan untuk produk ini.</p>
+                                <p class="text-sm text-gray-400 mt-2">Jadilah yang pertama memberikan ulasan!</p>
                             </div>
-                        <?php } ?>
-                        <div class="text-center pt-4">
-                            <button class="text-green-700 font-semibold hover:text-green-800">Lihat Semua Review
-                                (15)</button>
-                        </div>
+                        <?php endif; ?>
                     </div>
                 </section>
 
-                <section class="mt-16 pt-10 border-t border-gray-300">
-                    <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-8 text-center">PRODUK LAINNYA</h2>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                        <div class="bg-white p-4 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
-                            <a href="nyoba.html" class="block cursor-pointer">
-                                <img src="/content/roasted_cashew_card.png" alt="Roasted Cashew"
-                                    class="w-full h-auto object-cover mb-4 rounded-lg" />
-                                <h3 class="text-lg font-bold text-gray-800">Roasted Cashew (200g)</h3>
-                                <div class="flex space-x-0.5 text-sm text-yellow-500 my-1">
-                                    <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
-                                </div>
-                                <p class="text-gray-500 line-through text-sm">35.000</p>
-                                <p class="text-xl font-bold text-green-700">30.000</p>
-                            </a>
-                        </div>
-
-                        <div class="bg-white p-4 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
-                            <a href="/product-detail.html?id=energy-booster-mix" class="block cursor-pointer">
-                                <img src="/content/energy_booster_card.png" alt="Energy Booster Mix"
-                                    class="w-full h-auto object-cover mb-4 rounded-lg" />
-                                <h3 class="text-lg font-bold text-gray-800">Energy Booster Mix</h3>
-                                <div class="flex space-x-0.5 text-sm text-yellow-500 my-1">
-                                    <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span class="star-empty">&#9733;</span>
-                                </div>
-                                <p class="text-gray-500 line-through text-sm">135.000</p>
-                                <p class="text-xl font-bold text-green-700">120.000</p>
-                            </a>
-                        </div>
-
-                        <div class="bg-white p-4 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
-                            <a href="/product-detail.html?id=almond-roasted" class="block cursor-pointer">
-                                <img src="/content/almond_roasted_card.png" alt="Almond Roasted"
-                                    class="w-full h-auto object-cover mb-4 rounded-lg" />
-                                <h3 class="text-lg font-bold text-gray-800">Almond Roasted</h3>
-                                <div class="flex space-x-0.5 text-sm text-yellow-500 my-1">
-                                    <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
-                                </div>
-                                <p class="text-gray-500 line-through text-sm">45.000</p>
-                                <p class="text-xl font-bold text-green-700">40.000</p>
-                            </a>
-                        </div>
-                    </div>
-                </section>
             </main>
         <?php } ?>
     <?php } ?>
-    <img src="content/sret/sret-krem.png" alt="sret krem" class="rotate-180 w-full mb-[3px]">
+    <img src="content/sret/sret-krem.png" alt="sret krem" class="rotate-180 w-full -bottom-1 relative">
     <footer class="bg-[#F4E9BB] py-10 ">
         <div
             class="container mx-auto px-6 md:px-16 flex flex-col lg:flex-row justify-between items-start space-y-8 lg:space-y-0">
             <div class="lg:w-1/3 space-y-4">
-                <img src="/content/logo.png" alt="Orinuts Logo" class="h-14" />
+                <img src="content/logo.png" alt="Orinuts Logo" class="h-14" />
                 <p class="text-gray-600 text-sm max-w-sm">
                     The nuts & seeds in Orinuts products are carefully selected and roasted, providing a pure and
                     healthy taste in every bite.
                 </p>
-                <div class="flex space-x-3">
-                    <img src="/content/icon/instagram.svg" alt="Instagram" class="h-6 w-6 opacity-70" />
-                    <img src="/content/icon/facebook.svg" alt="Facebook" class="h-6 w-6 opacity-70" />
-                    <img src="/content/icon/twitter.svg" alt="Twitter" class="h-6 w-6 opacity-70" />
+                <div class="flex space-x-3 pt-5">
+                    <a href="https://www.instagram.com/orinuts.official?igsh=em1tazcxOWFqNGpm"><img src="content/icon/instagram.svg" alt="Instagram"
+                            class="w-7 h-7 rounded-full border border-gray-100 p-1 brightness-100 bg-white" /></a>
+                    <a href="https://wa.me/62816521369"><img src="content/icon/whatsapp.png" alt="WhatsApp"
+                            class="w-7 h-7 rounded-full border border-gray-100 p-1 brightness-100 bg-white" /></a>
+                    <a href="https://www.facebook.com/share/16N9e3564B/"><img src="content/icon/facebook.svg" alt="Facebook"
+                            class="w-7 h-7 rounded-full border border-gray-100 p-1 brightness-100 bg-white" /></a>
+                    <a href="mailto:orinuts.official@gmail.com "><img src="content/icon/mail.svg" alt="Email"
+                            class="w-7 h-7 rounded-full border border-gray-100 p-1 brightness-100 bg-white" /></a>
                 </div>
             </div>
 
@@ -585,10 +705,10 @@ $rataRata = $queryrata->fetch();
             <div class="space-y-2">
                 <h4 class="font-bold text-gray-800">Main menu</h4>
                 <nav class="flex flex-col space-y-1 text-sm">
-                    <a href="#" class="text-gray-600 hover:text-green-700">HOME</a>
-                    <a href="#" class="text-gray-600 hover:text-green-700">ABOUT US</a>
-                    <a href="#" class="text-gray-600 hover:text-green-700">PRODUCT</a>
-                    <a href="#" class="text-gray-600 hover:text-green-700">CONTACT</a>
+                    <a href="index.php" class="block leading-loose hover:underline">HOME</a>
+                    <a href="about.php" class="block leading-loose hover:underline">ABOUT US</a>
+                    <a href="product.php" class="block leading-loose hover:underline">PRODUCT</a>
+                    <a href="contact.php" class="block leading-loose hover:underline">CONTACT</a>
                 </nav>
             </div>
 
@@ -602,6 +722,34 @@ $rataRata = $queryrata->fetch();
     </footer>
 
     <script>
+        // ============== SIMPLIFIED IMAGE GALLERY ==============
+
+        // Fungsi untuk mengganti gambar utama
+        function changeMainImage(imageSrc) {
+            const mainImage = document.getElementById('mainProductImage');
+            mainImage.src = imageSrc;
+
+            // Update active thumbnail border
+            const thumbnails = document.querySelectorAll('.thumbnail-img');
+            thumbnails.forEach(thumb => {
+                if (thumb.src === imageSrc) {
+                    thumb.classList.remove('border-gray-300');
+                    thumb.classList.add('border-green-700');
+                } else {
+                    thumb.classList.remove('border-green-700');
+                    thumb.classList.add('border-gray-300');
+                }
+            });
+        }
+
+        // Set thumbnail pertama sebagai active saat load
+        window.addEventListener('DOMContentLoaded', function() {
+            const thumbnails = document.querySelectorAll('.thumbnail-img');
+            if (thumbnails.length > 0) {
+                thumbnails[0].classList.remove('border-gray-300');
+                thumbnails[0].classList.add('border-green-700');
+            }
+        });
         // ============== REVIEW FORM VALIDATION ==============
 
         const reviewForm = document.getElementById('reviewForm');
@@ -796,10 +944,12 @@ $rataRata = $queryrata->fetch();
         function updateHref() {
             addToCartBtn.href = `cart-handler.php?qty=${quantityInput.value}&id=<?= $_GET['id'] ?>&url=detail-product`;
         }
-
+        
         incrementButton.addEventListener("click", () => {
             let currentValue = parseInt(quantityInput.value);
-            quantityInput.value = currentValue + 1;
+            if (currentValue < max) {
+                quantityInput.value = currentValue + 1;
+            }
             updateHref();
         });
 

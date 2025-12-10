@@ -94,8 +94,20 @@ session_start();
             </nav>
 
             <div class="hidden lg:flex items-center space-x-4">
-                <a href="keranjang.php">
+                <a href="keranjang.php" class="relative">
                     <img src="content/icon/shopping-cart.svg" alt="cart" class="h-7 w-7" />
+                    <?php
+                    if (isset($_SESSION['user'])) {
+                        $pdo = require 'koneksi.php';
+                        $sql = "SELECT COUNT(*) FROM cart WHERE user_id = ?";
+                        $query = $pdo->prepare($sql);
+                        $query->execute([$_SESSION['user']['id']]);
+                        $count = $query->fetchColumn();
+                        if ($count > 0) {
+                            echo "<span class='absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center'>$count</span>";
+                        }
+                    }
+                    ?>
                 </a>
                 <?php if (!isset($_SESSION['user'])) { ?>
                     <a href="login.php" class="bg-white rounded-full py-2 px-8 font-semibold">Login</a>
@@ -138,7 +150,7 @@ session_start();
             </div>
 
             <a
-                href="index.html"
+                href="index.php"
                 class="block py-3 text-black font-semibold hover:text-green-800 border-b border-black">HOME</a>
             <a
                 href="about.php"
@@ -154,17 +166,43 @@ session_start();
                 <a
                     href="keranjang.php"
                     class="flex items-center space-x-3 py-3 text-black font-semibold ">
-                    <img
-                        src="content/icon/shopping-cart.svg"
-                        alt="cart"
-                        class="h-6 w-6">
+                    <div class="relative">
+                        <img
+                            src="content/icon/shopping-cart.svg"
+                            alt="cart"
+                            class="h-6 w-6">
+                        <?php
+                        if (isset($_SESSION['user'])) {
+                            $pdo = require 'koneksi.php';
+                            $sql = "SELECT COUNT(*) FROM cart WHERE user_id = ?";
+                            $query = $pdo->prepare($sql);
+                            $query->execute([$_SESSION['user']['id']]);
+                            $count = $query->fetchColumn();
+                            if ($count > 0) {
+                                echo "<span class='absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center'>$count</span>";
+                            }
+                        }
+                        ?>
+                    </div>
                     <span>Keranjang</span>
                 </a>
-                <a
-                    href="login.php"
-                    class="block w-full text-center bg-black text-white px-4 py-2 rounded-full font-bold">
-                    Login
-                </a>
+                <?php if (!isset($_SESSION['user'])) { ?>
+              <a href="login.php" class="bg-white rounded-full py-2 px-8 font-semibold">Login</a>
+            <?php } else { ?>
+              <a href="profile_user.php?id=<?php echo htmlspecialchars($_SESSION['user']['id']); ?>" class="flex items-center gap-3">
+                <?php
+                $pdo = require 'koneksi.php';
+                $query = $pdo->prepare("SELECT profile, fullname FROM users WHERE id=:id");
+                $query->execute([
+                  'id' => $_SESSION['user']['id']
+                ]);
+                $user = $query->fetch();
+                $base64 = base64_encode($user['profile']);
+                ?>
+                <img src= 'data:image/*;base64, <?=  $base64 ?>' class=' w-12 rounded-full' alt='Profile Picture'>
+                <p class=' text-xl'><?= $user['fullname'] ?></p>
+              </a>
+            <?php } ?>
             </div>
         </div>
     </div>
@@ -236,7 +274,7 @@ session_start();
                     <h3 class="text-2xl font-semibold text-black font-poppins">
                         Rp. 70,000-135,000
                     </h3>
-                    <a href="#"
+                    <a href="keranjang.php"
                         class="flex items-center space-x-3 bg-[#4A2311] text-white font-bold py-3 px-6 rounded-full font-inter">
                         <span>order now</span>
                         <img src="content/icon/shopping-cart.svg" alt="shopping cart"
@@ -269,7 +307,7 @@ session_start();
                             Rp. 70,000-135,000
                         </h3>
 
-                        <a href="#"
+                        <a href="keranjang.php"
                             class="flex items-center space-x-3 bg-[#4A2311] text-white font-bold py-3 px-6 rounded-full font-inter">
                             <span>order now</span>
                             <img src="content/icon/shopping-cart.svg" alt="shopping cart"
@@ -305,7 +343,7 @@ session_start();
                     <h3 class="text-2xl font-semibold text-black font-poppins">
                         Rp. 70,000-135,000
                     </h3>
-                    <a href="#"
+                    <a href="keranjang.php"
                         class="flex items-center space-x-3 bg-[#4A2311] text-white font-bold py-3 px-6 rounded-full font-inter">
                         <span>order now</span>
                         <img src="content/icon/shopping-cart.svg" alt="shopping cart"
@@ -338,7 +376,7 @@ session_start();
                             Rp. 70,000-135,000
                         </h3>
 
-                        <a href="#"
+                        <a href="keranjang.php"
                             class="flex items-center space-x-3 bg-[#4A2311] text-white font-bold py-3 px-6 rounded-full font-inter">
                             <span>order now</span>
                             <img src="content/icon/shopping-cart.svg" alt="shopping cart"
@@ -375,7 +413,7 @@ session_start();
                         Rp. 70,000-135,000
                     </h3>
 
-                    <a href="#"
+                    <a href="keranjang.php"
                         class="flex items-center space-x-3 bg-[#4A2311] text-white font-bold py-3 px-6 rounded-full font-inter">
                         <span>order now</span>
                         <img src="content/icon/shopping-cart.svg" alt="shopping cart"
@@ -392,7 +430,7 @@ session_start();
                         Orimond Himalayan Salt
                     </h2>
                     <p class="font-medium font-poppins tracking-[1px] text-[18px] uppercase mt-2">
-                        kacang almond panggang 
+                        kacang almond panggang
                     </p>
                     <ul class="list-disc list-inside font-bold font-poppins py-5 tracking-[1px]">
                         <li>Premium Quality.</li>
@@ -407,7 +445,7 @@ session_start();
                             Rp. 70,000-135,000
                         </h3>
 
-                        <a href="#"
+                        <a href="keranjang.php"
                             class="flex items-center space-x-3 bg-[#4A2311] text-white font-bold py-3 px-6 rounded-full font-inter">
                             <span>order now</span>
                             <img src="content/icon/shopping-cart.svg" alt="shopping cart"
@@ -428,7 +466,7 @@ session_start();
                     Orimond Bubble Gum
                 </h2>
                 <p class="font-medium font-poppins tracking-[1px] text-[18px] uppercase mt-2">
-                    kacang almond panggang 
+                    kacang almond panggang
                 </p>
                 <ul class="list-disc list-inside font-bold font-poppins py-5 tracking-[1px]">
                     <li>Premium Quality.</li>
@@ -443,7 +481,7 @@ session_start();
                         Rp. 70,000-135,000
                     </h3>
 
-                    <a href="#"
+                    <a href="keranjang.php"
                         class="flex items-center space-x-3 bg-[#4A2311] text-white font-bold py-3 px-6 rounded-full font-inter">
                         <span>order now</span>
                         <img src="content/icon/shopping-cart.svg" alt="shopping cart"
@@ -475,7 +513,7 @@ session_start();
                             Rp. 70,000-135,000
                         </h3>
 
-                        <a href="#"
+                        <a href="keranjang.php"
                             class="flex items-center space-x-3 bg-[#4A2311] text-white font-bold py-3 px-6 rounded-full font-inter">
                             <span>order now</span>
                             <img src="content/icon/shopping-cart.svg" alt="shopping cart"
@@ -511,7 +549,7 @@ session_start();
                         Rp. 70,000-135,000
                     </h3>
 
-                    <a href="#"
+                    <a href="keranjang.php"
                         class="flex items-center space-x-3 bg-[#4A2311] text-white font-bold py-3 px-6 rounded-full font-inter">
                         <span>order now</span>
                         <img src="content/icon/shopping-cart.svg" alt="shopping cart"

@@ -86,31 +86,7 @@ if(!empty($_POST)) {
       <div
         class="image-area hidden md:block md:w-[40%] bg-[#cb3d3d] p-10 relative overflow-hidden"
       >
-        <div class="absolute inset-0 flex justify-center items-end">
-          <img
-            src="content/kacang/mente1-removebg-preview.png"
-            alt="Kacang Mente Kiri"
-            class="absolute w-32 h-auto z-100 bottom-75 -rotate-70 left-27 "
-          />
-
-          <img
-            src="content/kacang/mente1-removebg-preview.png"
-            alt="Kacang Mente Kecil"
-            class="absolute w-24 h-auto bottom-4 z-30 rotate-145 left-41 "
-          />
-
-          <img
-            src="content/product/ori-merah-removebg-preview.png"
-            alt="Produk Orinuts Merah"
-            class="imgr absolute h-auto w-48 bottom-15 -right-10 z-20"
-          />
-
-          <img
-            src="content/product/ori-4mighty-removebg-preview.png"
-            alt="Energy Booster Mix"
-            class="imgl absolute h-auto w-80 bottom-15 -right-48 transform -translate-x-1/2 z-10"
-          />
-        </div>
+        
       </div>
       <div
         class="form-area w-full md:w-[60%] bg-white p-10 sm:p-12 md:p-16 lg:p-20 flex flex-col items-center justify-center"
@@ -173,11 +149,11 @@ if(!empty($_POST)) {
           </button>
         </form>
 
-        <a href="#" class="font-reglog pt-5 text-sm text-blue-700 hover:underline">Lupa Password?</a>
+        
         <p class="login-prompt mt-6 text-sm text-gray-600">
           Belum mempunyai akun?
           <a
-            href="register.php"
+            href="admin_register.php"
             class="login-link text-blue-700 font-semibold hover:underline"
             >Register</a
           >

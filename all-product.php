@@ -71,7 +71,18 @@ session_start();
             <div class="hidden lg:flex items-center space-x-4">
                 <a href="keranjang.php" class="relative">
                     <img src="content/icon/shopping-cart.svg" alt="cart" class="h-7 w-7" />
-                    <span id="cart-count-badge" class="hidden absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    <?php
+                    if (isset($_SESSION['user'])) {
+                        $pdo = require 'koneksi.php';
+                        $sql = "SELECT COUNT(*) FROM cart WHERE user_id = ?";
+                        $query = $pdo->prepare($sql);
+                        $query->execute([$_SESSION['user']['id']]);
+                        $count = $query->fetchColumn();
+                        if ($count > 0) {
+                            echo "<span class='absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center'>$count</span>";
+                        }
+                    }
+                    ?>
                 </a>
                 <?php if (!isset($_SESSION['user'])) { ?>
                     <a href="login.php" class="bg-white rounded-full py-2 px-8 font-semibold">Login</a>
@@ -112,24 +123,54 @@ session_start();
                 </button>
             </div>
 
-            <a href="#"
+            <a href="index.php"
                 class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30">HOME</a>
-            <a href="#" class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30">ABOUT
+            <a href="about.php" class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30">ABOUT
                 US</a>
-            <a href="#"
+            <a href="product.php"
                 class="block py-3 text-white font-semibold hover:text-green-800 border-b border-white/30">PRODUCT</a>
-            <a href="#" class="block py-3 text-white font-semibold hover:text-green-800">CONTACT</a>
+            <a href="contact.php" class="block py-3 text-white font-semibold hover:text-green-800">CONTACT</a>
             <hr class="my-6 border-white/30" />
             <div class="space-y-4">
-                <a href="#" class="flex items-center space-x-3 py-3 text-white font-semibold hover:text-green-800">
-                    <img src="content/icon/shopping-cart.svg" alt="cart" class="h-6 w-6"
-                        style="filter: brightness(0) invert(1)" />
+                <a href="keranjang.php" class="flex items-center space-x-3 py-3 text-white font-semibold hover:text-green-800">
+                    <div class="relative">
+                        <img
+                            src="content/icon/shopping-cart.svg"
+                            alt="cart"
+                            class="h-6 w-6"
+                            style="filter: brightness(0) invert(1);">
+                        <?php
+                        if (isset($_SESSION['user'])) {
+                            $pdo = require 'koneksi.php';
+                            $sql = "SELECT COUNT(*) FROM cart WHERE user_id = ?";
+                            $query = $pdo->prepare($sql);
+                            $query->execute([$_SESSION['user']['id']]);
+                            $count = $query->fetchColumn();
+                            if ($count > 0) {
+                                echo "<span class='absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center'>$count</span>";
+                            }
+                        }
+                        ?>
+                    </div>
                     <span>Keranjang</span>
                 </a>
-                <a href="#"
-                    class="block w-full text-center bg-white hover:bg-gray-200 text-green-700 px-4 py-2 rounded-full font-bold">
-                    Login
-                </a>
+                <?php if (!isset($_SESSION['user'])) { ?>
+                    <a href="login.php" class="bg-white rounded-full py-2 px-8 font-semibold">Login</a>
+                <?php } else { ?>
+                    <a href="profile_user.php?id=<?php echo htmlspecialchars($_SESSION['user']['id']); ?>" class="flex items-center gap-3">
+                        <?php
+                        $pdo = require 'koneksi.php';
+                        $query = $pdo->prepare("SELECT profile, fullname FROM users WHERE id=:id");
+                        $query->execute([
+                            'id' => $_SESSION['user']['id']
+                        ]);
+                        $user = $query->fetch();
+                        $base64 = base64_encode($user['profile']);
+                        ?>
+                        <img src='data:image/*;base64, <?= $base64 ?>' class=' w-12 rounded-full' alt='Profile Picture'>
+                        <p class=' text-xl'><?= $user['fullname'] ?></p>
+                    </a>
+                <?php } ?>
             </div>
         </div>
     </div>
@@ -187,66 +228,24 @@ session_start();
         <section class="mt-10">
             <h1 id="category-display" class="font-bold text-3xl">All</h1>
         </section>
-
+        <?php
+        $pdo = require 'koneksi.php';
+        $sqlCount = "SELECT COUNT(*) as total FROM products";
+        $queryCount = $pdo->prepare($sqlCount);
+        $queryCount->execute();
+        $totalProducts = $queryCount->fetch()['total'];
+        $sql = "SELECT * FROM products";
+        $query = $pdo->prepare($sql);
+        $query->execute();
+        $produks = $query->fetchAll();
+        ?>
         <section class="mt-6 mb-20">
             <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                <?php
-                $pdo = require 'koneksi.php';
-                $sql = "SELECT * FROM products";
-                $query = $pdo->prepare($sql);
-                $query->execute();
-                $produks = $query->fetchAll();
-                foreach ($produks as $produk) {
-                    // rating
-                    $sqlrata = "SELECT ROUND(AVG(rating), 1) as avg_rating FROM reviews WHERE produk_id = ?";
-                    $queryrata = $pdo->prepare($sqlrata);
-                    $queryrata->execute([$produk['id']]);
-                    $rataRata = $queryrata->fetch();
-                    $base64 = base64_encode($produk['image1']);
-                ?>
-                    <div class="product-card bg-stone-50 rounded-xl shadow-lg p-4 flex flex-col transition-all duration-300 hover:shadow-xl"
-                        data-category="<?= strtolower($produk['kategori']) ?>">
-                        <img src="data:image/*;base64, <?= $base64 ?>"
-                            alt="<?= $produk['nama_produk'] ?>" class="w-full h-56 object-contain rounded-t-lg" />
-                        <div class="mt-4 flex-grow">
-                            <h3 class="text-xl font-bold text-amber-800"><?= $produk['nama_produk'] ?></h3>
-                            <div class="flex justify-between items-center mt-2">
-                                <p class="text-lg font-semibold text-gray-900">Rp. <?= number_format($produk['harga'], 0, ',', '.') ?></p>
-                                <div class="flex items-center space-x-1">
-                                    <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
-                                        <path
-                                            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.847 5.698h5.998c.969 0 1.371 1.24.588 1.81l-4.853 3.53a.997.997 0 00-.364 1.118l1.847 5.698c.3.921-.755 1.688-1.539 1.118l-4.852-3.53a.997.997 0 00-1.176 0l-4.852 3.53c-.784.57-1.838-.197-1.539-1.118l1.847-5.698a.997.997 0 00-.364-1.118L.503 10.435c-.783-.57-.38-1.81.588-1.81h5.998L9.049 2.927z">
-                                        </path>
-                                    </svg>
-                                    <span class="text-sm font-medium text-gray-600"><?= isset($rataRata['avg_rating']) ? $rataRata['avg_rating'] : '-'; ?></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mt-5 flex space-x-2">
-                            <a href="detail-product.php?id=<?= $produk['id'] ?>"
-                                class="flex-1 bg-gray-200 text-gray-800 py-2.5 px-4 rounded-full text-sm font-semibold flex items-center justify-center space-x-1.5 hover:bg-gray-300 transition-colors">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
-                                    </path>
-                                </svg>
-                                <span>lihat produk</span>
-                            </a>
-                            <a
-                                href="cart-handler.php?qty=1&id=<?= $produk['id'] ?>&url=all-product"
-                                class="flex-1 bg-amber-800 text-white py-2.5 px-4 rounded-full text-sm font-semibold flex items-center justify-center space-x-1.5 hover:bg-amber-900 transition-colors">
-                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16">
-                                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
-                                </svg>
-                                <span>order now</span>
-                            </a>
-                        </div>
-                    </div>
-                <?php } ?>
-                <!-- End Loop -->
 
+            </div>
+        </section>
+        <section class="mb-20">
+            <div id="pagination-container" class="flex justify-center items-center space-x-2">
 
             </div>
         </section>
@@ -256,23 +255,23 @@ session_start();
 
     <footer>
         <div class="w-full p-10 bg-[#ea7003] text-white">
-            <img src="/content/logo.png" alt="Orinuts Logo" class="w-32 mb-6" />
+            <img src="content/logo.png" alt="Orinuts Logo" class="w-32 mb-6" />
             <div class="flex justify-between items-start pt-6 text-sm">
                 <div class="w-full md:w-1/4 pr-8 text-white">
                     <p class="leading-relaxed">
                         the No.1 Healthy Snack in Indonesia. We provide <br />
                         premium quality roasted nut snacks, crafted <br />
                         without salt, sugar, preservatives, or MSG — <br />
-                        delivering a pure and healthy taste in every bite.
+                        delivering a pure and healthy taste in every bite.`
                     </p>
                     <div class="flex space-x-3 pt-5">
-                        <a href=""><img src="content/icon/instagram.svg" alt="Instagram"
+                        <a href="https://www.instagram.com/orinuts.official?igsh=em1tazcxOWFqNGpm"><img src="content/icon/instagram.svg" alt="Instagram"
                                 class="w-7 h-7 rounded-full border border-gray-100 p-1 brightness-100 bg-white" /></a>
-                        <a href=""><img src="content/icon/twitter.svg" alt="Twitter"
+                        <a href="https://wa.me/62816521369"><img src="content/icon/whatsapp.png" alt="WhatsApp"
                                 class="w-7 h-7 rounded-full border border-gray-100 p-1 brightness-100 bg-white" /></a>
-                        <a href=""><img src="content/icon/facebook.svg" alt="Facebook"
+                        <a href="https://www.facebook.com/share/16N9e3564B/"><img src="content/icon/facebook.svg" alt="Facebook"
                                 class="w-7 h-7 rounded-full border border-gray-100 p-1 brightness-100 bg-white" /></a>
-                        <a href=""><img src="content/icon/mail.svg" alt="Email"
+                        <a href="mailto:orinuts.official@gmail.com "><img src="content/icon/mail.svg" alt="Email"
                                 class="w-7 h-7 rounded-full border border-gray-100 p-1 brightness-100 bg-white" /></a>
                     </div>
                 </div>
@@ -287,10 +286,10 @@ session_start();
                     </div>
                     <div class="w-1/3 text-white">
                         <h2 class="font-bold text-lg pb-4 uppercase">main menu</h2>
-                        <a href="" class="block leading-loose hover:underline">HOME</a>
-                        <a href="" class="block leading-loose hover:underline">ABOUT US</a>
-                        <a href="" class="block leading-loose hover:underline">PRODUCT</a>
-                        <a href="" class="block leading-loose hover:underline">CONTACT</a>
+                        <a href="index.php" class="block leading-loose hover:underline">HOME</a>
+                        <a href="about.php" class="block leading-loose hover:underline">ABOUT US</a>
+                        <a href="product.php" class="block leading-loose hover:underline">PRODUCT</a>
+                        <a href="contact.php" class="block leading-loose hover:underline">CONTACT</a>
                     </div>
                     <div class="w-1/3 text-white">
                         <h2 class="font-bold text-lg pb-4 uppercase">
@@ -314,11 +313,32 @@ session_start();
 
     <script>
         (function() {
-            // State Management
+            // ============ State Management ============
             let currentCategory = 'all';
             let searchTimeout = null;
+            let currentPage = 1;
+            const itemsPerPage = 9;
 
-            // DOM Elements
+            // Simpan semua produk dari PHP
+            const allProducts = [
+                <?php foreach ($produks as $produk) {
+                    $sqlrata = "SELECT ROUND(AVG(rating), 1) as avg_rating FROM reviews WHERE produk_id = ?";
+                    $queryrata = $pdo->prepare($sqlrata);
+                    $queryrata->execute([$produk['id']]);
+                    $rataRata = $queryrata->fetch();
+                    $base64 = base64_encode($produk['image1']);
+                ?> {
+                        id: <?= $produk['id'] ?>,
+                        nama: <?= json_encode($produk['nama_produk']) ?>,
+                        harga: <?= $produk['harga'] ?>,
+                        kategori: <?= json_encode(strtolower($produk['kategori'])) ?>,
+                        image: "<?= $base64 ?>",
+                        rating: <?= isset($rataRata['avg_rating']) ? $rataRata['avg_rating'] : 'null' ?>
+                    },
+                <?php } ?>
+            ];
+
+            // ============ DOM Elements ============
             const navbar = document.getElementById("navbar");
             const hamburgerButton = document.getElementById("hamburger-button");
             const mobileMenu = document.getElementById("mobile-menu");
@@ -330,18 +350,18 @@ session_start();
             const productGrid = document.getElementById("product-grid");
             const searchInput = document.getElementById("search-input");
             const categoryDisplay = document.getElementById("category-display");
-            const productCards = document.querySelectorAll(".product-card");
+            const paginationContainer = document.getElementById("pagination-container");
 
-            // Navbar Shadow on Scroll
+            // ============ Navbar Shadow on Scroll ============
             window.addEventListener("scroll", () => {
                 navbar.classList.toggle("shadow-lg", window.scrollY > 50);
             });
 
-            // Mobile Menu
+            // ============ Mobile Menu ============
             hamburgerButton.addEventListener("click", () => mobileMenu.classList.remove("translate-x-full"));
             closeMenuButton.addEventListener("click", () => mobileMenu.classList.add("translate-x-full"));
 
-            // Category Toggle
+            // ============ Category Toggle ============
             categoryToggle.addEventListener("click", () => {
                 const isOpen = categoryList.classList.contains("scale-x-100");
                 categoryList.classList.toggle("scale-x-0", isOpen);
@@ -351,57 +371,169 @@ session_start();
                 categoryArrow.style.transform = isOpen ? "rotate(0deg)" : "rotate(180deg)";
             });
 
-            // Filter Products (Show/Hide)
-            function filterProducts() {
+            // ============ Filter Products ============
+            function getFilteredProducts() {
                 const searchTerm = searchInput.value.toLowerCase().trim();
-                let visibleCount = 0;
 
-                productCards.forEach(card => {
-                    const productName = card.querySelector('h3').textContent.toLowerCase();
-                    const productCategory = card.getAttribute('data-category');
-
-                    // Cek kategori
-                    const matchCategory = currentCategory === 'all' || productCategory === currentCategory;
-
-                    // Cek search term
-                    const matchSearch = searchTerm === '' || productName.includes(searchTerm);
-
-                    // Tampilkan atau sembunyikan
-                    if (matchCategory && matchSearch) {
-                        card.classList.remove('hidden');
-                        visibleCount++;
-                    } else {
-                        card.classList.add('hidden');
-                    }
+                return allProducts.filter(product => {
+                    const matchCategory = currentCategory === 'all' || product.kategori === currentCategory;
+                    const matchSearch = searchTerm === '' || product.nama.toLowerCase().includes(searchTerm);
+                    return matchCategory && matchSearch;
                 });
-
-                // Tampilkan pesan jika tidak ada hasil
-                let noResultMsg = document.getElementById('no-result-message');
-                if (visibleCount === 0) {
-                    if (!noResultMsg) {
-                        noResultMsg = document.createElement('p');
-                        noResultMsg.id = 'no-result-message';
-                        noResultMsg.className = 'col-span-full text-center text-gray-600 py-8';
-                        noResultMsg.textContent = 'Produk tidak ditemukan.';
-                        productGrid.appendChild(noResultMsg);
-                    }
-                } else {
-                    if (noResultMsg) {
-                        noResultMsg.remove();
-                    }
-                }
             }
 
-            // Search Input Event (Debounced)
+            // ============ Render Product Card ============
+            function createProductCard(product) {
+                return `
+            <div class="product-card bg-stone-50 rounded-xl shadow-lg p-4 flex flex-col transition-all duration-300 hover:shadow-xl">
+                <img src="data:image/*;base64, ${product.image}"
+                    alt="${product.nama}" class="w-full h-56 object-contain rounded-t-lg" />
+                <div class="mt-4 flex-grow">
+                    <h3 class="text-xl font-bold text-amber-800">${product.nama}</h3>
+                    <div class="flex justify-between items-center mt-2">
+                        <p class="text-lg font-semibold text-gray-900">Rp. ${product.harga.toLocaleString('id-ID')}</p>
+                        <div class="flex items-center space-x-1">
+                            <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.847 5.698h5.998c.969 0 1.371 1.24.588 1.81l-4.853 3.53a.997.997 0 00-.364 1.118l1.847 5.698c.3.921-.755 1.688-1.539 1.118l-4.852-3.53a.997.997 0 00-1.176 0l-4.852 3.53c-.784.57-1.838-.197-1.539-1.118l1.847-5.698a.997.997 0 00-.364-1.118L.503 10.435c-.783-.57-.38-1.81.588-1.81h5.998L9.049 2.927z"></path>
+                            </svg>
+                            <span class="text-sm font-medium text-gray-600">${product.rating || '-'}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-5 flex space-x-2">
+                    <a href="detail-product.php?id=${product.id}"
+                        class="flex-1 bg-gray-200 text-gray-800 py-2.5 px-4 rounded-full text-sm font-semibold flex items-center justify-center space-x-1.5 hover:bg-gray-300 transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                        </svg>
+                        <span>lihat produk</span>
+                    </a>
+                    <a href="cart-handler.php?qty=1&id=${product.id}&url=all-product"
+                        class="flex-1 bg-amber-800 text-white py-2.5 px-4 rounded-full text-sm font-semibold flex items-center justify-center space-x-1.5 hover:bg-amber-900 transition-colors">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
+                        </svg>
+                        <span>order now</span>
+                    </a>
+                </div>
+            </div>
+        `;
+            }
+
+            // ============ Render Products ============
+            function renderProducts() {
+                const filteredProducts = getFilteredProducts();
+                const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+
+                // Reset ke halaman 1 jika current page melebihi total pages
+                if (currentPage > totalPages && totalPages > 0) {
+                    currentPage = 1;
+                }
+
+                const startIndex = (currentPage - 1) * itemsPerPage;
+                const endIndex = startIndex + itemsPerPage;
+                const productsToShow = filteredProducts.slice(startIndex, endIndex);
+
+                // Render products
+                if (productsToShow.length === 0) {
+                    productGrid.innerHTML = '<p class="col-span-full text-center text-gray-600 py-8">Produk tidak ditemukan.</p>';
+                } else {
+                    productGrid.innerHTML = productsToShow.map(product => createProductCard(product)).join('');
+                }
+
+                // Render pagination
+                renderPagination(totalPages);
+
+                // Scroll ke atas saat ganti halaman
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }
+
+            // ============ Render Pagination ============
+            function renderPagination(totalPages) {
+                if (totalPages <= 1) {
+                    paginationContainer.innerHTML = '';
+                    return;
+                }
+
+                let paginationHTML = '';
+
+                // Previous Button
+                paginationHTML += `
+            <button onclick="changePage(${currentPage - 1})" 
+                    ${currentPage === 1 ? 'disabled' : ''}
+                    class="px-4 py-2 rounded-lg font-semibold transition-colors ${
+                        currentPage === 1 
+                        ? 'bg-gray-200 text-gray-400 cursor-not-allowed' 
+                        : 'bg-white text-amber-800 hover:bg-amber-800 hover:text-white'
+                    }">
+                Previous
+            </button>
+        `;
+
+                // Page Numbers
+                for (let i = 1; i <= totalPages; i++) {
+                    // Tampilkan halaman pertama, terakhir, current, dan 1 halaman sebelum/sesudah current
+                    if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
+                        paginationHTML += `
+                    <button onclick="changePage(${i})" 
+                            class="px-4 py-2 rounded-lg font-semibold transition-colors ${
+                                i === currentPage 
+                                ? 'bg-amber-800 text-white' 
+                                : 'bg-white text-amber-800 hover:bg-amber-800 hover:text-white'
+                            }">
+                        ${i}
+                    </button>
+                `;
+                    } else if (i === currentPage - 2 || i === currentPage + 2) {
+                        paginationHTML += '<span class="px-2 py-2 text-gray-500">...</span>';
+                    }
+                }
+
+                // Next Button
+                paginationHTML += `
+            <button onclick="changePage(${currentPage + 1})" 
+                    ${currentPage === totalPages ? 'disabled' : ''}
+                    class="px-4 py-2 rounded-lg font-semibold transition-colors ${
+                        currentPage === totalPages 
+                        ? 'bg-gray-200 text-gray-400 cursor-not-allowed' 
+                        : 'bg-white text-amber-800 hover:bg-amber-800 hover:text-white'
+                    }">
+                Next
+            </button>
+        `;
+
+                paginationContainer.innerHTML = paginationHTML;
+            }
+
+            // ============ Change Page Function ============
+            window.changePage = function(page) {
+                const filteredProducts = getFilteredProducts();
+                const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+
+                if (page < 1 || page > totalPages) return;
+
+                currentPage = page;
+                renderProducts();
+            };
+
+            // ============ Search Input Event ============
             searchInput.addEventListener("input", () => {
                 clearTimeout(searchTimeout);
-                searchTimeout = setTimeout(filterProducts, 300);
+                searchTimeout = setTimeout(() => {
+                    currentPage = 1; // Reset ke halaman 1 saat search
+                    renderProducts();
+                }, 300);
             });
 
-            // Category Filter
+            // ============ Category Filter ============
             filterButtons.forEach((button) => {
                 button.addEventListener("click", () => {
                     currentCategory = button.getAttribute("data-filter");
+                    currentPage = 1; // Reset ke halaman 1 saat ganti kategori
 
                     // Update Active State
                     filterButtons.forEach((btn) => {
@@ -414,8 +546,8 @@ session_start();
                     // Update Category Display
                     categoryDisplay.textContent = button.textContent.trim();
 
-                    // Filter products
-                    filterProducts();
+                    // Render products
+                    renderProducts();
 
                     // Close Category Menu
                     categoryList.classList.remove("scale-x-100", "opacity-100");
@@ -423,6 +555,9 @@ session_start();
                     categoryArrow.style.transform = "rotate(0deg)";
                 });
             });
+
+            // ============ Initial Render ============
+            renderProducts();
         })();
     </script>
 </body>

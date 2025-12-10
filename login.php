@@ -151,8 +151,6 @@ if(!empty($_POST)) {
             Login
           </button>
         </form>
-
-        <a href="#" class="font-reglog pt-5 text-sm text-blue-700 hover:underline">Lupa Password?</a>
         <p class="login-prompt mt-6 text-sm text-gray-600">
           Belum mempunyai akun?
           <a

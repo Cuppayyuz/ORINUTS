@@ -86,7 +86,7 @@ foreach ($cart as $c) {
 $sql = "DELETE FROM cart WHERE user_id = ? AND id IN ($in)";
 $stmt = $pdo->prepare($sql);
 $stmt->execute(array_merge([$user_id], $selected));
-$_SESSION['payment'] = true;
 
-echo "<script>alert('Checkout berhasil!'); window.location='struk.php?tid='". $transaksi_id .";</script>";
+
+header("location: struk.php?tid=$transaksi_id");
 exit;

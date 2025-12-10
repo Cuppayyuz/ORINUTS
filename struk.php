@@ -218,7 +218,7 @@ $items = $query2->fetchAll(PDO::FETCH_ASSOC);
         <div class="max-w-full text-center">
           <a href="update_status.php?tid=<?= $tid ?>"
             class="w-full bg-green-500 px-4 py-2 text-white rounded-lg">
-            Pesanan Selesai
+            Selesaikan Pesanan
           </a>
 
         </div>

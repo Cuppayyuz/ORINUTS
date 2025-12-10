@@ -35,11 +35,13 @@ $items = $stmt2->fetchAll();
 foreach ($items as $item) {
     $upd = $pdo->prepare("
         UPDATE products 
-        SET terjual = terjual + :qty 
+        SET terjual = terjual + :qty,
+        stok = stok - :qty2
         WHERE produk_kode = :kode
     ");
     $upd->execute([
         'qty' => $item['qty'],
+        'qty2' => $item['qty'],
         'kode'=> $item['kode_produk']
     ]);
 }
@@ -51,4 +53,4 @@ $pdo->prepare("
     WHERE id = :tid
 ")->execute(['tid' => $tid]);
 
-echo "<script>alert('Pesanan selesai!');window.location='riwayat.php';</script>";
+echo "<script>alert('Pesanan selesai!');window.location='all-product.php';</script>";

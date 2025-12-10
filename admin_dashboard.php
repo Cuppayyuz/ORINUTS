@@ -82,8 +82,17 @@ echo "<script>
             <li
               class="nav-item p-2.5 flex items-center gap-3 cursor-pointer hover:bg-[#E0BBA1]/20 rounded-r-3xl transition">
               <i class="fas fa-comment w-4"></i> Message
-              <span
-                class="ml-auto bg-red-600 text-white text-xs font-semibold px-2 py-0.5 rounded-full">2</span>
+              <?php  
+              $sql = "SELECT COUNT(status) as total_message FROM messages WHERE status='unread'";
+              $query = $pdo->prepare($sql);
+              $query->execute();
+              $count = $query->fetchColumn();
+              
+              if($count > 0) {
+                echo "<span class='ml-auto bg-red-600 text-white text-xs font-semibold px-2 py-0.5 rounded-full'>$count</span>";
+              }
+              ?>
+              
             </li>
           </a>
           <a href="admin_order.php">
@@ -170,7 +179,7 @@ echo "<script>
           <div
             class="stat-card bg-[#F0C39F] p-5 rounded-xl text-center text-[#8B4513] shadow-lg">
             <?php
-            $sql = "SELECT COUNT(DISTINCT terjual) AS total_sells FROM products";
+            $sql = "SELECT SUM(terjual) AS total_sells FROM products";
             $query = $pdo->prepare($sql);
             $query->execute();
             $totalPenjulan = $query->fetchColumn();

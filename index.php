@@ -232,11 +232,23 @@ session_start();
         </nav>
 
         <div class="hidden lg:flex items-center space-x-4">
-          <a href="keranjang.php">
+          <a href="keranjang.php" class="relative">
             <img
               src="content/icon/shopping-cart.svg"
               alt="cart"
               class="h-7 w-7" />
+            <?php
+            if (isset($_SESSION['user'])) {
+              $pdo = require 'koneksi.php';
+              $sql = "SELECT COUNT(*) FROM cart WHERE user_id = ?";
+              $query = $pdo->prepare($sql);
+              $query->execute([$_SESSION['user']['id']]);
+              $count = $query->fetchColumn();
+              if ($count > 0) {
+                echo "<span class='absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center'>$count</span>";
+              }
+            }
+            ?>
           </a>
           <?php if (!isset($_SESSION['user'])) { ?>
             <a href="login.php" class="bg-white rounded-full py-2 px-8 font-semibold">Login</a>
@@ -280,7 +292,7 @@ session_start();
         </div>
 
         <a
-          href="index.html"
+          href=""
           class="block py-3 text-black font-semibold hover:text-green-800 border-b border-black">HOME</a>
         <a
           href="about.php"
@@ -296,17 +308,43 @@ session_start();
           <a
             href="keranjang.php"
             class="flex items-center space-x-3 py-3 text-black font-semibold ">
+            <div class="relative">
             <img
               src="content/icon/shopping-cart.svg"
               alt="cart"
               class="h-6 w-6">
+              <?php
+            if (isset($_SESSION['user'])) {
+              $pdo = require 'koneksi.php';
+              $sql = "SELECT COUNT(*) FROM cart WHERE user_id = ?";
+              $query = $pdo->prepare($sql);
+              $query->execute([$_SESSION['user']['id']]);
+              $count = $query->fetchColumn();
+              if ($count > 0) {
+                echo "<span class='absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center'>$count</span>";
+              }
+            }
+            ?>
+            </div>
             <span>Keranjang</span>
           </a>
-          <a
-            href="login.php"
-            class="block w-full text-center bg-black text-white px-4 py-2 rounded-full font-bold">
-            Login
-          </a>
+            <?php if (!isset($_SESSION['user'])) { ?>
+              <a href="login.php" class="bg-white rounded-full py-2 px-8 font-semibold">Login</a>
+            <?php } else { ?>
+              <a href="profile_user.php?id=<?php echo htmlspecialchars($_SESSION['user']['id']); ?>" class="flex items-center gap-3">
+                <?php
+                $pdo = require 'koneksi.php';
+                $query = $pdo->prepare("SELECT profile, fullname FROM users WHERE id=:id");
+                $query->execute([
+                  'id' => $_SESSION['user']['id']
+                ]);
+                $user = $query->fetch();
+                $base64 = base64_encode($user['profile']);
+                ?>
+                <img src= 'data:image/*;base64, <?=  $base64 ?>' class=' w-12 rounded-full' alt='Profile Picture'>
+                <p class=' text-xl'><?= $user['fullname'] ?></p>
+              </a>
+            <?php } ?>
         </div>
       </div>
     </div>
@@ -519,105 +557,50 @@ session_start();
   </h1>
   <div
     class="flex flex-col md:flex-row justify-center gap-8 px-6 md:px-12 pt-14 pb-32">
-    <div
-      class="kotak p-4 bg-gray-100 rounded-2xl shadow-xl w-full md:w-[32%] flex-shrink-0">
-      <div class="flex justify-between items-start">
-        <div class="w-2/3 flex flex-col space-y-2">
-          <div class="flex items-center space-x-2">
+    <?php
+    $pdo = require 'koneksi.php';
+    $sql = "SELECT reviews.*, users.fullname, users.profile, products.image1 FROM reviews INNER JOIN products ON reviews.produk_id = products.id INNER JOIN users ON reviews.user_id = users.id WHERE rating=5 LIMIT 3";
+    $query = $pdo->prepare($sql);
+    $query->execute();
+    $testimoni = $query->fetchAll();
+
+    foreach ($testimoni as $testi) {
+    ?>
+      <div
+        class="kotak p-4 bg-gray-100 rounded-2xl shadow-xl w-full md:w-[32%] flex-shrink-0">
+        <div class="flex justify-between items-start">
+          <div class="w-2/3 flex flex-col space-y-2">
+            <div class="flex items-center space-x-2">
+              <img
+                src="data:image/*; base64, <?= base64_encode($testi['profile']) ?>"
+                alt="user"
+                class="w-8 h-8 rounded-full bg-gray-200" />
+              <p class="font-bold text-base"><?= $testi['fullname'] ?></p>
+            </div>
+            <div class="flex items-center space-x-1">
+              <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
+              <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
+              <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
+              <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
+              <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
+              <h1 class="font-extrabold text-lg ml-1">5.0</h1>
+            </div>
+            <div>
+              <p class="font-extrabold text-sm leading-snug">
+                <?= $testi['ulasan'] ?>
+              </p>
+            </div>
+          </div>
+          <div class="w-1/3 flex justify-end">
             <img
-              src="content/icon/user.png"
-              alt="user"
-              class="w-8 h-8 rounded-full bg-gray-200" />
-            <p class="font-bold text-base">y*****i</p>
+              src="data:image/*;base64,  <?= base64_encode($testi['image1']) ?>"
+              alt="product-img"
+              class="w-16 h-auto object-contain mt-6" />
           </div>
-          <div class="flex items-center space-x-1">
-            <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
-            <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
-            <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
-            <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
-            <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
-            <h1 class="font-extrabold text-lg ml-1">5.0</h1>
-          </div>
-          <div>
-            <p class="font-extrabold text-sm leading-snug">
-              Enak... dan sehat... uda repeat order juga disini.
-            </p>
-          </div>
-        </div>
-        <div class="w-1/3 flex justify-end">
-          <img
-            src="content/product/Orinuts_Roasted_Cashew_Original_200g-removebg-preview.png"
-            alt="product-cashew"
-            class="w-16 h-auto object-contain mt-6" />
         </div>
       </div>
-    </div>
-    <div
-      class="kotak p-4 bg-gray-100 rounded-2xl shadow-xl w-full md:w-[32%] flex-shrink-0">
-      <div class="flex justify-between items-start">
-        <div class="w-2/3 flex flex-col space-y-2">
-          <div class="flex items-center space-x-2">
-            <img
-              src="content/icon/user.png"
-              alt="user"
-              class="w-8 h-8 rounded-full bg-gray-200" />
-            <p class="font-bold text-base">t*****n</p>
-          </div>
-          <div class="flex items-center space-x-1">
-            <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
-            <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
-            <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
-            <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
-            <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
-            <h1 class="font-extrabold text-lg ml-1">5.0</h1>
-          </div>
-          <div>
-            <p class="font-extrabold text-sm leading-snug">
-              mantab enak & krg seruasal (teks disesuaikan dengan gambar)
-            </p>
-          </div>
-        </div>
-        <div class="w-1/3 flex justify-end">
-          <img
-            src="content/product/Orinuts_Wonder_Mix_200gr-removebg-preview.png"
-            class="w-16 h-auto object-contain mt-6" />
-        </div>
-      </div>
-    </div>
-    <div
-      class="kotak p-4 bg-gray-100 rounded-2xl shadow-xl w-full md:w-[32%] flex-shrink-0">
-      <div class="flex justify-between items-start">
-        <div class="w-2/3 flex flex-col space-y-2">
-          <div class="flex items-center space-x-2">
-            <img
-              src="content/icon/user.png"
-              alt="user"
-              class="w-8 h-8 rounded-full bg-gray-200" />
-            <p class="font-bold text-base">m*****g</p>
-          </div>
-          <div class="flex items-center space-x-1">
-            <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
-            <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
-            <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
-            <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
-            <img src="content/icon/star.png" alt="star" class="w-4 h-4" />
-            <h1 class="font-extrabold text-lg ml-1">5.0</h1>
-          </div>
-          <div>
-            <p class="font-extrabold text-sm leading-snug">
-              Puas banget pengiriman cepat kemasan aman appe pun di kasih
-              (teks disesuaikan)
-            </p>
-          </div>
-        </div>
-        <div class="w-1/3 flex justify-end">
-          <img
-            src="content/product/Orinuts_Roasted_Almond_Original_200g-removebg-preview.png"
-            alt="product-granola"
-            class="w-16 h-auto object-contain mt-6" />
-        </div>
-      </div>
-    </div>
+      <!-- End loop -->
+    <?php } ?>
   </div>
 
   <img

@@ -112,24 +112,7 @@ if (!empty($_POST)) {
         <div
             id="panel-kiri"
             class="image-area hidden md:block md:w-[40%] bg-[#cb3d3d] p-10 relative overflow-hidden">
-            <div class="absolute inset-0 flex justify-center items-end">
-                <img
-                    src="content/kacang/mente1-removebg-preview.png"
-                    alt="Kacang Mente Kiri"
-                    class="absolute w-32 h-auto z-100 bottom-75 -rotate-70 left-27" />
-                <img
-                    src="content/kacang/mente1-removebg-preview.png"
-                    alt="Kacang Mente Kecil"
-                    class="absolute w-24 h-auto bottom-4 z-30 rotate-145 left-41" />
-                <img
-                    src="content/product/ori-merah-removebg-preview.png"
-                    alt="Produk Orinuts Merah"
-                    class="imgr absolute h-auto w-48 bottom-15 -right-10 z-20" />
-                <img
-                    src="content/product/ori-4mighty-removebg-preview.png"
-                    alt="Energy Booster Mix"
-                    classl="imgl absolute h-auto w-80 bottom-15 -right-48 transform -translate-x-1/2 z-10" />
-            </div>
+            
         </div>
 
         <div
@@ -219,7 +202,7 @@ if (!empty($_POST)) {
                         <p class="login-prompt mt-6 text-sm text-gray-600">
                             Sudah mempunyai akun?
                             <a
-                                href="login.php"
+                                href="admin_login.php"
                                 class="login-link text-blue-700 font-semibold hover:underline">Login</a>
                         </p>
                     </div>

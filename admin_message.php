@@ -12,6 +12,11 @@ $sql = "SELECT messages.*, users.username, users.email, users.profile FROM messa
 $query = $pdo->query($sql);
 $messages = $query->fetchAll();
 
+// update status
+$sql2 = "UPDATE messages SET status = 'read'";
+$query2 = $pdo->prepare($sql2);
+$query2->execute();
+
 
 function formatTanggalHeader($date)
 {
@@ -62,7 +67,6 @@ function formatTanggalHeader($date)
           <li
             class="nav-item font-bold p-2.5 flex items-center gap-3 cursor-pointer text-[#8B4513] bg-[#D2A278] rounded-r-3xl">
             <i class="fas fa-comment w-4"></i> Message
-            <span class="ml-auto bg-red-600 text-white text-xs font-semibold px-2 py-0.5 rounded-full">2</span>
           </li>
           <a href="admin_order.php">
             <li
